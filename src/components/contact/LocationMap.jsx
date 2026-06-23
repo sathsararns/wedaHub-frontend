@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css'
 const ACCENT = '#bf8d5b'
 
 // Your location
-
+const POSITION = [7.007863, 79.963172]
 
 // Custom tan teardrop pin
 const markerIcon = L.divIcon({
