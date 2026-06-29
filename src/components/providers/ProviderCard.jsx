@@ -24,11 +24,11 @@ export default function ProviderCard({ provider }) {
         {provider.firstName} {provider.lastName}
       </h2>
 
-      {provider.businessName && (
+      {/* {provider.businessName && (
         <p className="text-center text-gray-500">
           {provider.businessName}
         </p>
-      )}
+      )} */}
 
       <div className="mt-4 space-y-2 text-sm">
         <p>
