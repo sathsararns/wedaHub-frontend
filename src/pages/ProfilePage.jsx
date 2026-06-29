@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-import ProfileHeader from "../../components/profile/ProfileHeader";
-import ProfileInfo from "../../components/profile/ProfileInfo";
-import ProfileActions from "../../components/profile/ProfileActions";
+import ProfileHeader from "../components/profile/ProfileHeader";
+import ProfileInfo from "../components/profile/ProfileInfo";
+import ProfileActions from "../components/profile/ProfileActions";
 
 import {
   getProfile,
   updateProfile,
-} from "../../services/userService";
+} from "../services/userService";
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState(null);

@@ -11,7 +11,7 @@ import ContactPage from "../pages/ContactPage";
 // auth
 import LoginPage from "../pages/auth/LoginPage";
 import SignupPage from "../pages/auth/SignupPage";
-import ProfilePage from "../pages/customer/ProfilePage";
+import ProfilePage from "../pages/ProfilePage";
 
 export default function AppRoutes() {
   return (
