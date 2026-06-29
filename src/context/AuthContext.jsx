@@ -2,6 +2,9 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
+const DEFAULT_IMAGE =
+  "https://YOUR-DEFAULT-IMAGE-LINK.png"; // 👈 ඔයාගේ online PNG link එක
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
@@ -23,7 +26,7 @@ export function AuthProvider({ children }) {
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
-      image: data.image || "/default-profile.png",
+      image: data.image || DEFAULT_IMAGE,
     };
 
     setToken(data.token);
@@ -33,15 +36,38 @@ export function AuthProvider({ children }) {
     localStorage.setItem("user", JSON.stringify(userData));
   };
 
+  // 🔥 Profile update එකෙන් පස්සේ මේක call කරන්න
+  const updateUser = (updatedUser) => {
+    setUser((prev) => {
+      const newUser = {
+        ...prev,
+        ...updatedUser,
+      };
+
+      localStorage.setItem("user", JSON.stringify(newUser));
+
+      return newUser;
+    });
+  };
+
   const logout = () => {
     setToken(null);
     setUser(null);
+
     localStorage.removeItem("token");
     localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        login,
+        logout,
+        updateUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
