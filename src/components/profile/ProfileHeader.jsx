@@ -1,19 +1,17 @@
 import { uploadImage } from "../../services/uploadService";
+import defaultAvatar from "../../assets/images/avatar.png";
 
 export default function ProfileHeader({
   profile,
   setProfile,
   editing,
 }) {
-  const DEFAULT_IMAGE =
-    "https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff";
-
-  const avatar =
+  const avatarSrc =
     profile?.image &&
     profile.image.trim() !== "" &&
     !profile.image.includes("default-profile.png")
       ? profile.image
-      : DEFAULT_IMAGE;
+      : defaultAvatar;
 
   const handleImageUpload = async (e) => {
     try {
@@ -41,11 +39,11 @@ export default function ProfileHeader({
       <div className="flex flex-col items-center -mt-16 pb-8">
         <div className="relative">
           <img
-            src={avatar}
+            src={avatarSrc}
             alt="profile"
             className="w-32 h-32 rounded-full border-4 border-white object-cover shadow-lg"
             onError={(e) => {
-              e.target.src = DEFAULT_IMAGE;
+              e.currentTarget.src = defaultAvatar;
             }}
           />
 
@@ -53,7 +51,7 @@ export default function ProfileHeader({
             <>
               <label
                 htmlFor="profileImage"
-                className="absolute bottom-0 right-0 bg-blue-600 text-white rounded-full p-2 cursor-pointer shadow-lg hover:bg-blue-700"
+                className="absolute bottom-0 right-0 bg-blue-600 text-white rounded-full p-2 cursor-pointer shadow-lg hover:bg-blue-700 transition"
               >
                 📷
               </label>
