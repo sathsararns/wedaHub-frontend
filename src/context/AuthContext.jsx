@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 const AuthContext = createContext();
 
 const DEFAULT_IMAGE =
-  "https://YOUR-DEFAULT-IMAGE-LINK.png"; // 👈 ඔයාගේ online PNG link එක
+  "https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
