@@ -12,6 +12,13 @@ export async function searchLocations(text) {
         params: {
           text,
           limit: 5,
+
+          // Sri Lanka only
+          filter: "countrycode:lk",
+
+          // Prefer Sri Lanka results
+          bias: "countrycode:lk",
+
           apiKey: API_KEY,
         },
       }
@@ -19,7 +26,7 @@ export async function searchLocations(text) {
 
     return res.data.features;
   } catch (error) {
-    console.log("Geoapify Error:", error);
+    console.log(error);
     return [];
   }
 }
