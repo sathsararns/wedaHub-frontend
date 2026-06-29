@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import defaultAvatar from "../assets/images/avatar.png";
+import { ArrowLeft } from "lucide-react";
 
 export default function ProvidersPage() {
   const { category } = useParams();
+  const navigate = useNavigate();
 
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,6 +44,15 @@ export default function ProvidersPage() {
   return (
     <section className="min-h-screen bg-gray-100 py-12">
       <div className="max-w-7xl mx-auto px-5">
+
+        {/* Back Button */}
+        <button
+          onClick={() => navigate("/services")}
+          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium mb-6"
+        >
+          <ArrowLeft size={20} />
+          Back to Services
+        </button>
 
         <h1 className="text-4xl font-bold mb-8 capitalize">
           {category} Providers
@@ -86,12 +97,6 @@ export default function ProvidersPage() {
                     {provider.firstName} {provider.lastName}
                   </h2>
 
-                  {provider.businessName && (
-                    <p className="text-center text-gray-500">
-                      {provider.businessName}
-                    </p>
-                  )}
-
                   <div className="mt-4 space-y-2 text-sm">
                     <p>
                       <strong>Category:</strong> {provider.category}
@@ -106,17 +111,20 @@ export default function ProvidersPage() {
                       <strong>Phone:</strong>{" "}
                       {provider.phone || "Not available"}
                     </p>
-
-                    {provider.description && (
-                      <p className="text-gray-600">
-                        {provider.description}
-                      </p>
-                    )}
                   </div>
 
-                  <button className="w-full mt-5 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition">
-                    Book Now
-                  </button>
+                  <div className="mt-5 space-y-3">
+                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition">
+                      Book Now
+                    </button>
+
+                    <Link
+                      to={`/provider/${provider._id}`}
+                      className="block w-full text-center border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white py-2 rounded-lg transition"
+                    >
+                      View Profile
+                    </Link>
+                  </div>
                 </div>
               );
             })}
