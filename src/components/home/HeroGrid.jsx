@@ -17,7 +17,7 @@ export function HeroGrid() {
       title: 'PRECISION LOCATION SERVICES',
       description:
         'Connect your business to location intelligence. Distribute and integrate high-accuracy map data and services for precise, real-time insights across your network.',
-      buttonText: 'FIND SERVICES NOW',
+      buttonText: 'EXPLORE SOLUTIONS',
       image: hero_2,
     },
     {
@@ -25,7 +25,7 @@ export function HeroGrid() {
       title: 'CHATBOT FOR SMART SERVICE',
       description:
         'Get instant help finding the right local professional. Our intelligent chatbot understands your location, service needs, and availability to connect you with trusted experts in seconds — anywhere, anytime.',
-      buttonText: 'FIND SERVICES NOW',
+      buttonText: 'TRY AI ASSISTANT',
       image: hero_2,
     },
   ];
@@ -58,24 +58,27 @@ export function HeroGrid() {
             {/* TEXT BLOCK */}
             <div>
 
-              {/* Subtitle (closer to navbar now) */}
               <div className="text-xs sm:text-sm font-semibold text-gray-500 tracking-[0.2em] uppercase leading-tight mb-1">
                 {slide.subtitle}
               </div>
 
-              {/* Title */}
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight mb-4">
                 {slide.title}
               </h1>
 
-              {/* Description */}
               <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed max-w-xl mb-6">
                 {slide.description}
               </p>
 
-              {/* Button */}
-              <button className="bg-[#0ca59d] hover:bg-[#0a8a84] text-white font-semibold py-3 sm:py-4 px-8 sm:px-10 text-sm tracking-wider transition-colors duration-200">
+              {/* BUTTON (NAVBAR COLOR) */}
+              <button className="group relative inline-flex items-center justify-center bg-[#07184B] text-white font-semibold py-3 sm:py-4 px-8 sm:px-10 text-sm tracking-wider rounded-full shadow-md transition-all duration-300 hover:bg-[#0a1f5c] hover:shadow-lg hover:-translate-y-1 active:translate-y-0">
+
                 {slide.buttonText}
+
+                <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+
               </button>
 
             </div>
@@ -111,7 +114,6 @@ export function HeroGrid() {
 
       </div>
 
-      {/* Animation */}
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0.4; transform: translateY(10px); }
