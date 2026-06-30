@@ -13,7 +13,7 @@ import ProvidersPage from "../pages/ProvidersPage";
 import LoginPage from "../pages/auth/LoginPage";
 import SignupPage from "../pages/auth/SignupPage";
 import ProfilePage from "../pages/ProfilePage";
-import ProviderProfilePage from "../pages/Providers/ProfilePage";
+import ProviderProfilePage from "../pages/ProviderProfilePage";
 
 export default function AppRoutes() {
   return (
