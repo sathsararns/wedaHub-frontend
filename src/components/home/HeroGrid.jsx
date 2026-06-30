@@ -84,7 +84,7 @@ export function HeroGrid() {
             </div>
 
             {/* DOTS */}
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
               {slides.map((_, slideIndex) => (
                 <button
                   key={slideIndex}
@@ -96,7 +96,7 @@ export function HeroGrid() {
                   }`}
                 />
               ))}
-            </div>
+            </div> */}
 
           </div>
         </div>
