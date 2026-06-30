@@ -5,7 +5,7 @@ import hero_2 from '../../assets/images/hero_2.png';
 export function HeroGrid() {
   const slides = [
     {
-      subtitle: 'YOUR TRUSTED HUB FOR LOCATION-AWARE PROFESSIONALS',
+      subtitle: 'TRUSTED LOCAL PROFESIONALS HUB',
       title: 'FIND TRUSTED LOCAL PROFESSIONALS',
       description:
         'Discover trusted and experienced local experts for any job. Check verified user reviews and book certified professionals with ease. We bring reliable and top-rated services right to your doorstep.',
@@ -51,36 +51,37 @@ export function HeroGrid() {
       >
 
         {/* LEFT SIDE */}
-        <div className="w-full lg:w-1/2 h-full flex items-center px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28">
+        <div className="w-full lg:w-1/2 h-full flex items-start px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-6 lg:pt-10">
 
-          <div className="w-full max-w-2xl flex flex-col justify-center h-full">
+          <div className="w-full max-w-2xl flex flex-col justify-between h-full pb-10">
 
+            {/* TEXT BLOCK */}
             <div>
 
-              {/* Subtitle */}
-              <div className="text-xs sm:text-sm font-semibold text-gray-500 tracking-[0.2em] uppercase mb-6">
+              {/* Subtitle (closer to navbar now) */}
+              <div className="text-xs sm:text-sm font-semibold text-gray-500 tracking-[0.2em] uppercase leading-tight mb-1">
                 {slide.subtitle}
               </div>
 
               {/* Title */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-black leading-tight mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight mb-4">
                 {slide.title}
               </h1>
 
               {/* Description */}
-              <p className="text-base sm:text-lg text-gray-600 leading-relaxed mb-8 max-w-xl">
+              <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed max-w-xl mb-6">
                 {slide.description}
               </p>
 
               {/* Button */}
-              <button className="bg-[#0ca59d] hover:bg-[#0a8a84] text-white font-semibold py-4 px-10 text-sm tracking-wider transition-colors duration-200">
+              <button className="bg-[#0ca59d] hover:bg-[#0a8a84] text-white font-semibold py-3 sm:py-4 px-8 sm:px-10 text-sm tracking-wider transition-colors duration-200">
                 {slide.buttonText}
               </button>
 
             </div>
 
-            {/* DOTS (always visible inside screen) */}
-            <div className="flex gap-2 mt-auto pb-6 pt-6">
+            {/* DOTS */}
+            <div className="flex gap-2">
               {slides.map((_, slideIndex) => (
                 <button
                   key={slideIndex}
@@ -103,7 +104,7 @@ export function HeroGrid() {
           <img
             src={slide.image}
             alt="hero"
-            className="w-[85%] max-h-[85%] object-contain"
+            className="w-[80%] max-h-[80%] object-contain"
           />
 
         </div>
