@@ -37,13 +37,16 @@ export default function ProviderProfilePage() {
   }
 
   async function loadReviews() {
-    try {
-      const data = await getReviews(id);
-      setReviews(data);
-    } catch (err) {
-      console.log(err);
-    }
+  try {
+    const data = await getReviews(id);
+
+    console.log("REVIEWS =>", data);
+
+    setReviews(data);
+  } catch (err) {
+    console.log(err);
   }
+}
 
   if (loading || !provider) {
     return (
