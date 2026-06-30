@@ -65,7 +65,8 @@ export function HeroGrid() {
                 {slide.title}
               </h1>
 
-              <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed max-w-xl mb-6">
+              {/* 🔥 UPDATED DESCRIPTION */}
+              <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-snug max-w-xl mb-6">
                 {slide.description}
               </p>
 
@@ -98,7 +99,7 @@ export function HeroGrid() {
           </div>
         </div>
 
-        {/* RIGHT SIDE (IMAGE MOVED UP) */}
+        {/* RIGHT SIDE */}
         <div className="w-full lg:w-1/2 h-full flex items-start justify-center pt-6 lg:pt-10">
 
           <img
