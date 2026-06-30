@@ -35,7 +35,7 @@ export function HeroGrid() {
   useEffect(() => {
     const id = setInterval(() => {
       setIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(id);
   }, []);
@@ -47,7 +47,7 @@ export function HeroGrid() {
 
       <div
         key={index}
-        className="flex flex-col lg:flex-row w-full h-full animate-[fadeIn_500ms_ease-out]"
+        className="flex flex-col lg:flex-row w-full h-full animate-[fadeIn_400ms_ease-out]"
       >
 
         {/* LEFT SIDE */}
@@ -55,10 +55,9 @@ export function HeroGrid() {
 
           <div className="w-full max-w-2xl flex flex-col justify-between h-full pb-10">
 
-            {/* TEXT BLOCK */}
             <div>
 
-              <div className="text-xs sm:text-sm font-semibold text-gray-500 tracking-[0.2em] uppercase leading-tight mb-1">
+              <div className="text-xs sm:text-sm font-semibold text-gray-500 tracking-[0.2em] uppercase mb-1">
                 {slide.subtitle}
               </div>
 
@@ -70,8 +69,7 @@ export function HeroGrid() {
                 {slide.description}
               </p>
 
-              {/* BUTTON (NAVBAR COLOR) */}
-              <button className="group relative inline-flex items-center justify-center bg-[#07184B] text-white font-semibold py-3 sm:py-4 px-8 sm:px-10 text-sm tracking-wider rounded-full shadow-md transition-all duration-300 hover:bg-[#0a1f5c] hover:shadow-lg hover:-translate-y-1 active:translate-y-0">
+              <button className="group inline-flex items-center justify-center bg-[#07184B] text-white font-semibold py-3 sm:py-4 px-8 sm:px-10 text-sm tracking-wider rounded-full shadow-md transition-all duration-300 hover:bg-[#0a1f5c] hover:shadow-lg hover:-translate-y-1">
 
                 {slide.buttonText}
 
@@ -83,26 +81,25 @@ export function HeroGrid() {
 
             </div>
 
-            {/* DOTS */}
-            {/* <div className="flex gap-2">
+            <div className="flex gap-2">
               {slides.map((_, slideIndex) => (
                 <button
                   key={slideIndex}
                   onClick={() => setIndex(slideIndex)}
                   className={`h-2 rounded-full transition-all ${
                     slideIndex === index
-                      ? 'bg-[#0ca59d] w-8'
+                      ? 'bg-[#07184B] w-8'
                       : 'bg-gray-300 w-2'
                   }`}
                 />
               ))}
-            </div> */}
+            </div>
 
           </div>
         </div>
 
-        {/* RIGHT SIDE */}
-        <div className="w-full lg:w-1/2 h-full flex items-center justify-center">
+        {/* RIGHT SIDE (IMAGE MOVED UP) */}
+        <div className="w-full lg:w-1/2 h-full flex items-start justify-center pt-6 lg:pt-10">
 
           <img
             src={slide.image}
