@@ -13,6 +13,7 @@ import ProvidersPage from "../pages/ProvidersPage";
 import LoginPage from "../pages/auth/LoginPage";
 import SignupPage from "../pages/auth/SignupPage";
 import ProfilePage from "../pages/ProfilePage";
+import ProviderProfilePage from "../pages/Providers/ProfilePage";
 
 export default function AppRoutes() {
   return (
@@ -34,6 +35,11 @@ export default function AppRoutes() {
 
         <Route path="/contact" element={<ContactPage />} />
       </Route>
+
+      <Route
+    path="/provider/:id"
+    element={<ProviderProfilePage />}
+/>
 
       {/* AUTH ROUTES */}
       <Route path="/login" element={<LoginPage />} />
