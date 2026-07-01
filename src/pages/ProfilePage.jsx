@@ -61,25 +61,32 @@ export default function ProfilePage() {
   // Upload Work Image
   // ===========================
 
-  const handleWorkImageUpload = async (e) => {
-    try {
-      const file = e.target.files[0];
+const handleWorkImageUpload = async (e) => {
+  try {
+    const file = e.target.files[0];
 
-      if (!file) return;
+    if (!file) return;
 
-      const imageUrl = await uploadImage(file);
+    const imageUrl = await uploadImage(file);
 
-      setProfile((prev) => ({
+    console.log("Uploaded URL:", imageUrl);
+
+    setProfile((prev) => {
+      const updated = {
         ...prev,
         workImages: [...(prev.workImages || []), imageUrl],
-      }));
+      };
 
-      toast.success("Image uploaded");
-    } catch (err) {
-      console.log(err);
-      toast.error("Upload failed");
-    }
-  };
+      console.log(updated);
+
+      return updated;
+    });
+
+    toast.success("Image uploaded");
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   // ===========================
   // Delete Work Image
@@ -177,6 +184,8 @@ export default function ProfilePage() {
                 </>
               )}
             </div>
+
+            
 
             {(profile.workImages || []).length === 0 ? (
               <p className="text-gray-500">
