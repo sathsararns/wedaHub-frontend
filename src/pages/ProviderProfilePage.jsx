@@ -40,7 +40,7 @@ export default function ProviderProfilePage() {
   try {
     const data = await getReviews(id);
 
-    console.log("REVIEWS =>", data);
+    console.log("Reviews:", data);
 
     setReviews(data);
   } catch (err) {
