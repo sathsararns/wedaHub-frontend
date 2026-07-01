@@ -15,6 +15,7 @@ export default function ProvidersPage() {
 
   const [searchName, setSearchName] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
+  const [minimumRating, setMinimumRating] = useState(0);
 
   useEffect(() => {
     fetchProviders();
@@ -38,6 +39,7 @@ export default function ProvidersPage() {
 
   const filteredProviders = useMemo(() => {
     return providers.filter((provider) => {
+
       const fullName =
         `${provider.firstName} ${provider.lastName}`.toLowerCase();
 
@@ -50,9 +52,22 @@ export default function ProvidersPage() {
       const matchesLocation =
         location.includes(searchLocation.toLowerCase());
 
-      return matchesName && matchesLocation;
+      const matchesRating =
+        (provider.rating || 0) >= minimumRating;
+
+      return (
+        matchesName &&
+        matchesLocation &&
+        matchesRating
+      );
+
     });
-  }, [providers, searchName, searchLocation]);
+  }, [
+    providers,
+    searchName,
+    searchLocation,
+    minimumRating,
+  ]);
 
   if (loading) {
     return (
@@ -85,6 +100,8 @@ export default function ProvidersPage() {
           setSearchName={setSearchName}
           searchLocation={searchLocation}
           setSearchLocation={setSearchLocation}
+          minimumRating={minimumRating}
+          setMinimumRating={setMinimumRating}
         />
 
         {filteredProviders.length === 0 ? (

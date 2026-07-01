@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Star } from "lucide-react";
 import defaultAvatar from "../../assets/images/avatar.png";
 
 export default function ProviderCard({ provider }) {
@@ -24,11 +25,21 @@ export default function ProviderCard({ provider }) {
         {provider.firstName} {provider.lastName}
       </h2>
 
-      {/* {provider.businessName && (
-        <p className="text-center text-gray-500">
-          {provider.businessName}
-        </p>
-      )} */}
+      {/* Rating */}
+      <div className="flex justify-center items-center gap-2 mt-3">
+        <Star
+          size={18}
+          className="text-yellow-500 fill-yellow-500"
+        />
+
+        <span className="font-semibold">
+          {provider.rating?.toFixed(1) || "0.0"}
+        </span>
+
+        <span className="text-gray-500 text-sm">
+          ({provider.reviews || 0} Reviews)
+        </span>
+      </div>
 
       <div className="mt-4 space-y-2 text-sm">
         <p>
@@ -53,7 +64,7 @@ export default function ProviderCard({ provider }) {
 
         <Link
           to={`/provider/${provider._id}`}
-          className="block w-full text-center border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white py-2 rounded-lg rounded-lg transition"
+          className="block w-full text-center border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white py-2 rounded-lg transition"
         >
           View Profile
         </Link>
