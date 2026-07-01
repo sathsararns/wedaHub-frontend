@@ -6,6 +6,8 @@ export default function ProviderFilters({
   setSearchName,
   searchLocation,
   setSearchLocation,
+  minimumRating,
+  setMinimumRating,
 }) {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -93,6 +95,26 @@ export default function ProviderFilters({
 
             </div>
           )}
+        </div>
+
+        {/* Rating Filter */}
+        <div>
+          <label className="block mb-2 font-semibold">
+            Minimum Rating
+          </label>
+
+          <select
+            value={minimumRating}
+            onChange={(e) => setMinimumRating(Number(e.target.value))}
+            className="w-full border rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value={0}>All Ratings</option>
+            <option value={5}>⭐⭐⭐⭐⭐ 5 Stars</option>
+            <option value={4}>⭐⭐⭐⭐☆ 4 Stars & Up</option>
+            <option value={3}>⭐⭐⭐☆☆ 3 Stars & Up</option>
+            <option value={2}>⭐⭐☆☆☆ 2 Stars & Up</option>
+            <option value={1}>⭐☆☆☆☆ 1 Star & Up</option>
+          </select>
         </div>
 
       </div>
