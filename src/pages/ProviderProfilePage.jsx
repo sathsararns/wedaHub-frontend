@@ -7,6 +7,7 @@ import defaultAvatar from "../assets/images/avatar.png";
 
 import ReviewForm from "../components/providers/ReviewForm";
 import ReviewsList from "../components/providers/ReviewsList";
+import ProviderGallery from "../components/providers/ProviderGallery";
 import { getReviews } from "../services/reviewService";
 
 export default function ProviderProfilePage() {
@@ -37,16 +38,16 @@ export default function ProviderProfilePage() {
   }
 
   async function loadReviews() {
-  try {
-    const data = await getReviews(id);
+    try {
+      const data = await getReviews(id);
 
-    console.log("Reviews:", data);
+      console.log("Reviews:", data);
 
-    setReviews(data);
-  } catch (err) {
-    console.log(err);
+      setReviews(data);
+    } catch (err) {
+      console.log(err);
+    }
   }
-}
 
   if (loading || !provider) {
     return (
@@ -69,14 +70,16 @@ export default function ProviderProfilePage() {
     <section className="bg-gray-100 min-h-screen py-10">
       <div className="max-w-5xl mx-auto px-5">
 
+        {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-blue-600 mb-8"
+          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8"
         >
           <ArrowLeft size={20} />
           Back
         </button>
 
+        {/* Provider Info */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
 
           <div className="flex flex-col md:flex-row gap-8">
@@ -118,23 +121,23 @@ export default function ProviderProfilePage() {
 
                 <p>
                   <strong>Rating :</strong>{" "}
-                  ⭐ {provider.rating.toFixed(1)}
+                  ⭐ {(provider.rating || 0).toFixed(1)}
                 </p>
 
                 <p>
                   <strong>Reviews :</strong>{" "}
-                  {provider.reviews}
+                  {provider.reviews || 0}
                 </p>
 
               </div>
 
               {provider.description && (
                 <div className="mt-6">
-                  <h3 className="font-bold mb-2">
+                  <h3 className="font-bold text-xl mb-2">
                     About
                   </h3>
 
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 leading-7">
                     {provider.description}
                   </p>
                 </div>
@@ -146,14 +149,21 @@ export default function ProviderProfilePage() {
 
         </div>
 
+        {/* Work Gallery */}
+        <ProviderGallery
+          images={provider.workImages || []}
+        />
+
+        {/* Review Form */}
         <ReviewForm
           providerId={id}
           onReviewAdded={() => {
-            loadReviews();
             loadProvider();
+            loadReviews();
           }}
         />
 
+        {/* Reviews */}
         <div className="mt-10">
 
           <h2 className="text-2xl font-bold mb-5">

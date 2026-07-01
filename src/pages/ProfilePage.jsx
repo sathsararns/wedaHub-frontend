@@ -10,6 +10,7 @@ import {
   updateProfile,
 } from "../services/userService";
 
+import { uploadImage } from "../services/uploadService";
 import { useAuth } from "../context/AuthContext";
 
 export default function ProfilePage() {
@@ -42,10 +43,7 @@ export default function ProfilePage() {
 
       const updated = await updateProfile(profile);
 
-      // Update profile page
       setProfile(updated);
-
-      // Update navbar & localStorage
       updateUser(updated);
 
       setEditing(false);
@@ -57,6 +55,41 @@ export default function ProfilePage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // ===========================
+  // Upload Work Image
+  // ===========================
+
+  const handleWorkImageUpload = async (e) => {
+    try {
+      const file = e.target.files[0];
+
+      if (!file) return;
+
+      const imageUrl = await uploadImage(file);
+
+      setProfile((prev) => ({
+        ...prev,
+        workImages: [...(prev.workImages || []), imageUrl],
+      }));
+
+      toast.success("Image uploaded");
+    } catch (err) {
+      console.log(err);
+      toast.error("Upload failed");
+    }
+  };
+
+  // ===========================
+  // Delete Work Image
+  // ===========================
+
+  const removeImage = (index) => {
+    setProfile((prev) => ({
+      ...prev,
+      workImages: prev.workImages.filter((_, i) => i !== index),
+    }));
   };
 
   if (pageLoading) {
@@ -112,6 +145,71 @@ export default function ProfilePage() {
           setProfile={setProfile}
           editing={editing}
         />
+
+        {/* ===========================
+            Provider Work Gallery
+        =========================== */}
+
+        {profile.role === "provider" && (
+          <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
+
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold">
+                Work Gallery
+              </h2>
+
+              {editing && (
+                <>
+                  <label
+                    htmlFor="workImage"
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-700"
+                  >
+                    + Upload Image
+                  </label>
+
+                  <input
+                    id="workImage"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleWorkImageUpload}
+                  />
+                </>
+              )}
+            </div>
+
+            {(profile.workImages || []).length === 0 ? (
+              <p className="text-gray-500">
+                No work images uploaded yet.
+              </p>
+            ) : (
+              <div className="grid md:grid-cols-3 gap-5">
+                {profile.workImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className="relative"
+                  >
+                    <img
+                      src={image}
+                      alt=""
+                      className="w-full h-56 object-cover rounded-xl"
+                    />
+
+                    {editing && (
+                      <button
+                        onClick={() => removeImage(index)}
+                        className="absolute top-2 right-2 bg-red-600 text-white w-8 h-8 rounded-full"
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+          </div>
+        )}
 
         <ProfileActions
           editing={editing}
