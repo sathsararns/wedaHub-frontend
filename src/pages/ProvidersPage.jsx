@@ -17,6 +17,9 @@ export default function ProvidersPage() {
   const [searchLocation, setSearchLocation] = useState("");
   const [minimumRating, setMinimumRating] = useState(0);
 
+  // NEW
+  const [sortBy, setSortBy] = useState("highestRated");
+
   useEffect(() => {
     fetchProviders();
   }, [category]);
@@ -38,8 +41,8 @@ export default function ProvidersPage() {
   }
 
   const filteredProviders = useMemo(() => {
-    return providers.filter((provider) => {
-
+    // Filter
+    const filtered = providers.filter((provider) => {
       const fullName =
         `${provider.firstName} ${provider.lastName}`.toLowerCase();
 
@@ -60,13 +63,49 @@ export default function ProvidersPage() {
         matchesLocation &&
         matchesRating
       );
-
     });
+
+    // Sort
+    switch (sortBy) {
+      case "highestRated":
+        filtered.sort(
+          (a, b) => (b.rating || 0) - (a.rating || 0)
+        );
+        break;
+
+      case "mostReviewed":
+        filtered.sort(
+          (a, b) => (b.reviews || 0) - (a.reviews || 0)
+        );
+        break;
+
+      case "a-z":
+        filtered.sort((a, b) =>
+          `${a.firstName} ${a.lastName}`.localeCompare(
+            `${b.firstName} ${b.lastName}`
+          )
+        );
+        break;
+
+      case "z-a":
+        filtered.sort((a, b) =>
+          `${b.firstName} ${b.lastName}`.localeCompare(
+            `${a.firstName} ${a.lastName}`
+          )
+        );
+        break;
+
+      default:
+        break;
+    }
+
+    return filtered;
   }, [
     providers,
     searchName,
     searchLocation,
     minimumRating,
+    sortBy,
   ]);
 
   if (loading) {
@@ -102,6 +141,8 @@ export default function ProvidersPage() {
           setSearchLocation={setSearchLocation}
           minimumRating={minimumRating}
           setMinimumRating={setMinimumRating}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
         />
 
         {filteredProviders.length === 0 ? (

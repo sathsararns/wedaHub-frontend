@@ -128,11 +128,10 @@ export default function ProviderFilters({
             onChange={(e) => setSortBy(e.target.value)}
             className="w-full border rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="">Default</option>
-            <option value="rating">⭐ Highest Rated</option>
-            <option value="reviews">📝 Most Reviewed</option>
-            <option value="az">🔤 Name A-Z</option>
-            <option value="za">🔠 Name Z-A</option>
+            <option value="highestRated">⭐ Highest Rated</option>
+              <option value="mostReviewed">📝 Most Reviewed</option>
+              <option value="a-z">🔤 Name A-Z</option>
+              <option value="z-a">🔠 Name Z-A</option>
           </select>
         </div>
 
