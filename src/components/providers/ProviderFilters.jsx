@@ -8,6 +8,8 @@ export default function ProviderFilters({
   setSearchLocation,
   minimumRating,
   setMinimumRating,
+  sortBy,
+  setSortBy,
 }) {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -43,7 +45,7 @@ export default function ProviderFilters({
 
   return (
     <div className="bg-white rounded-xl shadow p-5 mb-8">
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-4 gap-4">
 
         {/* Search Name */}
         <div>
@@ -82,7 +84,6 @@ export default function ProviderFilters({
 
           {suggestions.length > 0 && (
             <div className="absolute z-50 w-full mt-2 bg-white border rounded-lg shadow-lg max-h-60 overflow-y-auto">
-
               {suggestions.map((item) => (
                 <div
                   key={item.properties.place_id}
@@ -92,7 +93,6 @@ export default function ProviderFilters({
                   📍 {item.properties.formatted}
                 </div>
               ))}
-
             </div>
           )}
         </div>
@@ -114,6 +114,25 @@ export default function ProviderFilters({
             <option value={3}>⭐⭐⭐☆☆ 3 Stars & Up</option>
             <option value={2}>⭐⭐☆☆☆ 2 Stars & Up</option>
             <option value={1}>⭐☆☆☆☆ 1 Star & Up</option>
+          </select>
+        </div>
+
+        {/* Sort By */}
+        <div>
+          <label className="block mb-2 font-semibold">
+            Sort By
+          </label>
+
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="w-full border rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Default</option>
+            <option value="rating">⭐ Highest Rated</option>
+            <option value="reviews">📝 Most Reviewed</option>
+            <option value="az">🔤 Name A-Z</option>
+            <option value="za">🔠 Name Z-A</option>
           </select>
         </div>
 
