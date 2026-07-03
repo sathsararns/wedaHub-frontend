@@ -14,6 +14,8 @@ import LoginPage from "../pages/auth/LoginPage";
 import SignupPage from "../pages/auth/SignupPage";
 import ProfilePage from "../pages/ProfilePage";
 import ProviderProfilePage from "../pages/ProviderProfilePage";
+import BookingPage from "../pages/BookingPage";
+
 
 export default function AppRoutes() {
   return (
@@ -39,6 +41,11 @@ export default function AppRoutes() {
       <Route
     path="/provider/:id"
     element={<ProviderProfilePage />}
+/>
+
+    <Route
+  path="/booking/:providerId"
+  element={<BookingPage />}
 />
 
       {/* AUTH ROUTES */}
