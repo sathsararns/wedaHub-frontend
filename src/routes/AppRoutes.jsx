@@ -43,8 +43,8 @@ export default function AppRoutes() {
     element={<ProviderProfilePage />}
 />
 
-    <Route
-  path="/booking/:providerId"
+   <Route
+  path="/booking/:id"
   element={<BookingPage />}
 />
 

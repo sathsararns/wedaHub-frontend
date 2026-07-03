@@ -1,14 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Star } from "lucide-react";
 import defaultAvatar from "../../assets/images/avatar.png";
 
 export default function ProviderCard({ provider }) {
+  const navigate = useNavigate();
+
   const avatar =
     provider.image &&
     provider.image.trim() !== "" &&
     !provider.image.includes("default-profile.png")
       ? provider.image
       : defaultAvatar;
+
+  const handleBookNow = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    navigate(`/booking/${provider._id}`);
+  };
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition duration-300">
@@ -58,7 +71,10 @@ export default function ProviderCard({ provider }) {
       </div>
 
       <div className="mt-5 space-y-3">
-        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition">
+        <button
+          onClick={handleBookNow}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition"
+        >
           Book Now
         </button>
 
