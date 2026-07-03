@@ -124,7 +124,7 @@ function ServicesList() {
   );
 }
 
-export default ServicesList;
+export default ServicesList;*/
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
