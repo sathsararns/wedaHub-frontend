@@ -40,14 +40,26 @@ export default function ProviderProfilePage() {
   async function loadReviews() {
     try {
       const data = await getReviews(id);
-
-      console.log("Reviews:", data);
-
       setReviews(data);
     } catch (err) {
       console.log(err);
     }
   }
+
+  // ============================
+  // Book Now
+  // ============================
+
+  const handleBookNow = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    navigate(`/booking/${provider._id}`);
+  };
 
   if (loading || !provider) {
     return (
@@ -142,6 +154,16 @@ export default function ProviderProfilePage() {
                   </p>
                 </div>
               )}
+
+              {/* Book Now Button */}
+              <div className="mt-8">
+                <button
+                  onClick={handleBookNow}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition"
+                >
+                  Book Now
+                </button>
+              </div>
 
             </div>
 
