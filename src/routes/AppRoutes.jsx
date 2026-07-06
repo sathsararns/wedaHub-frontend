@@ -15,6 +15,7 @@ import SignupPage from "../pages/auth/SignupPage";
 import ProfilePage from "../pages/ProfilePage";
 import ProviderProfilePage from "../pages/ProviderProfilePage";
 import BookingPage from "../pages/BookingPage";
+import MyBookingsPage from "../pages/MyBookingsPage";
 
 
 export default function AppRoutes() {
@@ -48,6 +49,10 @@ export default function AppRoutes() {
   element={<BookingPage />}
 />
 
+<Route
+  path="/my-bookings"
+  element={<MyBookingsPage />}
+/>
       {/* AUTH ROUTES */}
       <Route path="/login" element={<LoginPage />} />
 

@@ -37,30 +37,33 @@ export default function BookingPage() {
   }
 
   async function handleBooking() {
-    if (!bookingDate) {
-      toast.error("Please select booking date");
-      return;
-    }
-
-    try {
-      setLoading(true);
-
-      await createBooking({
-        providerId: id,
-        bookingDate,
-        specialInstructions,
-      });
-
-      toast.success("Booking submitted successfully");
-
-      navigate("/my-bookings");
-    } catch (err) {
-      console.log(err);
-      toast.error("Booking failed");
-    } finally {
-      setLoading(false);
-    }
+  if (!bookingDate) {
+    toast.error("Please select booking date");
+    return;
   }
+
+  try {
+    setLoading(true);
+
+    await createBooking({
+      providerId: id,
+      serviceName: provider.businessName || provider.category,
+      description: specialInstructions,
+      date: bookingDate,
+    });
+
+    toast.success("Booking submitted successfully");
+
+    navigate("/my-bookings");
+  } catch (err) {
+    console.log(err);
+    console.log(err.response?.data);
+
+    toast.error(err.response?.data?.message || "Booking failed");
+  } finally {
+    setLoading(false);
+  }
+}
 
   if (!provider) {
     return (
