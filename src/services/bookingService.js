@@ -51,3 +51,8 @@ export const getProviderRating = async (id) => {
   const res = await api.get(`/bookings/rating/${id}`);
   return res.data;
 };
+
+export const completeBooking = async (id) => {
+  const res = await api.put(`/bookings/complete/${id}`);
+  return res.data;
+};
