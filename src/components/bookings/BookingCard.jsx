@@ -3,10 +3,10 @@ import StatusBadge from "./StatusBadge";
 
 export default function BookingCard({ booking }) {
 
-  const provider = booking.provider;
+  const provider = booking.providerId;
 
   const avatar =
-    provider.image &&
+    provider?.image &&
     !provider.image.includes("default-profile")
       ? provider.image
       : defaultAvatar;
@@ -29,18 +29,16 @@ export default function BookingCard({ booking }) {
             <div>
 
               <h2 className="text-xl font-bold">
-                {provider.firstName} {provider.lastName}
+                {provider?.firstName} {provider?.lastName}
               </h2>
 
               <p className="text-gray-500">
-                {provider.category}
+                {provider?.category}
               </p>
 
             </div>
 
-            <StatusBadge
-              status={booking.status}
-            />
+            <StatusBadge status={booking.status} />
 
           </div>
 
@@ -48,24 +46,22 @@ export default function BookingCard({ booking }) {
 
             <p>
               <strong>Date :</strong>{" "}
-              {new Date(
-                booking.bookingDate
-              ).toLocaleDateString()}
+              {new Date(booking.date).toLocaleDateString()}
             </p>
 
             <p>
               <strong>Location :</strong>{" "}
-              {provider.location}
+              {provider?.location || "-"}
             </p>
 
             <p>
               <strong>Phone :</strong>{" "}
-              {provider.phone}
+              {provider?.phone || "-"}
             </p>
 
             <p>
               <strong>Instructions :</strong>{" "}
-              {booking.specialInstructions || "-"}
+              {booking.description || "-"}
             </p>
 
           </div>
