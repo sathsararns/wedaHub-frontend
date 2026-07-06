@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import defaultAvatar from "../assets/images/avatar.png";
+import socket from "../lib/socket";
 
 const AuthContext = createContext();
 
@@ -9,6 +10,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
+  // Load saved login
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     const savedUser = localStorage.getItem("user");
@@ -17,6 +19,7 @@ export function AuthProvider({ children }) {
       const parsedUser = JSON.parse(savedUser);
 
       setToken(savedToken);
+
       setUser({
         ...parsedUser,
         image:
@@ -29,8 +32,25 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+  // Socket connection
+  useEffect(() => {
+    if (user?._id) {
+      socket.connect();
+
+      socket.emit("join", user._id);
+
+      console.log("Socket Joined :", user._id);
+    }
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [user]);
+
+  // Login
   const login = (data) => {
     const userData = {
+      _id: data._id,
       token: data.token,
       role: data.role,
       email: data.email,
@@ -51,7 +71,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem("user", JSON.stringify(userData));
   };
 
-  // Profile update එකෙන් පස්සේ Navbar update වෙන්න
+  // Update profile
   const updateUser = (updatedUser) => {
     setUser((prev) => {
       const newUser = {
@@ -71,7 +91,10 @@ export function AuthProvider({ children }) {
     });
   };
 
+  // Logout
   const logout = () => {
+    socket.disconnect();
+
     setToken(null);
     setUser(null);
 
