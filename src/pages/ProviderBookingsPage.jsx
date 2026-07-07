@@ -2,16 +2,12 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import { getProviderBookings } from "../services/bookingService";
-
 import BookingRequestCard from "../components/providerBookings/BookingRequestCard";
+import { socket } from "../lib/socket";
 
 export default function ProviderBookingsPage() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadBookings();
-  }, []);
 
   async function loadBookings() {
     try {
@@ -22,12 +18,23 @@ export default function ProviderBookingsPage() {
       setBookings(data);
     } catch (err) {
       console.log(err);
-
       toast.error("Failed to load bookings");
     } finally {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    loadBookings();
+
+    socket.on("booking-status-updated", () => {
+      loadBookings();
+    });
+
+    return () => {
+      socket.off("booking-status-updated");
+    };
+  }, []);
 
   if (loading) {
     return (
