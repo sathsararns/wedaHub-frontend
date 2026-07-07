@@ -289,7 +289,7 @@ function ServicesList() {
             </div>
 
             {/* Smaller floating avatar bubbles вокруг */}
-            <img src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&q=80&w=120" alt="team" className="absolute top-4 left-4 w-14 h-14 rounded-full border-4 border-white object-cover shadow-md" />
+            <img src="https://thumbs.dreamstime.com/b/hands-phone-hologram-icons-city-communication-networking-connection-internet-outdoor-person-typing-mobile-app-chat-292395593.jpg" alt="team" className="absolute top-4 left-4 w-14 h-14 rounded-full border-4 border-white object-cover shadow-md" />
             <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="team" className="absolute bottom-16 right-0 w-14 h-14 rounded-full border-4 border-white object-cover shadow-md" />
             <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=120" alt="team" className="absolute top-0 right-8 w-12 h-12 rounded-full border-4 border-white object-cover shadow-md" />
             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120" alt="team" className="absolute bottom-24 left-0 w-12 h-12 rounded-full border-4 border-white object-cover shadow-md" />
