@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 import { getProviderBookings } from "../services/bookingService";
 import BookingRequestCard from "../components/providerBookings/BookingRequestCard";
-import { socket } from "../lib/socket";
+import socket from "../lib/socket";
 
 export default function ProviderBookingsPage() {
   const [bookings, setBookings] = useState([]);
@@ -31,8 +31,13 @@ export default function ProviderBookingsPage() {
       loadBookings();
     });
 
+    socket.on("new-booking", () => {
+      loadBookings();
+    });
+
     return () => {
       socket.off("booking-status-updated");
+      socket.off("new-booking");
     };
   }, []);
 
