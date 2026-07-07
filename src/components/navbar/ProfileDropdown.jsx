@@ -42,7 +42,7 @@ export default function ProfileDropdown() {
           {/* CUSTOMER */}
           {user?.role === "customer" && (
             <Link
-              to="/customer"
+              to="/my-bookings"
               className="block px-4 py-2 hover:bg-gray-100"
               onClick={() => setOpen(false)}
             >
