@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect } from "react";
-import { socket } from "../lib/socket";
+import socket from "../lib/socket";
 import { useAuth } from "./AuthContext";
 
 const SocketContext = createContext();
@@ -10,12 +10,11 @@ export function SocketProvider({ children }) {
   useEffect(() => {
     if (!user?._id) return;
 
-    // connect only once
     socket.connect();
 
     socket.emit("join-room", user._id);
 
-    console.log("Socket Joined :", user._id);
+    console.log("Socket Connected:", user._id);
 
     return () => {
       socket.disconnect();
@@ -23,7 +22,7 @@ export function SocketProvider({ children }) {
   }, [user]);
 
   return (
-    <SocketContext.Provider value={{ socket }}>
+    <SocketContext.Provider value={socket}>
       {children}
     </SocketContext.Provider>
   );
