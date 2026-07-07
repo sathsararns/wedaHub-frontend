@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import hero_1 from '../../assets/images/hero_1.png';
 import hero_2 from '../../assets/images/hero_2.png';
-import   
+import hero_3 from '../../assets/images/hero_3.jpg';
 
 export function HeroGrid() {
   const slides = [
@@ -27,7 +27,7 @@ export function HeroGrid() {
       description:
         'Get instant help finding the right local professional. Our intelligent chatbot understands your location, service needs, and availability to connect you with trusted experts in seconds — anywhere, anytime.',
       buttonText: 'TRY AI ASSISTANT',
-      image: hero_2,
+      image: hero_3,
     },
   ];
 

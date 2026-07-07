@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import logo from '../assets/images/logo.jpg'
+import logo from '../assets/images/logo.png'
 
 function Footer() {
   const footerRef = useRef(null)
@@ -40,11 +40,11 @@ function Footer() {
             <div className="flex items-center mb-4">
               <img
                 src={logo}
-                alt="Home Interior Logo"
+                alt="wedahub Logo"
                 className="h-16 w-auto"
               />
             </div>
-            <p className="text-gray-400 mb-4">Redefine the way you live.</p>
+            <p className="text-gray-400 mb-4">Connecting you with trusted local professionals.</p>
             <div className="flex space-x-4 mt-2">
               <a
                 href="#"
@@ -112,9 +112,9 @@ function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Address</h3>
             <p className="text-gray-400">
-              75 drive, Lincoln Av,
+              123 Service Hub Road, 
               <br />
-              Colombo, SL
+              Colombo 05, SL
             </p>
           </div>
           {/* Our Policies */}
@@ -150,7 +150,7 @@ function Footer() {
           {/* Help */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Help</h3>
-            <p className="text-gray-400 mb-2">hello@decor.world.com</p>
+            <p className="text-gray-400 mb-2">support@wedaHub.lk</p>
             <a
               href="#"
               className="text-gray-400 hover:text-white transition-colors"
@@ -160,7 +160,7 @@ function Footer() {
           </div>
         </div>
         <div className="mt-12 pt-8 border-t border-white text-center text-gray-400 text-sm">
-          Copyright 2025 Home Interior. All Rights Reserved
+          © 2026 WedaHub - Trusted Local Service Platform. All Rights Reserved.
         </div>
       </div>
     </footer>
