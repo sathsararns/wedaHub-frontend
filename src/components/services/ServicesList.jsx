@@ -291,8 +291,8 @@ function ServicesList() {
             {/* Smaller floating avatar bubbles вокруг */}
             <img src="https://img.freepik.com/premium-photo/photo-electrical-technician-working_763111-37049.jpg" alt="team" className="absolute top-4 left-4 w-14 h-14 rounded-full border-4 border-white object-cover shadow-md" />
             <img src="https://tse4.mm.bing.net/th/id/OIP.SWzzUBWR4FuSnD8it-QQAAHaFF?cb=thfc1falcon4&rs=1&pid=ImgDetMain&o=7&rm=3" alt="team" className="absolute bottom-16 right-0 w-14 h-14 rounded-full border-4 border-white object-cover shadow-md" />
-            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=120" alt="team" className="absolute top-0 right-8 w-12 h-12 rounded-full border-4 border-white object-cover shadow-md" />
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120" alt="team" className="absolute bottom-24 left-0 w-12 h-12 rounded-full border-4 border-white object-cover shadow-md" />
+            <img src="https://media.istockphoto.com/id/866897648/photo/handsome-carpenter-working-in-workshop.jpg?s=170667a&w=0&k=20&c=k0L93hIEm7UbLmtE5dO26B7vKqQiSPsB4un_sw2c92U=" alt="team" className="absolute top-0 right-8 w-12 h-12 rounded-full border-4 border-white object-cover shadow-md" />
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/015/302/822/small_2x/with-level-measuring-tool-construction-worker-in-uniform-and-safety-equipment-have-job-on-building-photo.jpg" alt="team" className="absolute bottom-24 left-0 w-12 h-12 rounded-full border-4 border-white object-cover shadow-md" />
           </div>
 
         </div>
