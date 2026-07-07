@@ -241,7 +241,7 @@ function ServicesList() {
             </span>
 
             <h2 className="text-[#0b1736] text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
-              Explore Our Wide <br /> Range of <span className="text-orange-500">Services</span>
+              Explore Our Wide <br /> Range of <span className="text-yellow-500">Services</span>
             </h2>
 
             <p className="text-slate-500 text-base md:text-lg max-w-xl leading-relaxed">
