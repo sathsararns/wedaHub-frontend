@@ -1,16 +1,14 @@
-import { useAuth } from "../../context/AuthContext";
-
-export default function DashboardHeader() {
-  const { user } = useAuth();
-
+export default function DashboardHeader({ provider }) {
   return (
-    <div className="bg-white rounded-xl shadow-md p-8 mb-8">
-      <h1 className="text-3xl font-bold text-gray-800">
-        Welcome Back, {user?.firstName} 👋
+    <div className="bg-white rounded-xl shadow p-6 mb-8">
+      <h1 className="text-3xl font-bold">
+        Welcome,
+        {" "}
+        {provider?.firstName}
       </h1>
 
       <p className="text-gray-500 mt-2">
-        Manage your bookings and customer requests.
+        Manage your bookings and monitor your services.
       </p>
     </div>
   );
