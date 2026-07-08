@@ -20,6 +20,7 @@ import BookingPage from "../pages/BookingPage";
 import MyBookingsPage from "../pages/MyBookingsPage";
 
 // Provider
+import ProviderDashboardPage from "../pages/ProviderDashboardPage";
 import ProviderBookingsPage from "../pages/ProviderBookingsPage";
 
 export default function AppRoutes() {
@@ -29,16 +30,12 @@ export default function AppRoutes() {
       {/* PUBLIC */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />
-
         <Route path="/about" element={<AboutPage />} />
-
         <Route path="/services" element={<ServicesPage />} />
-
         <Route
           path="/services/:category"
           element={<ProvidersPage />}
         />
-
         <Route path="/contact" element={<ContactPage />} />
       </Route>
 
@@ -53,6 +50,11 @@ export default function AppRoutes() {
       <Route path="/my-bookings" element={<MyBookingsPage />} />
 
       {/* PROVIDER */}
+      <Route
+        path="/provider-dashboard"
+        element={<ProviderDashboardPage />}
+      />
+
       <Route
         path="/provider/requests"
         element={<ProviderBookingsPage />}
