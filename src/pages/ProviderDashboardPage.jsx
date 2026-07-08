@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import toast from "react-hot-toast";
 
 import api from "../utils/api";
@@ -11,6 +13,8 @@ import RecentBookings from "../components/providerDashboard/RecentBookings";
 import LatestReviews from "../components/providerDashboard/LatestReviews";
 
 export default function ProviderDashboardPage() {
+  const navigate = useNavigate();
+
   const [provider, setProvider] = useState(null);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,11 +27,11 @@ export default function ProviderDashboardPage() {
     try {
       setLoading(true);
 
-      // Load logged in provider profile
+      // Provider Profile
       const profileRes = await api.get("/users/profile");
       setProvider(profileRes.data);
 
-      // Load provider bookings
+      // Provider Bookings
       const bookingData = await getProviderBookings();
       setBookings(bookingData);
 
@@ -52,6 +56,15 @@ export default function ProviderDashboardPage() {
   return (
     <section className="min-h-screen bg-gray-100 py-10">
       <div className="max-w-7xl mx-auto px-5">
+
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6 font-medium"
+        >
+          <ArrowLeft size={20} />
+          Back
+        </button>
 
         <DashboardHeader provider={provider} />
 
