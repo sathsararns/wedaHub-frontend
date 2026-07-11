@@ -82,7 +82,7 @@ export default function ProfileDropdown() {
                 Admin Dashboard
               </Link>
 
-              <Link
+              {/* <Link
                 to="/admin/users"
                 onClick={() => setOpen(false)}
                 className="block px-4 py-2 hover:bg-gray-100"
@@ -96,7 +96,7 @@ export default function ProfileDropdown() {
                 className="block px-4 py-2 hover:bg-gray-100"
               >
                 Manage Bookings
-              </Link>
+              </Link> */}
             </>
           )}
 
