@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import toast from "react-hot-toast";
 
 import { getProviderBookings } from "../services/bookingService";
@@ -6,6 +8,8 @@ import BookingRequestCard from "../components/providerBookings/BookingRequestCar
 import socket from "../lib/socket";
 
 export default function ProviderBookingsPage() {
+  const navigate = useNavigate();
+
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -54,6 +58,16 @@ export default function ProviderBookingsPage() {
   return (
     <section className="min-h-screen bg-gray-100 py-10">
       <div className="max-w-6xl mx-auto px-5">
+
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6 transition"
+        >
+          <ArrowLeft size={20} />
+          Back
+        </button>
+
         <h1 className="text-4xl font-bold mb-8">
           Incoming Bookings
         </h1>
@@ -79,6 +93,7 @@ export default function ProviderBookingsPage() {
             ))}
           </div>
         )}
+
       </div>
     </section>
   );

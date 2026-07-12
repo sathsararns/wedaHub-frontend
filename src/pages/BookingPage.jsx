@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -37,33 +38,37 @@ export default function BookingPage() {
   }
 
   async function handleBooking() {
-  if (!bookingDate) {
-    toast.error("Please select booking date");
-    return;
+    if (!bookingDate) {
+      toast.error("Please select booking date");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      await createBooking({
+        providerId: id,
+        serviceName:
+          provider.businessName || provider.category,
+        description: specialInstructions,
+        date: bookingDate,
+      });
+
+      toast.success("Booking submitted successfully");
+
+      navigate("/my-bookings");
+    } catch (err) {
+      console.log(err);
+      console.log(err.response?.data);
+
+      toast.error(
+        err.response?.data?.message ||
+          "Booking failed"
+      );
+    } finally {
+      setLoading(false);
+    }
   }
-
-  try {
-    setLoading(true);
-
-    await createBooking({
-      providerId: id,
-      serviceName: provider.businessName || provider.category,
-      description: specialInstructions,
-      date: bookingDate,
-    });
-
-    toast.success("Booking submitted successfully");
-
-    navigate("/my-bookings");
-  } catch (err) {
-    console.log(err);
-    console.log(err.response?.data);
-
-    toast.error(err.response?.data?.message || "Booking failed");
-  } finally {
-    setLoading(false);
-  }
-}
 
   if (!provider) {
     return (
@@ -81,8 +86,16 @@ export default function BookingPage() {
 
   return (
     <section className="min-h-screen bg-gray-100 py-10">
-
       <div className="max-w-4xl mx-auto">
+
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6 transition"
+        >
+          <ArrowLeft size={20} />
+          Back
+        </button>
 
         <div className="bg-white rounded-2xl shadow-lg p-8">
 
@@ -91,9 +104,7 @@ export default function BookingPage() {
           </h1>
 
           {/* Provider */}
-
           <div className="flex gap-5 items-center mb-8">
-
             <img
               src={avatar}
               alt=""
@@ -101,9 +112,9 @@ export default function BookingPage() {
             />
 
             <div>
-
               <h2 className="text-2xl font-bold">
-                {provider.firstName} {provider.lastName}
+                {provider.firstName}{" "}
+                {provider.lastName}
               </h2>
 
               <p className="text-gray-500">
@@ -113,15 +124,11 @@ export default function BookingPage() {
               <p>
                 ⭐ {(provider.rating || 0).toFixed(1)}
               </p>
-
             </div>
-
           </div>
 
           {/* Date */}
-
           <div className="mb-6">
-
             <label className="font-semibold block mb-2">
               Booking Date
             </label>
@@ -129,19 +136,20 @@ export default function BookingPage() {
             <input
               type="date"
               value={bookingDate}
-              min={new Date().toISOString().split("T")[0]}
+              min={
+                new Date()
+                  .toISOString()
+                  .split("T")[0]
+              }
               onChange={(e) =>
                 setBookingDate(e.target.value)
               }
               className="border rounded-lg p-3 w-full"
             />
-
           </div>
 
           {/* Instructions */}
-
           <div className="mb-8">
-
             <label className="font-semibold block mb-2">
               Special Instructions
             </label>
@@ -150,25 +158,25 @@ export default function BookingPage() {
               rows="5"
               value={specialInstructions}
               onChange={(e) =>
-                setSpecialInstructions(e.target.value)
+                setSpecialInstructions(
+                  e.target.value
+                )
               }
               placeholder="Write anything provider should know..."
               className="border rounded-lg p-3 w-full"
             />
-
           </div>
 
           {/* Summary */}
-
           <div className="bg-blue-50 rounded-xl p-6 mb-8">
-
             <h2 className="text-xl font-bold mb-4">
               Booking Summary
             </h2>
 
             <p>
               <strong>Provider:</strong>{" "}
-              {provider.firstName} {provider.lastName}
+              {provider.firstName}{" "}
+              {provider.lastName}
             </p>
 
             <p>
@@ -185,13 +193,12 @@ export default function BookingPage() {
               <strong>Location:</strong>{" "}
               {provider.location}
             </p>
-
           </div>
 
           <button
             onClick={handleBooking}
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl text-lg font-semibold"
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white py-4 rounded-xl text-lg font-semibold transition"
           >
             {loading
               ? "Booking..."
@@ -199,9 +206,7 @@ export default function BookingPage() {
           </button>
 
         </div>
-
       </div>
-
     </section>
   );
 }
