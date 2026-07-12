@@ -23,6 +23,10 @@ import MyBookingsPage from "../pages/MyBookingsPage";
 import ProviderDashboardPage from "../pages/ProviderDashboardPage";
 import ProviderBookingsPage from "../pages/ProviderBookingsPage";
 
+import AdminDashboardPage from "../pages/AdminDashboardPage";
+import ManageUsersPage from "../pages/ManageUsersPage";
+import ManageBookingsPage from "../pages/ManageBookingsPage";
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -58,6 +62,22 @@ export default function AppRoutes() {
       <Route
         path="/provider/requests"
         element={<ProviderBookingsPage />}
+      />
+
+      {/* ADMIN */}
+      <Route
+        path="/admin"
+        element={<AdminDashboardPage />}
+      />
+
+      <Route
+        path="/admin/users"
+        element={<ManageUsersPage />}
+      />
+
+      <Route
+        path="/admin/bookings"
+        element={<ManageBookingsPage />}
       />
 
     </Routes>
