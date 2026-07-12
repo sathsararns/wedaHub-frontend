@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 import { PhoneIcon, MailIcon, MapPinIcon } from 'lucide-react'
 
@@ -35,7 +34,7 @@ export function ContactSection() {
     {
       icon: MapPinIcon,
       label: 'Visit now',
-      value: '80 broklyn golden street, New York',
+      value: 'No. 23, Colombo - Kandy Road, Eldeniya, Kadawatha, Sri Lanka',
     },
   ]
 
@@ -48,7 +47,7 @@ export function ContactSection() {
             className="mb-5 text-sm font-bold uppercase tracking-widest"
             style={{ color: ACCENT }}
           >
-            // Contact us
+            //Contact us
           </p>
           <h2 className="max-w-md text-4xl font-extrabold leading-tight text-neutral-900 sm:text-5xl">
             Get in touch with our expert agents
@@ -62,7 +61,7 @@ export function ContactSection() {
             {contactItems.map(({ icon: Icon, label, value }) => (
               <li key={label} className="flex items-center gap-5">
                 <span
-                  className="flex h-12 w-12 flex-shrink-0 items-center justify-center bg-neutral-100"
+                  className="flex h-12 w-12 shrink-0 items-center justify-center bg-neutral-100"
                   aria-hidden="true"
                 >
                   <Icon className="h-5 w-5" style={{ color: ACCENT }} />
@@ -76,8 +75,8 @@ export function ContactSection() {
           </ul>
         </div>
 
-        {/* Right column - form */}
-        <div className="border border-neutral-100 p-6 shadow-sm sm:p-10">
+        {/* Right column - form with balanced 4-sided shadow */}
+        <div className="bg-white p-6 shadow-[0_0_50px_rgba(0,0,0,0.12)] sm:p-10 rounded-xl">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label htmlFor="name" className="sr-only">
