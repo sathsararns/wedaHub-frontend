@@ -7,7 +7,7 @@ import RecentBookings from "../../components/admin/RecentBookings";
 
 export default function AdminDashboardPage() {
   return (
-    <div className="flex bg-gray-100">
+    <div className="flex bg-gray-100 min-h-screen">
 
       <Sidebar />
 
