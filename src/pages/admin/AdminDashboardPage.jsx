@@ -1,9 +1,9 @@
-import Sidebar from "../../components/adminDashboard/Sidebar";
-import DashboardHeader from "../../components/adminDashboard/DashboardHeader";
-import StatsCards from "../../components/adminDashboard/StatsCards";
-import QuickActions from "../../components/adminDashboard/QuickActions";
-import RecentUsers from "../../components/adminDashboard/RecentUsers";
-import RecentBookings from "../../components/adminDashboard/RecentBookings";
+import Sidebar from "../../components/admin/Sidebar";
+import DashboardHeader from "../../components/admin/DashboardHeader";
+import StatsCards from "../../components/admin/StatsCards";
+import QuickActions from "../../components/admin/QuickActions";
+import RecentUsers from "../../components/admin/RecentUsers";
+import RecentBookings from "../../components/admin/RecentBookings";
 
 export default function AdminDashboardPage() {
   return (
