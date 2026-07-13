@@ -1,18 +1,26 @@
 import api from "../utils/api";
 
-export const getUsers = () =>
-  api.get("/admin/users");
+export const getAdminStats = async () => {
+  const res = await api.get("/admin/stats");
+  return res.data;
+};
 
-export const getBookings = () =>
-  api.get("/admin/bookings");
+export const getUsers = async () => {
+  const res = await api.get("/admin/users");
+  return res.data;
+};
 
-export const blockUser = (id) =>
-  api.put(`/admin/block/${id}`);
+export const getBookings = async () => {
+  const res = await api.get("/admin/bookings");
+  return res.data;
+};
 
-export const unblockUser = (id) =>
-  api.put(`/admin/unblock/${id}`);
+export const blockUser = async (id) => {
+  const res = await api.put(`/admin/block/${id}`);
+  return res.data;
+};
 
-export const getDashboardData = async () => {
-  const res = await api.get("/admin/dashboard");
+export const unblockUser = async (id) => {
+  const res = await api.put(`/admin/unblock/${id}`);
   return res.data;
 };

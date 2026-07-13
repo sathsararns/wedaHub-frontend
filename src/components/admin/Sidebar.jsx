@@ -1,72 +1,92 @@
-import { Link, useNavigate } from "react-router-dom";
-
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
   CalendarCheck,
   ArrowLeft,
+  LogOut,
 } from "lucide-react";
 
+import { useAuth } from "../../context/AuthContext";
+
 export default function Sidebar() {
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
+  const menu = [
+    {
+      name: "Dashboard",
+      icon: <LayoutDashboard size={20} />,
+      path: "/admin-dashboard",
+    },
+    {
+      name: "Manage Users",
+      icon: <Users size={20} />,
+      path: "/admin/users",
+    },
+    {
+      name: "Manage Bookings",
+      icon: <CalendarCheck size={20} />,
+      path: "/admin/bookings",
+    },
+  ];
+
+  function handleLogout() {
+    logout();
+    navigate("/");
+  }
+
   return (
-    <aside className="w-64 bg-white shadow-lg flex flex-col">
+    <aside className="w-64 h-screen sticky top-0 bg-slate-900 text-white flex flex-col">
 
       {/* Logo */}
-
-      <div className="h-20 flex items-center justify-center border-b">
-
-        <h1 className="text-2xl font-bold text-[#07184B]">
+      <div className="p-6 border-b border-slate-700">
+        <h1 className="text-2xl font-bold text-center">
           WedaHub
         </h1>
 
+        <p className="text-sm text-slate-400 text-center mt-1">
+          Admin Panel
+        </p>
       </div>
 
       {/* Menu */}
-
-      <nav className="flex-1 p-5 space-y-2">
-
-        <Link
-          to="/admin-dashboard"
-          className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 text-gray-700"
-        >
-          <LayoutDashboard size={20} />
-
-          Dashboard
-        </Link>
-
-        <Link
-          to="/admin/users"
-          className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 text-gray-700"
-        >
-          <Users size={20} />
-
-          Manage Users
-        </Link>
-
-        <Link
-          to="/admin/bookings"
-          className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 text-gray-700"
-        >
-          <CalendarCheck size={20} />
-
-          Manage Bookings
-        </Link>
-
+      <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+        {menu.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+                isActive
+                  ? "bg-blue-600"
+                  : "hover:bg-slate-800"
+              }`
+            }
+          >
+            {item.icon}
+            <span>{item.name}</span>
+          </NavLink>
+        ))}
       </nav>
 
-      {/* Back */}
-
-      <div className="p-5 border-t">
+      {/* Bottom */}
+      <div className="mt-auto p-4 border-t border-slate-700">
 
         <button
-          onClick={() => navigate(-1)}
-          className="flex items-center justify-center gap-2 w-full bg-[#07184B] text-white py-3 rounded-lg hover:bg-blue-900"
+          onClick={() => navigate("/")}
+          className="w-full flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 py-3 rounded-lg transition mb-3"
         >
           <ArrowLeft size={18} />
+          Back to Website
+        </button>
 
-          Back
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 py-3 rounded-lg transition"
+        >
+          <LogOut size={18} />
+          Logout
         </button>
 
       </div>
