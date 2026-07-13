@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-import DashboardHeader from "../components/adminDashboard/DashboardHeader";
-import StatsCards from "../components/adminDashboard/StatsCards";
-import QuickActions from "../components/adminDashboard/QuickActions";
-import RecentUsers from "../components/adminDashboard/RecentUsers";
-import RecentBookings from "../components/adminDashboard/RecentBookings";
+import DashboardHeader from "../../components/adminDashboard/DashboardHeader";
+import StatsCards from "../../components/adminDashboard/StatsCards";
+import QuickActions from "../../components/adminDashboard/QuickActions";
+import RecentUsers from "../../components/adminDashboard/RecentUsers";
+import RecentBookings from "../../components/adminDashboard/RecentBookings";
 
-import { getDashboardData } from "../services/adminService";
+import { getDashboardData } from "../../services/adminService";
 
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState(null);
