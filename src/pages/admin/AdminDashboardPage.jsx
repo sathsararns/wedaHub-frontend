@@ -1,10 +1,13 @@
-import DashboardLayout from "../../components/adminDashboard/DashboardLayout";
 import Sidebar from "../../components/adminDashboard/Sidebar";
 import DashboardHeader from "../../components/adminDashboard/DashboardHeader";
+import StatsCards from "../../components/adminDashboard/StatsCards";
+import QuickActions from "../../components/adminDashboard/QuickActions";
+import RecentUsers from "../../components/adminDashboard/RecentUsers";
+import RecentBookings from "../../components/adminDashboard/RecentBookings";
 
 export default function AdminDashboardPage() {
   return (
-    <DashboardLayout>
+    <div className="flex bg-gray-100">
 
       <Sidebar />
 
@@ -12,8 +15,20 @@ export default function AdminDashboardPage() {
 
         <DashboardHeader />
 
+        <StatsCards />
+
+        <QuickActions />
+
+        <div className="grid lg:grid-cols-2 gap-6 mt-8">
+
+          <RecentUsers />
+
+          <RecentBookings />
+
+        </div>
+
       </main>
 
-    </DashboardLayout>
+    </div>
   );
 }
