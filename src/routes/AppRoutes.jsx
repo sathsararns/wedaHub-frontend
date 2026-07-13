@@ -24,6 +24,7 @@ import ProviderDashboardPage from "../pages/ProviderDashboardPage";
 import ProviderBookingsPage from "../pages/ProviderBookingsPage";
 
 // Admin
+import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
 
 
 export default function AppRoutes() {
@@ -64,6 +65,10 @@ export default function AppRoutes() {
       />
 
       {/* ADMIN */}
+          <Route
+      path="/admin-dashboard"
+      element={<AdminDashboardPage />}
+    />
       
 
     </Routes>
