@@ -1,29 +1,4 @@
-import { useEffect, useState } from "react";
-import api from "../../utils/api";
-import UserRow from "./UserRow";
-
-export default function RecentUsers() {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    loadUsers();
-  }, []);
-
-  async function loadUsers() {
-    try {
-      const res = await api.get("/admin/users");
-
-      const sorted = res.data.sort(
-        (a, b) =>
-          new Date(b.createdAt) -
-          new Date(a.createdAt)
-      );
-
-      setUsers(sorted.slice(0, 5));
-    } catch (err) {
-      console.log(err);
-    }
-  }
+export default function RecentUsers({ users = [] }) {
 
   return (
     <div className="bg-white rounded-xl shadow p-6">
@@ -32,18 +7,36 @@ export default function RecentUsers() {
         Recent Users
       </h2>
 
-      {users.length === 0 ? (
-        <p className="text-gray-500">
-          No users found
-        </p>
-      ) : (
-        users.map((user) => (
-          <UserRow
+      <div className="space-y-4">
+
+        {users.map((user) => (
+
+          <div
             key={user._id}
-            user={user}
-          />
-        ))
-      )}
+            className="border rounded-lg p-4 flex justify-between items-center"
+          >
+
+            <div>
+
+              <h3 className="font-semibold">
+                {user.firstName} {user.lastName}
+              </h3>
+
+              <p className="text-sm text-gray-500">
+                {user.email}
+              </p>
+
+            </div>
+
+            <span className="capitalize bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
+              {user.role}
+            </span>
+
+          </div>
+
+        ))}
+
+      </div>
 
     </div>
   );

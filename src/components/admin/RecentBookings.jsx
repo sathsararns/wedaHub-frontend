@@ -26,23 +26,63 @@ export default function RecentBookings() {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow p-6">
+    <div className="bg-white rounded-xl shadow overflow-hidden">
 
-      <h2 className="text-xl font-bold mb-5">
-        Recent Bookings
-      </h2>
+      <div className="p-6 border-b">
+        <h2 className="text-xl font-bold">
+          Recent Bookings
+        </h2>
+      </div>
 
       {bookings.length === 0 ? (
-        <p className="text-gray-500">
+        <div className="p-6 text-gray-500">
           No bookings found
-        </p>
+        </div>
       ) : (
-        bookings.map((booking) => (
-          <BookingRow
-            key={booking._id}
-            booking={booking}
-          />
-        ))
+
+        <table className="w-full">
+
+          <thead className="bg-gray-100">
+
+            <tr>
+
+              <th className="p-3 text-left">
+                Customer
+              </th>
+
+              <th className="p-3 text-left">
+                Provider
+              </th>
+
+              <th className="p-3 text-left">
+                Service
+              </th>
+
+              <th className="p-3 text-left">
+                Date
+              </th>
+
+              <th className="p-3 text-left">
+                Status
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {bookings.map((booking) => (
+              <BookingRow
+                key={booking._id}
+                booking={booking}
+              />
+            ))}
+
+          </tbody>
+
+        </table>
+
       )}
 
     </div>

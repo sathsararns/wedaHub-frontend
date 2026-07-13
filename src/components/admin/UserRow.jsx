@@ -1,30 +1,76 @@
-export default function UserRow({ user }) {
+import { blockUser, unblockUser } from "../../services/adminService";
+
+export default function UserRow({ user, refresh }) {
+
+  async function handleBlock() {
+    try {
+      await blockUser(user._id);
+      refresh();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function handleUnblock() {
+    try {
+      await unblockUser(user._id);
+      refresh();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
-    <div className="flex items-center justify-between py-3 border-b last:border-b-0">
+    <tr className="border-b hover:bg-gray-50">
 
-      <div>
-        <h3 className="font-semibold">
-          {user.firstName} {user.lastName}
-        </h3>
+      <td className="p-4">
+        {user.firstName} {user.lastName}
+      </td>
 
-        <p className="text-sm text-gray-500">
-          {user.email}
-        </p>
-      </div>
+      <td className="p-4">
+        {user.email}
+      </td>
 
-      <span
-        className={`px-3 py-1 rounded-full text-xs font-semibold
-        ${
-          user.role === "provider"
-            ? "bg-blue-100 text-blue-700"
-            : user.role === "admin"
-            ? "bg-red-100 text-red-700"
-            : "bg-green-100 text-green-700"
-        }`}
-      >
+      <td className="p-4 capitalize">
         {user.role}
-      </span>
+      </td>
 
-    </div>
+      <td className="p-4">
+        {user.isBlocked ? (
+          <span className="text-red-600 font-semibold">
+            Blocked
+          </span>
+        ) : (
+          <span className="text-green-600 font-semibold">
+            Active
+          </span>
+        )}
+      </td>
+
+      <td className="p-4">
+
+        {user.isBlocked ? (
+
+          <button
+            onClick={handleUnblock}
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+          >
+            Unblock
+          </button>
+
+        ) : (
+
+          <button
+            onClick={handleBlock}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+          >
+            Block
+          </button>
+
+        )}
+
+      </td>
+
+    </tr>
   );
 }

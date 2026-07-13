@@ -1,34 +1,29 @@
 export default function BookingRow({ booking }) {
   return (
-    <div className="flex justify-between items-center py-3 border-b last:border-b-0">
+    <tr className="border-b hover:bg-gray-50">
 
-      <div>
+      <td className="p-3">
+        {booking.customerId?.firstName}{" "}
+        {booking.customerId?.lastName}
+      </td>
 
-        <h3 className="font-semibold">
-          {booking.customerId?.firstName}{" "}
-          {booking.customerId?.lastName}
-        </h3>
+      <td className="p-3">
+        {booking.providerId?.businessName ||
+          `${booking.providerId?.firstName} ${booking.providerId?.lastName}`}
+      </td>
 
-        <p className="text-sm text-gray-500">
-          {booking.providerId?.firstName}{" "}
-          {booking.providerId?.lastName}
-        </p>
+      <td className="p-3">
+        {booking.serviceName}
+      </td>
 
-      </div>
+      <td className="p-3">
+        {new Date(booking.date).toLocaleDateString()}
+      </td>
 
-      <span
-        className={`px-3 py-1 rounded-full text-xs font-semibold
-        ${
-          booking.status === "accepted"
-            ? "bg-green-100 text-green-700"
-            : booking.status === "pending"
-            ? "bg-yellow-100 text-yellow-700"
-            : "bg-red-100 text-red-700"
-        }`}
-      >
+      <td className="p-3 capitalize">
         {booking.status}
-      </span>
+      </td>
 
-    </div>
+    </tr>
   );
 }

@@ -71,7 +71,16 @@ export default function AppRoutes() {
       path="/admin-dashboard"
       element={<AdminDashboardPage />}
     />
-      
+
+ <Route
+  path="/admin/users"
+  element={<ManageUsersPage />}
+/>
+
+<Route
+  path="/admin/bookings"
+  element={<ManageBookingsPage />}
+/> 
 
     </Routes>
   );
