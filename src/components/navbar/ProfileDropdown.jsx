@@ -75,7 +75,7 @@ export default function ProfileDropdown() {
           {user.role === "admin" && (
             <>
               <Link
-                to="/admin"
+                to="/admin-dashboard"
                 onClick={() => setOpen(false)}
                 className="block px-4 py-2 hover:bg-gray-100"
               >
