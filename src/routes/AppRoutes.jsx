@@ -23,9 +23,10 @@ import MyBookingsPage from "../pages/MyBookingsPage";
 import ProviderDashboardPage from "../pages/ProviderDashboardPage";
 import ProviderBookingsPage from "../pages/ProviderBookingsPage";
 
-import AdminDashboardPage from "../pages/AdminDashboardPage";
-import ManageUsersPage from "../pages/ManageUsersPage";
-import ManageBookingsPage from "../pages/ManageBookingsPage";
+// Admin
+import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
+import ManageUsersPage from "../pages/admin/ManageUsersPage";
+import ManageBookingsPage from "../pages/admin/ManageBookingsPage";
 
 export default function AppRoutes() {
   return (

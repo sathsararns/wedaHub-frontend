@@ -1,13 +1,13 @@
 export default function DashboardHeader() {
   return (
-    <div className="bg-white rounded-2xl shadow p-6 mb-8">
+    <div className="bg-white rounded-xl shadow p-6">
 
-      <h1 className="text-3xl font-bold">
+      <h1 className="text-3xl font-bold text-[#07184B]">
         Admin Dashboard
       </h1>
 
       <p className="text-gray-500 mt-2">
-        Manage users, providers and bookings.
+        Welcome back Administrator.
       </p>
 
     </div>
