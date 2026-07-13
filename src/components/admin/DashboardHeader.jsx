@@ -1,39 +1,31 @@
-import { useAuth } from "../../context/AuthContext";
-import UserAvatar from "../navbar/UserAvatar";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardHeader() {
-  const { user } = useAuth();
+
+  const navigate = useNavigate();
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 flex justify-between items-center">
+    <div className="flex justify-between items-center mb-8">
 
       <div>
 
-        <h1 className="text-3xl font-bold text-[#07184B]">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-blue-600 mb-3"
+        >
+          <ArrowLeft size={20} />
+
+          Back
+        </button>
+
+        <h1 className="text-4xl font-bold">
           Admin Dashboard
         </h1>
 
         <p className="text-gray-500 mt-2">
-          Welcome back, {user?.firstName}
+          Welcome to the Administration Panel
         </p>
-
-      </div>
-
-      <div className="flex items-center gap-4">
-
-        <div className="text-right">
-
-          <p className="font-semibold">
-            {user?.firstName} {user?.lastName}
-          </p>
-
-          <p className="text-sm text-gray-500">
-            Administrator
-          </p>
-
-        </div>
-
-        <UserAvatar />
 
       </div>
 

@@ -1,31 +1,42 @@
 import StatCard from "./StatCard";
 
-export default function StatsCards() {
+export default function StatsCards({ stats }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+    <div className="grid md:grid-cols-2 xl:grid-cols-5 gap-6">
 
       <StatCard
-        title="Users"
-        value="0"
-        color="text-blue-600"
+        title="Total Users"
+        value={stats.totalUsers}
+        icon="users"
+        color="bg-blue-600"
       />
 
       <StatCard
         title="Customers"
-        value="0"
-        color="text-green-600"
+        value={stats.totalCustomers}
+        icon="customers"
+        color="bg-green-600"
       />
 
       <StatCard
         title="Providers"
-        value="0"
-        color="text-purple-600"
+        value={stats.totalProviders}
+        icon="providers"
+        color="bg-orange-500"
       />
 
       <StatCard
         title="Bookings"
-        value="0"
-        color="text-red-600"
+        value={stats.totalBookings}
+        icon="bookings"
+        color="bg-purple-600"
+      />
+
+      <StatCard
+        title="Pending"
+        value={stats.pendingBookings}
+        icon="pending"
+        color="bg-red-500"
       />
 
     </div>
