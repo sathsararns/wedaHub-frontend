@@ -24,9 +24,7 @@ import ProviderDashboardPage from "../pages/ProviderDashboardPage";
 import ProviderBookingsPage from "../pages/ProviderBookingsPage";
 
 // Admin
-import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
-import ManageUsersPage from "../pages/admin/ManageUsersPage";
-import ManageBookingsPage from "../pages/admin/ManageBookingsPage";
+
 
 export default function AppRoutes() {
   return (
@@ -66,20 +64,7 @@ export default function AppRoutes() {
       />
 
       {/* ADMIN */}
-      <Route
-        path="/admin"
-        element={<AdminDashboardPage />}
-      />
-
-      <Route
-        path="/admin/users"
-        element={<ManageUsersPage />}
-      />
-
-      <Route
-        path="/admin/bookings"
-        element={<ManageBookingsPage />}
-      />
+      
 
     </Routes>
   );
