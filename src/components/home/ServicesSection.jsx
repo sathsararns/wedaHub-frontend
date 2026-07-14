@@ -36,28 +36,28 @@ const services = [
     description:
       'Fast and efficient drain cleaning, unclogging, and repair services.',
     Icon: WrenchIcon,
-    imageUrl: s3,
+    imageUrl: ser3,
   },
   {
     title: 'Sewer Repair & Cleaning',
     description:
       'Expert sewer line inspection, repair, and maintenance services.',
     Icon: ShovelIcon,
-    imageUrl: s4,
+    imageUrl: ser4,
   },
   {
     title: 'Water Line Repair',
     description:
       'Reliable water line repair and replacement for uninterrupted water flow.',
     Icon: DropletsIcon,
-    imageUrl: s5,
+    imageUrl: ser5,
   },
   {
     title: 'Gas Line Services',
     description:
       'Safe gas line installation, maintenance, and emergency repair services.',
     Icon: FlameIcon,
-    imageUrl: s6,
+    imageUrl: ser6,
   },
 ]
 
