@@ -13,23 +13,23 @@ export default function UserTable({
 
           <tr>
 
-            <th className="p-3 text-left">
+            <th className="p-4 text-left">
               Name
             </th>
 
-            <th className="p-3 text-left">
+            <th className="p-4 text-left">
               Email
             </th>
 
-            <th className="p-3 text-left">
+            <th className="p-4 text-left">
               Role
             </th>
 
-            <th className="p-3 text-left">
+            <th className="p-4 text-left">
               Status
             </th>
 
-            <th className="p-3 text-left">
+            <th className="p-4 text-center">
               Action
             </th>
 
@@ -38,25 +38,33 @@ export default function UserTable({
         </thead>
 
         <tbody>
-  {users.length === 0 ? (
-    <tr>
-      <td
-        colSpan={5}
-        className="text-center py-8 text-gray-500"
-      >
-        No Users Found
-      </td>
-    </tr>
-  ) : (
-    users.map((user) => (
-      <UserRow
-        key={user._id}
-        user={user}
-        refresh={refresh}
-      />
-    ))
-  )}
-</tbody>
+
+          {users.length === 0 ? (
+
+            <tr>
+
+              <td
+                colSpan={5}
+                className="text-center py-10 text-gray-500"
+              >
+                No users found.
+              </td>
+
+            </tr>
+
+          ) : (
+
+            users.map((user) => (
+              <UserRow
+                key={user._id}
+                user={user}
+                refresh={refresh}
+              />
+            ))
+
+          )}
+
+        </tbody>
 
       </table>
 
