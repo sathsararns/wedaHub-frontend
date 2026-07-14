@@ -9,10 +9,10 @@ import {
 } from 'lucide-react'
 // Fix: Update these imports to point to the correct location
 // Assuming images are in src/assets/images/services/
-import s1 from '../../assets/images/services/s1.png'
-import s2 from '../../assets/images/services/s2.png'
-import ser3 from '../../assets/images/services/ser3.jpg'
-import ser4 from '../../assets/images/services/ser4.jpg'
+import electrician from '../../assets/images/services/electrician.png'
+import plumber from '../../assets/images/services/plumber.jpg'
+import carpenter from '../../assets/images/services/carpenter.jpg'
+import cleaner from '../../assets/images/services/cleaner.jpg'
 import ser5 from '../../assets/images/services/ser5.jpg'
 import ser6 from '../../assets/images/services/ser6.jpg'
 
@@ -22,28 +22,28 @@ const services = [
     description:
       'Reliable electrical repair, wiring, and installation services for homes and businesses.',
     Icon: ZapIcon,
-    imageUrl: s1,
+    imageUrl: electrician,
   },
   {
     title: 'Remodeling Service',
     description:
       'Professional renovation and remodeling solutions to transform your space.',
     Icon: HammerIcon,
-    imageUrl: s2,
+    imageUrl: plumber,
   },
   {
     title: 'Drain Cleaning & Repairs',
     description:
       'Fast and efficient drain cleaning, unclogging, and repair services.',
     Icon: WrenchIcon,
-    imageUrl: ser3,
+    imageUrl: carpenter,
   },
   {
     title: 'Sewer Repair & Cleaning',
     description:
       'Expert sewer line inspection, repair, and maintenance services.',
     Icon: ShovelIcon,
-    imageUrl: ser4,
+    imageUrl: cleaner,
   },
   {
     title: 'Water Line Repair',
