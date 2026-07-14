@@ -11,10 +11,10 @@ import {
 // Assuming images are in src/assets/images/services/
 import s1 from '../../assets/images/services/s1.png'
 import s2 from '../../assets/images/services/s2.png'
-import s3 from '../../assets/images/services/s3.jpg'
-import s4 from '../../assets/images/services/s4.jpg'
-import s5 from '../../assets/images/services/s5.png'
-import s6 from '../../assets/images/services/s6.jpg'
+import ser3 from '../../assets/images/services/ser3.jpg'
+import ser4 from '../../assets/images/services/ser4.jpg'
+import ser5 from '../../assets/images/services/ser5.jpg'
+import ser6 from '../../assets/images/services/ser6.jpg'
 
 const services = [
   {
