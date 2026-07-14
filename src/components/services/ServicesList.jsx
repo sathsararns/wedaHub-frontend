@@ -128,6 +128,19 @@ export default ServicesList;*/
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
+
+
+/*import electricianImg from "../assets/services/electrician.jpg";*/
+import electricianImg from "../../assets/images/services/electrician.jpg";
+import plumberImg from "../../assets/images/services/plumber.jpg";
+import carpenterImg from "../../assets/images/services/carpenter.jpg";
+import masonImg from "../../assets/images/services/mason.jpg";
+import cleanerImg from "../../assets/images/services/cleaner.jpg";
+import mechanicImg from "../../assets/images/services/mechanic.jpg";
+import applianceImg from "../../assets/images/services/appliance.jpg";
+import painterImg from "../../assets/images/services/s3.jpg";
+import pestImg from "../../assets/images/services/pest-control.jpg";
+
 import {
   ZapIcon,
   DropletIcon,
@@ -146,77 +159,85 @@ import {
 
 const services = [
   {
+    image: electricianImg,
     icon: ZapIcon,
     title: "Electrician",
     description: "Electrical wiring, repairs, installations and more.",
    
-    colorTheme: "from-blue-600 to-sky-400",
+    colorTheme: "from-blue-900 to-sky-900",
     textColor: "text-blue-600",
     badgeBg: "bg-blue-50",
-    btnColor: "bg-blue-600 hover:bg-blue-700",
+    btnColor: "bg-blue-900 hover:bg-blue-900",
   },
   {
+    image: plumberImg,
     icon: DropletIcon,
     title: "Plumber",
     description: "Plumbing services, pipe repairs, installations.",
-    colorTheme: "from-blue-600 to-sky-400",
+    colorTheme: "from-blue-900 to-sky-900",
     textColor: "text-blue-600",
     badgeBg: "bg-blue-50",
-    btnColor: "bg-blue-600 hover:bg-blue-700",
+    btnColor: "bg-blue-900 hover:bg-blue-900",
   },
   {
+    image: carpenterImg,
     icon: HammerIcon,
     title: "Carpenter",
     description: "Furniture repairs, woodwork & more.",
-    colorTheme: "from-blue-600 to-sky-400",
+    colorTheme: "from-blue-900 to-sky-900",
     textColor: "text-blue-600",
     badgeBg: "bg-blue-50",
-    btnColor: "bg-blue-600 hover:bg-blue-700",
+    btnColor: "bg-blue-900 hover:bg-blue-900",
   },
   {
+    image: cleanerImg,
     icon: BrushIcon,
     title: "Cleaner",
     description: "Home, office, and deep cleaning services.",
-    colorTheme: "from-blue-600 to-sky-400",
+    colorTheme: "from-blue-900 to-sky-900",
     textColor: "text-blue-600",
     badgeBg: "bg-blue-50",
-    btnColor: "bg-blue-600 hover:bg-blue-700",
+    btnColor: "bg-blue-900 hover:bg-blue-900",
   },
   {
+    image: mechanicImg,
     icon: WrenchIcon,
     title: "Mechanic",
     description: "Vehicle repairs, servicing and maintenance.",
-    colorTheme: "from-blue-600 to-sky-400",
+    colorTheme: "from-blue-900 to-sky-900",
     textColor: "text-blue-600",
     badgeBg: "bg-blue-50",
-    btnColor: "bg-blue-600 hover:bg-blue-700",
+    btnColor: "bg-blue-900 hover:bg-blue-900",
   },
   {
+    image: applianceImg,
     icon: WashingMachineIcon,
     title: "Appliance Repair",
     description: "Washing machine, fridge, AC & more.",
-    colorTheme: "from-blue-600 to-sky-400",
+    colorTheme: "from-blue-900 to-sky-900",
     textColor: "text-blue-600",
     badgeBg: "bg-blue-50",
-    btnColor: "bg-blue-600 hover:bg-blue-700",
+    btnColor: "bg-blue-900 hover:bg-blue-900",
   },
   {
+    image: painterImg,
     icon: PaintbrushIcon,
     title: "Painter",
     description: "Home, office, and wall painting services.",
-    colorTheme: "from-blue-600 to-sky-400",
+    colorTheme: "from-blue-900 to-sky-900",
     textColor: "text-blue-600",
     badgeBg: "bg-blue-50",
-    btnColor: "bg-blue-600 hover:bg-blue-700",
+    btnColor: "bg-blue-900 hover:bg-blue-900",
   },
   {
+    image: pestImg,
     icon: BugIcon,
     title: "Pest Control",
     description: "Pest inspection and control services.",
-    colorTheme: "from-blue-600 to-sky-400",
+    colorTheme: "from-blue-900 to-sky-900",
     textColor: "text-blue-600",
     badgeBg: "bg-blue-50",
-    btnColor: "bg-blue-600 hover:bg-blue-700",
+    btnColor: "bg-blue-900 hover:bg-blue-900",
   },
 ];
 
@@ -299,11 +320,29 @@ function ServicesList() {
 
         {/* Dynamic Services Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map(({ icon: Icon, title, description, colorTheme, textColor, badgeBg, btnColor }) => (
+          {/* {services.map(({ icon: Icon, title, description, colorTheme, textColor, badgeBg, btnColor }) => ( */}
+          {services.map(({
+                        image,
+                        icon: Icon,
+                        title,
+                        description,
+                        colorTheme,
+                        textColor,
+                        badgeBg,
+                        btnColor,
+                        }) => (
             <article
               key={title}
               className="bg-white rounded-2xl border border-slate-100 p-6 flex flex-col justify-between shadow-[0_4px_25px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_35px_rgba(0,0,0,0.06)] hover:-translate-y-1.5 transition-all duration-300 group"
             >
+              <div className="mb-5 overflow-hidden rounded-2xl">
+                <img
+                  src={image}
+                  alt={title}
+                 className="w-full h-52 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+
               <div>
                 {/* Horizontal Header Row inside card */}
                 <div className="flex items-start gap-4 mb-5">
@@ -329,7 +368,7 @@ function ServicesList() {
               {/* Bottom Interactive Booking Row */}
               <div className="flex items-center justify-between pt-2 border-t border-slate-50">
                 <span className={`text-sm font-black ${textColor}`}>
-                  Book Now
+                  Read More
                 </span>
                 <button
                   onClick={() => handleBookNow(title)}
