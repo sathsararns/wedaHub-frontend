@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 import api from "../../utils/api";
 import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -17,8 +19,6 @@ export default function LoginPage() {
         password,
       });
 
-      console.log("LOGIN RESPONSE:", res.data)
-
       login({
         token: res.data.token,
         role: res.data.role,
@@ -28,11 +28,14 @@ export default function LoginPage() {
         image: res.data.image || null,
       });
 
-      // ✅ ALWAYS GO HOME
+      toast.success("Login successful");
+
       navigate("/");
 
     } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
+      toast.error(
+        err.response?.data?.message || "Login failed"
+      );
     }
   }
 
@@ -40,7 +43,9 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="p-6 border rounded w-80 space-y-3">
 
-        <h2 className="text-xl font-bold">Login</h2>
+        <h2 className="text-xl font-bold">
+          Login
+        </h2>
 
         <input
           className="w-full border p-2"
@@ -59,7 +64,7 @@ export default function LoginPage() {
 
         <button
           onClick={handleLogin}
-          className="w-full bg-blue-600 text-white p-2"
+          className="w-full bg-blue-600 text-white p-2 rounded"
         >
           Login
         </button>
