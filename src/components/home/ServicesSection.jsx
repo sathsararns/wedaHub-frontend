@@ -10,11 +10,11 @@ import {
 // Fix: Update these imports to point to the correct location
 // Assuming images are in src/assets/images/services/
 import electrician from '../../assets/images/services/electrician.png'
-import plumber from '../../assets/images/services/plumber.jpg'
-import carpenter from '../../assets/images/services/carpenter.jpg'
-import cleaner from '../../assets/images/services/cleaner.jpg'
-import ser5 from '../../assets/images/services/ser5.jpg'
-import ser6 from '../../assets/images/services/ser6.jpg'
+import s2 from '../../assets/images/services/s2.png'
+import s3 from '../../assets/images/services/s3.jpg'
+import s4 from '../../assets/images/services/s4.jpg'
+import s5 from '../../assets/images/services/s5.png'
+import s6 from '../../assets/images/services/s6.jpg'
 
 const services = [
   {
@@ -29,35 +29,35 @@ const services = [
     description:
       'Professional renovation and remodeling solutions to transform your space.',
     Icon: HammerIcon,
-    imageUrl: plumber,
+    imageUrl: s2,
   },
   {
     title: 'Drain Cleaning & Repairs',
     description:
       'Fast and efficient drain cleaning, unclogging, and repair services.',
     Icon: WrenchIcon,
-    imageUrl: carpenter,
+    imageUrl: s3,
   },
   {
     title: 'Sewer Repair & Cleaning',
     description:
       'Expert sewer line inspection, repair, and maintenance services.',
     Icon: ShovelIcon,
-    imageUrl: cleaner,
+    imageUrl: s4,
   },
   {
     title: 'Water Line Repair',
     description:
       'Reliable water line repair and replacement for uninterrupted water flow.',
     Icon: DropletsIcon,
-    imageUrl: ser5,
+    imageUrl: s5,
   },
   {
     title: 'Gas Line Services',
     description:
       'Safe gas line installation, maintenance, and emergency repair services.',
     Icon: FlameIcon,
-    imageUrl: ser6,
+    imageUrl: s6,
   },
 ]
 
