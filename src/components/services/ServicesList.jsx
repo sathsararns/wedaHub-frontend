@@ -333,12 +333,19 @@ function ServicesList() {
                         }) => (
             <article
               key={title}
+              style={{ clipPath: "polygon(40px 0%, 100% 0%, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0% 100%, 0% 40px)" }}
               className="bg-white rounded-2xl border border-slate-100 p-6 flex flex-col justify-between shadow-[0_4px_25px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_35px_rgba(0,0,0,0.06)] hover:-translate-y-1.5 transition-all duration-300 group"
             >
-              <div className="mb-5 overflow-hidden rounded-2xl">
+              
+                <div 
+                  className="mb-5 overflow-hidden"
+                  style={{ clipPath: "polygon(40px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 40px)" }}
+                >
+                
                 <img
                   src={image}
                   alt={title}
+                  style={{ clipPath: "polygon(40px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 40px)" }}
                  className="w-full h-52 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
