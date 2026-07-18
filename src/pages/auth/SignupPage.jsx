@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../../utils/api";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -16,26 +16,36 @@ export default function SignupPage() {
   const [role, setRole] = useState("customer");
   const [loading, setLoading] = useState(false);
 
-  const [formData, setFormData] = useState({
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  phone: "",
+  // Initial form state - reset function එකට use කරන්න
+  const initialFormData = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    phone: "",
 
-  // Customer + Provider
-  city: "",
-  district: "",
+    // Customer + Provider
+    city: "",
+    district: "",
 
-  // Provider only
-  description: "",
-  category: "",
-});
+    // Provider only
+    description: "",
+    category: "",
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // Reset form function
+  const resetForm = () => {
+    setFormData(initialFormData);
+    setRole("customer"); // Role එකත් reset කරන්න
   };
 
   // Password Validation
@@ -67,10 +77,18 @@ export default function SignupPage() {
         role,
       };
 
-      const res = await api.post("/users/register", payload);
+      await api.post("/users/register", payload);
 
-      toast.success("Account created successfully");
-      navigate("/login");
+      // Success message
+      toast.success("Account created successfully! Redirecting to login...");
+
+      // Form reset කරන්න
+      resetForm();
+
+      // 1.5s පස්සේ login page එකට navigate කරන්න
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
 
     } catch (err) {
       toast.error(err.response?.data?.message || "Signup failed");
@@ -122,6 +140,7 @@ export default function SignupPage() {
               name="firstName"
               type="text"
               placeholder="e.g. John"
+              value={formData.firstName}
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
@@ -141,6 +160,7 @@ export default function SignupPage() {
               name="lastName"
               type="text"
               placeholder="e.g. Doe"
+              value={formData.lastName}
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
@@ -160,6 +180,7 @@ export default function SignupPage() {
               name="email"
               type="email"
               placeholder="e.g. john.doe@gmail.com"
+              value={formData.email}
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
@@ -179,6 +200,7 @@ export default function SignupPage() {
               name="password"
               type="password"
               placeholder="Min. 8 chars with A-Z, a-z, 0-9 & symbol"
+              value={formData.password}
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
@@ -198,6 +220,7 @@ export default function SignupPage() {
               name="phone"
               type="tel"
               placeholder="e.g. +94 77 123 4567"
+              value={formData.phone}
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
@@ -239,12 +262,12 @@ export default function SignupPage() {
           {/* Login Link */}
           <p className="text-center text-sm text-gray-500 mt-4">
             Already have an account?{" "}
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="text-[#4338CA] font-semibold hover:text-[#07184B] hover:underline transition-colors"
             >
               Log in
-            </a>
+            </Link>
           </p>
         </form>
       </div>
