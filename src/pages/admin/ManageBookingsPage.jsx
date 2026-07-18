@@ -14,10 +14,15 @@ export default function ManageBookingsPage() {
   const [bookings, setBookings] = useState([]);
 
   async function loadBookings() {
-    const res = await getBookings();
+  try {
+    const data = await getBookings();
 
-    setBookings(res.data);
+    setBookings(data);
+  } catch (err) {
+    console.log(err);
+    setBookings([]);
   }
+}
 
   useEffect(() => {
     loadBookings();

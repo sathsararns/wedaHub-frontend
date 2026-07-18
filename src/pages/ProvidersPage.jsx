@@ -25,20 +25,27 @@ export default function ProvidersPage() {
   }, [category]);
 
   async function fetchProviders() {
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      const res = await axios.get(
-        `http://localhost:3000/api/users/providers/${category}`
-      );
+    const res = await axios.get(
+      `http://localhost:3000/api/users/providers/${category}`
+    );
 
-      setProviders(res.data);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
+    setProviders(res.data);
+
+  } catch (err) {
+
+    console.log(err);
+
+    setProviders([]);
+
+  } finally {
+
+    setLoading(false);
+
   }
+}
 
   const filteredProviders = useMemo(() => {
     // Filter
