@@ -129,11 +129,11 @@ export default function LoginPage() {
       <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-[440px] p-8 sm:p-10 relative z-10 mx-4">
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <div className="w-20 h-20 bg-[#07184B] rounded-full flex items-center justify-center overflow-hidden">
+          <div className="w-24 h-24 bg-[#07184B] rounded-full flex items-center justify-center overflow-hidden">
             <img 
               src={logo} 
               alt="වැල Hub Logo" 
-              className="w-16 h-16 object-contain"
+              className="w-20 h-16 object-contain"
             />
           </div>
         </div>

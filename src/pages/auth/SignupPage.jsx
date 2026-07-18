@@ -7,6 +7,9 @@ import RoleSelector from "../../components/auth/RoleSelector";
 import CustomerFields from "../../components/auth/CustomerFields";
 import ProviderFields from "../../components/auth/ProviderFields";
 
+// Import your logo (same as login page)
+import logo from "../../assets/images/logo.png";
+
 export default function SignupPage() {
   const navigate = useNavigate();
 
@@ -14,19 +17,20 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    phone: "",
-    address: "",
-    location: "",
-    businessName: "",
-    description: "",
-    category: "",
-    serviceRadius: "",
-  });
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  phone: "",
 
+  // Customer + Provider
+  city: "",
+  district: "",
+
+  // Provider only
+  description: "",
+  category: "",
+});
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -42,30 +46,12 @@ export default function SignupPage() {
     const hasNumber = /[0-9]/.test(password);
     const hasSymbol = /[!@#$%^&*]/.test(password);
 
-    return (
-      minLength &&
-      hasUpper &&
-      hasLower &&
-      hasNumber &&
-      hasSymbol
-    );
+    return minLength && hasUpper && hasLower && hasNumber && hasSymbol;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    // 🔥 DEBUG
-    console.log("========== SIGNUP DEBUG ==========");
-    console.log("FORM DATA:", formData);
-    console.log("PASSWORD:", formData.password);
-    console.log("PASSWORD LENGTH:", formData.password.length);
-    console.log("HAS UPPER:", /[A-Z]/.test(formData.password));
-    console.log("HAS LOWER:", /[a-z]/.test(formData.password));
-    console.log("HAS NUMBER:", /[0-9]/.test(formData.password));
-    console.log("HAS SYMBOL:", /[!@#$%^&*]/.test(formData.password));
-    console.log("VALID:", validatePassword(formData.password));
-    console.log("=================================");
 
     try {
       if (!validatePassword(formData.password)) {
@@ -81,103 +67,187 @@ export default function SignupPage() {
         role,
       };
 
-      console.log("PAYLOAD:", payload);
-
       const res = await api.post("/users/register", payload);
 
-      console.log("SERVER RESPONSE:", res.data);
-
       toast.success("Account created successfully");
-
       navigate("/login");
 
     } catch (err) {
-      console.log("SERVER ERROR:", err.response?.data);
-
-      toast.error(
-        err.response?.data?.message || "Signup failed"
-      );
+      toast.error(err.response?.data?.message || "Signup failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-      <Toaster />
+    <div className="min-h-screen flex items-center justify-center bg-[#F5F5FB] relative overflow-hidden font-sans py-12">
+      <Toaster position="top-center" />
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg shadow-md w-full max-w-xl space-y-4"
-      >
-        <h1 className="text-2xl font-bold text-center">
+      {/* Decorative background line */}
+      <div className="absolute left-0 right-0 top-[30%] h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent z-0 opacity-50"></div>
+
+      {/* Main Card */}
+      <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-[480px] p-8 sm:p-10 relative z-10 mx-4">
+        {/* Logo */}
+        <div className="flex justify-center mb-6">
+          <div className="w-24 h-24 bg-[#07184B] rounded-full flex items-center justify-center overflow-hidden">
+            <img
+              src={logo}
+              alt="වැල Hub Logo"
+              className="w-20 h-20 object-contain"
+            />
+          </div>
+        </div>
+
+        {/* Heading */}
+        <h1 className="text-3xl font-bold text-center text-gray-900 mb-2 tracking-tight">
           Sign Up
         </h1>
+        <p className="text-center text-gray-500 text-sm mb-8">
+          Create your account to get started
+        </p>
 
-        <input
-          name="firstName"
-          placeholder="First Name"
-          className="w-full border p-2 rounded"
-          onChange={handleChange}
-        />
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* First Name */}
+          <div>
+            <label
+              htmlFor="firstName"
+              className="block text-sm font-semibold text-gray-900 mb-1.5"
+            >
+              First Name
+            </label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              placeholder="e.g. John"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <input
-          name="lastName"
-          placeholder="Last Name"
-          className="w-full border p-2 rounded"
-          onChange={handleChange}
-        />
+          {/* Last Name */}
+          <div>
+            <label
+              htmlFor="lastName"
+              className="block text-sm font-semibold text-gray-900 mb-1.5"
+            >
+              Last Name
+            </label>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              placeholder="e.g. Doe"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          className="w-full border p-2 rounded"
-          onChange={handleChange}
-        />
+          {/* Email */}
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-semibold text-gray-900 mb-1.5"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="e.g. john.doe@gmail.com"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          className="w-full border p-2 rounded"
-          onChange={handleChange}
-        />
+          {/* Password */}
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-semibold text-gray-900 mb-1.5"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Min. 8 chars with A-Z, a-z, 0-9 & symbol"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <input
-          name="phone"
-          placeholder="Phone"
-          className="w-full border p-2 rounded"
-          onChange={handleChange}
-        />
+          {/* Phone */}
+          <div>
+            <label
+              htmlFor="phone"
+              className="block text-sm font-semibold text-gray-900 mb-1.5"
+            >
+              Phone
+            </label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              placeholder="e.g. +94 77 123 4567"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <RoleSelector
-          role={role}
-          setRole={setRole}
-        />
+          {/* Role Selector */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-1.5">
+              Account Type
+            </label>
+            <RoleSelector role={role} setRole={setRole} />
+          </div>
 
-        {role === "customer" && (
-          <CustomerFields
-            formData={formData}
-            handleChange={handleChange}
-          />
-        )}
+          {/* Conditional Fields */}
+          {role === "customer" && (
+            <CustomerFields
+              formData={formData}
+              handleChange={handleChange}
+            />
+          )}
 
-        {role === "provider" && (
-          <ProviderFields
-            formData={formData}
-            handleChange={handleChange}
-          />
-        )}
+          {role === "provider" && (
+            <ProviderFields
+              formData={formData}
+              handleChange={handleChange}
+            />
+          )}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-green-600 text-white p-2 rounded"
-        >
-          {loading ? "Creating..." : "Create Account"}
-        </button>
-      </form>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-[#4338CA] hover:bg-[#07184B] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-colors mt-2 shadow-sm"
+          >
+            {loading ? "Creating Account..." : "Create Account"}
+          </button>
+
+          {/* Login Link */}
+          <p className="text-center text-sm text-gray-500 mt-4">
+            Already have an account?{" "}
+            <a
+              href="/login"
+              className="text-[#4338CA] font-semibold hover:text-[#07184B] hover:underline transition-colors"
+            >
+              Log in
+            </a>
+          </p>
+        </form>
+      </div>
     </div>
   );
 }
