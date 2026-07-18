@@ -13,10 +13,11 @@ export default function CustomerFields({
 
       <input
         type="text"
+        name="district"
         value={formData.district}
         readOnly
-        className="w-full border rounded-lg p-3 bg-gray-100 cursor-not-allowed"
         placeholder="District"
+        className="w-full border rounded-lg p-3 bg-gray-100 cursor-not-allowed"
       />
     </>
   );

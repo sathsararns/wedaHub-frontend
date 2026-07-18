@@ -9,12 +9,13 @@ export default function LocationAutocomplete({
 
   useEffect(() => {
     const delay = setTimeout(async () => {
-      if (value.length < 2) {
+      if (!value || value.length < 2) {
         setSuggestions([]);
         return;
       }
 
       const results = await searchLocations(value);
+
       setSuggestions(results);
     }, 300);
 
@@ -22,21 +23,30 @@ export default function LocationAutocomplete({
   }, [value]);
 
   const handleSelect = (place) => {
+
+    const city =
+      place.properties.city ||
+      place.properties.town ||
+      place.properties.village ||
+      place.properties.name ||
+      "";
+
+    const district =
+      place.properties.county ||
+      place.properties.state_district ||
+      "";
+
     handleChange({
       target: {
         name: "city",
-        value:
-          place.properties.city ||
-          place.properties.town ||
-          place.properties.village ||
-          place.properties.name,
+        value: city,
       },
     });
 
     handleChange({
       target: {
         name: "district",
-        value: place.properties.county || "",
+        value: district,
       },
     });
 
@@ -52,13 +62,15 @@ export default function LocationAutocomplete({
         value={value}
         onChange={handleChange}
         placeholder="City / Town"
+        autoComplete="off"
         className="w-full border rounded-lg p-3"
       />
 
       {suggestions.length > 0 && (
-        <div className="absolute left-0 right-0 bg-white border rounded-lg shadow-lg mt-1 max-h-56 overflow-y-auto z-50">
+        <div className="absolute left-0 right-0 mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-y-auto z-50">
 
           {suggestions.map((item) => (
+
             <div
               key={item.properties.place_id}
               onClick={() => handleSelect(item)}
@@ -74,12 +86,13 @@ export default function LocationAutocomplete({
               <div className="text-sm text-gray-500">
                 {item.properties.county}
               </div>
+
             </div>
+
           ))}
 
         </div>
       )}
-
     </div>
   );
 }
