@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import hero_1 from '../../assets/images/hero_1.png';
-import hero_2 from '../../assets/images/hero_2.png';
+import hero2 from '../../assets/images/hero2.png';
 import hero_3 from '../../assets/images/hero_3.png';
 
 export function HeroGrid() {
@@ -19,7 +19,7 @@ export function HeroGrid() {
       description:
         'Connect your business to location intelligence. Distribute and integrate high-accuracy map data and services for precise, real-time insights across your network.',
       buttonText: 'EXPLORE SOLUTIONS',
-      image: hero_2,
+      image: hero2,
     },
     {
       subtitle: 'AI-POWERED ASSISTANT',
