@@ -6,23 +6,18 @@ export default function CustomerFields({
 }) {
   return (
     <>
-
       <LocationAutocomplete
-        label="City / Town"
-        name="city"
         value={formData.city}
         handleChange={handleChange}
       />
 
       <input
         type="text"
-        name="district"
-        placeholder="District"
         value={formData.district}
-        onChange={handleChange}
-        className="w-full border rounded-lg p-3"
+        readOnly
+        className="w-full border rounded-lg p-3 bg-gray-100 cursor-not-allowed"
+        placeholder="District"
       />
-
     </>
   );
 }
