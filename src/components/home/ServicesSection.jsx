@@ -56,7 +56,7 @@ const services = [
 
 function ServiceCard({ title, description, Icon, imageUrl }) {
   return (
-    <div className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+    <div className="group bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
       <div className="relative h-56 overflow-hidden">
         <img
           src={imageUrl}
@@ -66,24 +66,24 @@ function ServiceCard({ title, description, Icon, imageUrl }) {
       </div>
 
       <div className="relative px-6 pt-12 pb-8 text-center">
-        <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 bg-white rounded-full border border-gray-100 shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+        <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 bg-slate-800 rounded-full border border-slate-700 shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
           <Icon
-            className="w-7 h-7 text-sky-500"
+            className="w-7 h-7 text-sky-300"
             strokeWidth={1.8}
           />
         </div>
 
-        <h3 className="text-xl font-bold text-slate-900 mb-3">
+        <h3 className="text-xl font-bold text-white mb-3">
           {title}
         </h3>
 
-        <p className="text-gray-500 text-sm leading-7 mb-6">
+        <p className="text-slate-300 text-sm leading-7 mb-6">
           {description}
         </p>
 
         <a
           href="#"
-          className="text-sky-500 font-semibold text-sm hover:text-sky-700"
+          className="text-sky-300 font-semibold text-sm hover:text-sky-100"
         >
           View Service
         </a>
