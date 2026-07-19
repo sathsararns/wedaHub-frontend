@@ -14,6 +14,7 @@ import LoginPage from "../pages/auth/LoginPage";
 import SignupPage from "../pages/auth/SignupPage";
 import ProfilePage from "../pages/ProfilePage";
 import ProviderProfilePage from "../pages/ProviderProfilePage";
+import ProviderBookingsPage from "../pages/ProviderBookingsPage";
 import BookingPage from "../pages/BookingPage";
 import MyBookingsPage from "../pages/MyBookingsPage";
 
@@ -40,19 +41,24 @@ export default function AppRoutes() {
       </Route>
 
       <Route
-    path="/provider/:id"
-    element={<ProviderProfilePage />}
-/>
+        path="/provider/:id"
+        element={<ProviderProfilePage />}
+      />
 
-   <Route
-  path="/booking/:id"
-  element={<BookingPage />}
-/>
+      <Route
+        path="/provider/requests"
+        element={<ProviderBookingsPage />}
+      />
 
-<Route
-  path="/my-bookings"
-  element={<MyBookingsPage />}
-/>
+      <Route
+        path="/booking/:id"
+        element={<BookingPage />}
+      />
+
+      <Route
+        path="/my-bookings"
+        element={<MyBookingsPage />}
+      />
       {/* AUTH ROUTES */}
       <Route path="/login" element={<LoginPage />} />
 
