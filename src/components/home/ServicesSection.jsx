@@ -56,17 +56,17 @@ const services = [
 
 function ServiceCard({ title, description, Icon, imageUrl }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
-      <div className="relative h-56">
+    <div className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+      <div className="relative h-56 overflow-hidden">
         <img
           src={imageUrl}
           alt={title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
 
       <div className="relative px-6 pt-12 pb-8 text-center">
-        <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 bg-white rounded-full border border-gray-100 shadow-md flex items-center justify-center">
+        <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 bg-white rounded-full border border-gray-100 shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
           <Icon
             className="w-7 h-7 text-sky-500"
             strokeWidth={1.8}
