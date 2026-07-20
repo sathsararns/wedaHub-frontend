@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import logo from '../assets/images/logo.jpg'
+import logo from '../assets/images/logo.png'
 
 function Footer() {
   const footerRef = useRef(null)
