@@ -46,10 +46,6 @@ export default function ProviderProfilePage() {
     }
   }
 
-  // ============================
-  // Book Now
-  // ============================
-
   const handleBookNow = () => {
     const token = localStorage.getItem("token");
 
@@ -112,7 +108,7 @@ export default function ProviderProfilePage() {
               </h1>
 
               <p className="text-lg text-gray-500 mt-2">
-                {provider.businessName || provider.category}
+                {provider.category} {/* ✅ Changed from businessName */}
               </p>
 
               <div className="mt-5 space-y-2">
@@ -121,24 +117,25 @@ export default function ProviderProfilePage() {
                   <strong>Category :</strong> {provider.category}
                 </p>
 
+                {/* ✅ Changed from location to city + district */}
                 <p>
-                  <strong>Location :</strong>{" "}
-                  {provider.location || "Not specified"}
+                  <strong>City :</strong> {provider.city || "Not specified"}
                 </p>
 
                 <p>
-                  <strong>Phone :</strong>{" "}
-                  {provider.phone || "Not available"}
+                  <strong>District :</strong> {provider.district || "Not specified"}
                 </p>
 
                 <p>
-                  <strong>Rating :</strong>{" "}
-                  ⭐ {(provider.rating || 0).toFixed(1)}
+                  <strong>Phone :</strong> {provider.phone || "Not available"}
                 </p>
 
                 <p>
-                  <strong>Reviews :</strong>{" "}
-                  {provider.reviews || 0}
+                  <strong>Rating :</strong> ⭐ {(provider.rating || 0).toFixed(1)}
+                </p>
+
+                <p>
+                  <strong>Reviews :</strong> {provider.reviews || 0}
                 </p>
 
               </div>

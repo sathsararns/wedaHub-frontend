@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../../utils/api";
 import toast, { Toaster } from "react-hot-toast";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import RoleSelector from "../../components/auth/RoleSelector";
 import CustomerFields from "../../components/auth/CustomerFields";
@@ -15,6 +16,7 @@ export default function SignupPage() {
 
   const [role, setRole] = useState("customer");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // ✅ Password toggle state
 
   // Initial form state - reset function එකට use කරන්න
   const initialFormData = {
@@ -46,6 +48,7 @@ export default function SignupPage() {
   const resetForm = () => {
     setFormData(initialFormData);
     setRole("customer"); // Role එකත් reset කරන්න
+    setShowPassword(false); // Password toggle එකත් reset කරන්න
   };
 
   // Password Validation
@@ -187,7 +190,7 @@ export default function SignupPage() {
             />
           </div>
 
-          {/* Password */}
+          {/* Password with Toggle */}
           <div>
             <label
               htmlFor="password"
@@ -195,16 +198,26 @@ export default function SignupPage() {
             >
               Password
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Min. 8 chars with A-Z, a-z, 0-9 & symbol"
-              value={formData.password}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
-              onChange={handleChange}
-              required
-            />
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Min. 8 chars with A-Z, a-z, 0-9 & symbol"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#4338CA] transition-colors"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+              </button>
+            </div>
           </div>
 
           {/* Phone */}

@@ -1,99 +1,27 @@
-// import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import toast from "react-hot-toast";
-
-// import api from "../../utils/api";
-// import { useAuth } from "../../context/AuthContext";
-
-// export default function LoginPage() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   const { login } = useAuth();
-//   const navigate = useNavigate();
-
-//   async function handleLogin() {
-//     try {
-//       const res = await api.post("/users/login", {
-//         email,
-//         password,
-//       });
-
-//       login({
-//         token: res.data.token,
-//         role: res.data.role,
-//         email: res.data.email,
-//         firstName: res.data.firstName,
-//         lastName: res.data.lastName,
-//         image: res.data.image || null,
-//       });
-
-//       toast.success("Login successful");
-
-//       navigate("/");
-
-//     } catch (err) {
-//       toast.error(
-//         err.response?.data?.message || "Login failed"
-//       );
-//     }
-//   }
-
-//   return (
-//     <div className="min-h-screen flex items-center justify-center">
-//       <div className="p-6 border rounded w-80 space-y-3">
-
-//         <h2 className="text-xl font-bold">
-//           Login
-//         </h2>
-
-//         <input
-//           className="w-full border p-2"
-//           placeholder="Email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//         />
-
-//         <input
-//           className="w-full border p-2"
-//           type="password"
-//           placeholder="Password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//         />
-
-//         <button
-//           onClick={handleLogin}
-//           className="w-full bg-blue-600 text-white p-2 rounded"
-//         >
-//           Login
-//         </button>
-
-//       </div>
-//     </div>
-//   );
-// }
-
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import api from "../../utils/api";
 import { useAuth } from "../../context/AuthContext";
 
 // Import your logo image (adjust the path based on your project structure)
-import logo from "../../assets/images/logo.png"; // <-- Update this path to where you saved the logo
+import logo from "../../assets/images/logo.png";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // ✅ Password toggle state
+  const [loading, setLoading] = useState(false); // ✅ Loading state
 
   const { login } = useAuth();
   const navigate = useNavigate();
 
   async function handleLogin(e) {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await api.post("/users/login", {
@@ -111,12 +39,18 @@ export default function LoginPage() {
       });
 
       toast.success("Login successful");
-      navigate("/");
+      
+      // Small delay before navigation
+      setTimeout(() => {
+        navigate("/");
+      }, 500);
 
     } catch (err) {
       toast.error(
         err.response?.data?.message || "Login failed"
       );
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -132,7 +66,7 @@ export default function LoginPage() {
           <div className="w-24 h-24 bg-[#07184B] rounded-full flex items-center justify-center overflow-hidden">
             <img 
               src={logo} 
-              alt="වැල Hub Logo" 
+              alt="weda Hub Logo" 
               className="w-20 h-16 object-contain"
             />
           </div>
@@ -164,7 +98,7 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Password Field */}
+          {/* Password Field with Toggle */}
           <div>
             <label
               htmlFor="password"
@@ -172,14 +106,28 @@ export default function LoginPage() {
             >
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+                placeholder="Enter your password"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#4338CA] transition-colors"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+              </button>
+            </div>
+
             <p className="text-sm text-gray-500 mt-2">
               Forgot your password?{' '}
               <a
@@ -194,9 +142,10 @@ export default function LoginPage() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-[#4338CA] hover:bg-[#07184B] text-white font-semibold py-3 rounded-lg transition-colors mt-2 shadow-sm"
+            disabled={loading}
+            className="w-full bg-[#4338CA] hover:bg-[#07184B] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-colors mt-2 shadow-sm"
           >
-            Log In
+            {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
 
@@ -215,6 +164,17 @@ export default function LoginPage() {
           <FcGoogle className="w-5 h-5" />
           Continue with Google
         </button>
+
+        {/* Sign Up Link */}
+        <p className="text-center text-sm text-gray-500 mt-6">
+          Don't have an account?{' '}
+          <Link
+            to="/signup"
+            className="text-[#4338CA] font-semibold hover:text-[#07184B] hover:underline transition-colors"
+          >
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   );
