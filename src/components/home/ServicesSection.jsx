@@ -1,126 +1,130 @@
-import React from 'react'
+import React from 'react';
 import {
   ZapIcon,
-  HammerIcon,
   WrenchIcon,
-  ShovelIcon,
-  DropletsIcon,
-  FlameIcon,
-} from 'lucide-react'
-// Fix: Update these imports to point to the correct location
-// Assuming images are in src/assets/images/services/
-import s1 from '../../assets/images/services/s1.png'
-import s2 from '../../assets/images/services/s2.png'
-import s3 from '../../assets/images/services/s3.jpg'
-import s4 from '../../assets/images/services/s4.jpg'
-import s5 from '../../assets/images/services/s5.png'
-import s6 from '../../assets/images/services/s6.jpg'
+  HammerIcon,
+  SprayCanIcon,
+  CpuIcon,
+  BugIcon,
+  BrushIcon,
+} from 'lucide-react';
+
+import electricianImg from '../../assets/images/services/electrician.png';
+import plumberImg from '../../assets/images/services/plumber.jpg';
+import carpenterImg from '../../assets/images/services/carpenter.jpg';
+import cleanerImg from '../../assets/images/services/cleaner.jpg';
+import applianceImg from '../../assets/images/services/appliance.jpg';
+import pestControlImg from '../../assets/images/services/pest-control.jpg';
+import masonImg from '../../assets/images/services/mason.jpg';
+import painterImg from '../../assets/images/services/painter.jpg';
+
 
 const services = [
   {
     title: 'Electrician',
-    description:
-      'Reliable electrical repair, wiring, and installation services for homes and businesses.',
+    description: 'Professional electrical repairs, wiring, and installation services.',
     Icon: ZapIcon,
-    imageUrl: s1,
+    imageUrl: electricianImg,
   },
   {
-    title: 'Remodeling Service',
-    description:
-      'Professional renovation and remodeling solutions to transform your space.',
-    Icon: HammerIcon,
-    imageUrl: s2,
-  },
-  {
-    title: 'Drain Cleaning & Repairs',
-    description:
-      'Fast and efficient drain cleaning, unclogging, and repair services.',
+    title: 'Plumber',
+    description: 'Expert plumbing solutions for leaks, pipes, and installations.',
     Icon: WrenchIcon,
-    imageUrl: s3,
+    imageUrl: plumberImg,
   },
   {
-    title: 'Sewer Repair & Cleaning',
-    description:
-      'Expert sewer line inspection, repair, and maintenance services.',
-    Icon: ShovelIcon,
-    imageUrl: s4,
+    title: 'Carpenter',
+    description: 'Quality woodwork, furniture repair, and custom carpentry solutions.',
+    Icon: HammerIcon,
+    imageUrl: carpenterImg,
   },
   {
-    title: 'Water Line Repair',
-    description:
-      'Reliable water line repair and replacement for uninterrupted water flow.',
-    Icon: DropletsIcon,
-    imageUrl: s5,
+    title: 'Cleaner',
+    description: 'Reliable cleaning services for homes and commercial spaces.',
+    Icon: SprayCanIcon,
+    imageUrl: cleanerImg,
   },
   {
-    title: 'Gas Line Services',
-    description:
-      'Safe gas line installation, maintenance, and emergency repair services.',
-    Icon: FlameIcon,
-    imageUrl: s6,
+    title: 'Appliance Repair',
+    description: 'Fast and efficient repair services for all your home appliances.',
+    Icon: CpuIcon,
+    imageUrl: applianceImg,
   },
-]
+  {
+    title: 'Mason',
+    description: 'Skilled masonry work for walls, foundations, and stone structures.',
+    Icon: HammerIcon,
+    imageUrl: masonImg,
+  },
+  {
+    title: 'Painter',
+    description: 'Professional painting services for interiors, exteriors, and finishes.',
+    Icon: BrushIcon,
+    imageUrl: painterImg,
+  },
+  {
+    title: 'Pest Control',
+    description: 'Effective pest management and control solutions for a safe environment.',
+    Icon: BugIcon,
+    imageUrl: pestControlImg,
+  },
+];
 
 function ServiceCard({ title, description, Icon, imageUrl }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
-      {/* Image */}
-      <div className="relative h-56">
+    <div className="group flex h-full min-h-[22rem] flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+      <div className="relative h-44 overflow-hidden">
         <img
           src={imageUrl}
           alt={title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
 
-      {/* Content */}
-      <div className="relative px-6 pt-12 pb-8 text-center">
-        {/* Floating Icon */}
-        <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 bg-white rounded-full border border-gray-100 shadow-md flex items-center justify-center">
+      <div className="relative flex flex-1 flex-col px-5 pt-10 pb-5 text-center">
+        <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-14 h-14 bg-slate-800 rounded-full border border-slate-700 shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
           <Icon
-            className="w-7 h-7 text-sky-500"
+            className="w-5 h-5 text-sky-300"
             strokeWidth={1.8}
           />
         </div>
 
-        <h3 className="text-xl font-bold text-slate-900 mb-3">
-          {title}
-        </h3>
+        <div className="flex-1">
+          <h3 className="text-lg font-bold text-white mb-2">
+            {title}
+          </h3>
 
-        <p className="text-gray-500 text-sm leading-7 mb-6">
-          {description}
-        </p>
+          <p className="text-slate-300 text-sm leading-6 mb-4">
+            {description}
+          </p>
+        </div>
 
         <a
           href="#"
-          className="text-sky-500 font-semibold text-sm hover:text-sky-700"
+          className="text-sky-300 font-semibold text-sm hover:text-sky-100"
         >
           View Service
         </a>
       </div>
     </div>
-  )
+  );
 }
 
 export default function ServicesSection() {
   return (
-    <section className="bg-gray-50 py-24">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-slate-900 mb-4">
+    <section className="bg-gray-50 py-14 sm:py-16">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-3">
             Our Services
           </h2>
 
-          <p className="max-w-2xl mx-auto text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipiscing elit aenean id
-            volutpat imperdiet quis at pellentesque nunc commodo nunc purus
-            pulvinar nisi fusce.
+          <p className="max-w-2xl mx-auto text-gray-500 text-base sm:text-sm">
+            We provide a wide range of professional home services to make your life easier and more convenient.
           </p>
         </div>
 
-        {/* EXACTLY 3 CARDS TOP + 3 CARDS BOTTOM */}
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service) => (
             <div key={service.title} className="w-full">
               <ServiceCard {...service} />
@@ -129,5 +133,5 @@ export default function ServicesSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
