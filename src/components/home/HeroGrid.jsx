@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import hero_1 from '../../assets/images/hero_1.png';
-import hero2 from '../../assets/images/hero2.png';
+import hero_2 from '../../assets/images/location_2.png';
 import hero_3 from '../../assets/images/hero_3.png';
 
 export function HeroGrid() {
@@ -19,7 +19,7 @@ export function HeroGrid() {
       description:
         'Connect your business to location intelligence. Distribute and integrate high-accuracy map data and services for precise, real-time insights across your network.',
       buttonText: 'EXPLORE SOLUTIONS',
-      image: hero2,
+      image: hero_2,
     },
     {
       subtitle: 'AI-POWERED ASSISTANT',
@@ -42,6 +42,7 @@ export function HeroGrid() {
   }, []);
 
   const slide = slides[index];
+  const isLocationSlide = slide.image === hero_2;
 
   return (
     <section className="w-full h-[calc(100vh-70px)] bg-white overflow-hidden">
@@ -52,7 +53,7 @@ export function HeroGrid() {
       >
 
         {/* LEFT SIDE */}
-        <div className="w-full lg:w-1/2 h-full flex items-start px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-6 lg:pt-10">
+        <div className={`w-full ${isLocationSlide ? 'lg:w-2/5' : 'lg:w-1/2'} h-full flex items-start px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-6 lg:pt-10`}>
 
           <div className="w-full max-w-2xl flex flex-col justify-between h-full pb-10">
 
@@ -101,12 +102,12 @@ export function HeroGrid() {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="w-full lg:w-1/2 h-full flex items-start justify-center pt-6 lg:pt-10">
+        <div className={`w-full ${isLocationSlide ? 'lg:w-3/5' : 'lg:w-1/2'} h-full flex ${isLocationSlide ? 'items-center' : 'items-start'} justify-center pt-6 lg:pt-10`}>
 
           <img
             src={slide.image}
             alt="hero"
-            className="w-[80%] max-h-[80%] object-contain"
+            className={`object-contain transition-all duration-500 ${isLocationSlide ? 'w-full max-w-[56rem] max-h-[98%]' : 'w-[80%] max-h-[80%]'}`}
           />
 
         </div>
