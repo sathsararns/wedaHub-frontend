@@ -1,37 +1,54 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../../utils/api";
 import toast, { Toaster } from "react-hot-toast";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import RoleSelector from "../../components/auth/RoleSelector";
 import CustomerFields from "../../components/auth/CustomerFields";
 import ProviderFields from "../../components/auth/ProviderFields";
+
+// Import your logo (same as login page)
+import logo from "../../assets/images/logo.png";
 
 export default function SignupPage() {
   const navigate = useNavigate();
 
   const [role, setRole] = useState("customer");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // ✅ Password toggle state
 
-  const [formData, setFormData] = useState({
+  // Initial form state - reset function එකට use කරන්න
+  const initialFormData = {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
     phone: "",
-    address: "",
-    location: "",
-    businessName: "",
+
+    // Customer + Provider
+    city: "",
+    district: "",
+
+    // Provider only
     description: "",
     category: "",
-    serviceRadius: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // Reset form function
+  const resetForm = () => {
+    setFormData(initialFormData);
+    setRole("customer"); // Role එකත් reset කරන්න
+    setShowPassword(false); // Password toggle එකත් reset කරන්න
   };
 
   // Password Validation
@@ -42,30 +59,12 @@ export default function SignupPage() {
     const hasNumber = /[0-9]/.test(password);
     const hasSymbol = /[!@#$%^&*]/.test(password);
 
-    return (
-      minLength &&
-      hasUpper &&
-      hasLower &&
-      hasNumber &&
-      hasSymbol
-    );
+    return minLength && hasUpper && hasLower && hasNumber && hasSymbol;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    // 🔥 DEBUG
-    console.log("========== SIGNUP DEBUG ==========");
-    console.log("FORM DATA:", formData);
-    console.log("PASSWORD:", formData.password);
-    console.log("PASSWORD LENGTH:", formData.password.length);
-    console.log("HAS UPPER:", /[A-Z]/.test(formData.password));
-    console.log("HAS LOWER:", /[a-z]/.test(formData.password));
-    console.log("HAS NUMBER:", /[0-9]/.test(formData.password));
-    console.log("HAS SYMBOL:", /[!@#$%^&*]/.test(formData.password));
-    console.log("VALID:", validatePassword(formData.password));
-    console.log("=================================");
 
     try {
       if (!validatePassword(formData.password)) {
@@ -81,103 +80,210 @@ export default function SignupPage() {
         role,
       };
 
-      console.log("PAYLOAD:", payload);
+      await api.post("/users/register", payload);
 
-      const res = await api.post("/users/register", payload);
+      // Success message
+      toast.success("Account created successfully! Redirecting to login...");
 
-      console.log("SERVER RESPONSE:", res.data);
+      // Form reset කරන්න
+      resetForm();
 
-      toast.success("Account created successfully");
-
-      navigate("/login");
+      // 1.5s පස්සේ login page එකට navigate කරන්න
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
 
     } catch (err) {
-      console.log("SERVER ERROR:", err.response?.data);
-
-      toast.error(
-        err.response?.data?.message || "Signup failed"
-      );
+      toast.error(err.response?.data?.message || "Signup failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-      <Toaster />
+    <div className="min-h-screen flex items-center justify-center bg-[#F5F5FB] relative overflow-hidden font-sans py-12">
+      <Toaster position="top-center" />
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg shadow-md w-full max-w-xl space-y-4"
-      >
-        <h1 className="text-2xl font-bold text-center">
+      {/* Decorative background line */}
+      <div className="absolute left-0 right-0 top-[30%] h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent z-0 opacity-50"></div>
+
+      {/* Main Card */}
+      <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-[480px] p-8 sm:p-10 relative z-10 mx-4">
+        {/* Logo */}
+        <div className="flex justify-center mb-6">
+          <div className="w-24 h-24 bg-[#07184B] rounded-full flex items-center justify-center overflow-hidden">
+            <img
+              src={logo}
+              alt="වැල Hub Logo"
+              className="w-20 h-20 object-contain"
+            />
+          </div>
+        </div>
+
+        {/* Heading */}
+        <h1 className="text-3xl font-bold text-center text-gray-900 mb-2 tracking-tight">
           Sign Up
         </h1>
+        <p className="text-center text-gray-500 text-sm mb-8">
+          Create your account to get started
+        </p>
 
-        <input
-          name="firstName"
-          placeholder="First Name"
-          className="w-full border p-2 rounded"
-          onChange={handleChange}
-        />
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* First Name */}
+          <div>
+            <label
+              htmlFor="firstName"
+              className="block text-sm font-semibold text-gray-900 mb-1.5"
+            >
+              First Name
+            </label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              placeholder="e.g. John"
+              value={formData.firstName}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <input
-          name="lastName"
-          placeholder="Last Name"
-          className="w-full border p-2 rounded"
-          onChange={handleChange}
-        />
+          {/* Last Name */}
+          <div>
+            <label
+              htmlFor="lastName"
+              className="block text-sm font-semibold text-gray-900 mb-1.5"
+            >
+              Last Name
+            </label>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              placeholder="e.g. Doe"
+              value={formData.lastName}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          className="w-full border p-2 rounded"
-          onChange={handleChange}
-        />
+          {/* Email */}
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-semibold text-gray-900 mb-1.5"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="e.g. john.doe@gmail.com"
+              value={formData.email}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          className="w-full border p-2 rounded"
-          onChange={handleChange}
-        />
+          {/* Password with Toggle */}
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-semibold text-gray-900 mb-1.5"
+            >
+              Password
+            </label>
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Min. 8 chars with A-Z, a-z, 0-9 & symbol"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#4338CA] transition-colors"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+              </button>
+            </div>
+          </div>
 
-        <input
-          name="phone"
-          placeholder="Phone"
-          className="w-full border p-2 rounded"
-          onChange={handleChange}
-        />
+          {/* Phone */}
+          <div>
+            <label
+              htmlFor="phone"
+              className="block text-sm font-semibold text-gray-900 mb-1.5"
+            >
+              Phone
+            </label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              placeholder="e.g. +94 77 123 4567"
+              value={formData.phone}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <RoleSelector
-          role={role}
-          setRole={setRole}
-        />
+          {/* Role Selector */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-1.5">
+              Account Type
+            </label>
+            <RoleSelector role={role} setRole={setRole} />
+          </div>
 
-        {role === "customer" && (
-          <CustomerFields
-            formData={formData}
-            handleChange={handleChange}
-          />
-        )}
+          {/* Conditional Fields */}
+          {role === "customer" && (
+            <CustomerFields
+              formData={formData}
+              handleChange={handleChange}
+            />
+          )}
 
-        {role === "provider" && (
-          <ProviderFields
-            formData={formData}
-            handleChange={handleChange}
-          />
-        )}
+          {role === "provider" && (
+            <ProviderFields
+              formData={formData}
+              handleChange={handleChange}
+            />
+          )}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-green-600 text-white p-2 rounded"
-        >
-          {loading ? "Creating..." : "Create Account"}
-        </button>
-      </form>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-[#4338CA] hover:bg-[#07184B] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-colors mt-2 shadow-sm"
+          >
+            {loading ? "Creating Account..." : "Create Account"}
+          </button>
+
+          {/* Login Link */}
+          <p className="text-center text-sm text-gray-500 mt-4">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-[#4338CA] font-semibold hover:text-[#07184B] hover:underline transition-colors"
+            >
+              Log in
+            </Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 }

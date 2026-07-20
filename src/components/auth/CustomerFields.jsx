@@ -1,22 +1,23 @@
-export default function CustomerFields({ formData, handleChange }) {
+import LocationAutocomplete from "./LocationAutocomplete";
+
+export default function CustomerFields({
+  formData,
+  handleChange,
+}) {
   return (
     <>
-      <input
-        type="text"
-        name="address"
-        placeholder="Address"
-        value={formData.address}
-        onChange={handleChange}
-        className="w-full border rounded-lg p-3"
+      <LocationAutocomplete
+        value={formData.city}
+        handleChange={handleChange}
       />
 
       <input
         type="text"
-        name="location"
-        placeholder="Location"
-        value={formData.location}
-        onChange={handleChange}
-        className="w-full border rounded-lg p-3"
+        name="district"
+        value={formData.district}
+        readOnly
+        placeholder="District"
+        className="w-full border rounded-lg p-3 bg-gray-100 cursor-not-allowed"
       />
     </>
   );

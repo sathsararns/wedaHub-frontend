@@ -59,14 +59,17 @@ export default function ProviderCard({ provider }) {
           <strong>Category:</strong> {provider.category}
         </p>
 
+        {/* ✅ Changed from location to city + district */}
         <p>
-          <strong>Location:</strong>{" "}
-          {provider.location || "Not specified"}
+          <strong>City:</strong> {provider.city || "-"}
         </p>
 
         <p>
-          <strong>Phone:</strong>{" "}
-          {provider.phone || "Not available"}
+          <strong>District:</strong> {provider.district || "-"}
+        </p>
+
+        <p>
+          <strong>Phone:</strong> {provider.phone || "Not available"}
         </p>
       </div>
 

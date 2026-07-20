@@ -1,18 +1,14 @@
-export default function ProviderFields({ formData, handleChange }) {
+import LocationAutocomplete from "./LocationAutocomplete";
+
+export default function ProviderFields({
+  formData,
+  handleChange,
+}) {
   return (
     <>
-      <input
-        type="text"
-        name="businessName"
-        placeholder="Business Name"
-        value={formData.businessName}
-        onChange={handleChange}
-        className="w-full border rounded-lg p-3"
-      />
-
       <textarea
         name="description"
-        placeholder="Business Description"
+        placeholder="Description"
         value={formData.description}
         onChange={handleChange}
         className="w-full border rounded-lg p-3"
@@ -25,29 +21,25 @@ export default function ProviderFields({ formData, handleChange }) {
         className="w-full border rounded-lg p-3"
       >
         <option value="">Select Category</option>
-        <option>Electrician</option>
-        <option>Plumber</option>
-        <option>Cleaner</option>
-        <option>Painter</option>
-        <option>Carpenter</option>
+        <option value="Electrician">Electrician</option>
+        <option value="Plumber">Plumber</option>
+        <option value="Cleaner">Cleaner</option>
+        <option value="Painter">Painter</option>
+        <option value="Carpenter">Carpenter</option>
       </select>
 
-      <input
-        type="number"
-        name="serviceRadius"
-        placeholder="Service Radius (KM)"
-        value={formData.serviceRadius}
-        onChange={handleChange}
-        className="w-full border rounded-lg p-3"
+      <LocationAutocomplete
+        value={formData.city}
+        handleChange={handleChange}
       />
 
       <input
         type="text"
-        name="address"
-        placeholder="Business Address"
-        value={formData.address}
-        onChange={handleChange}
-        className="w-full border rounded-lg p-3"
+        name="district"
+        value={formData.district}
+        readOnly
+        placeholder="District"
+        className="w-full border rounded-lg p-3 bg-gray-100 cursor-not-allowed"
       />
     </>
   );
