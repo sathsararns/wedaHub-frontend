@@ -120,7 +120,7 @@ export function HeroGrid() {
           <img
             src={slide.image}
             alt="hero"
-            className={`object-contain transition-all duration-500 ${isLocationSlide ? 'w-full max-w-[56rem] max-h-[98%]' : 'w-[80%] max-h-[80%]'}`}
+            className={`object-contain transition-all duration-500 ${isLocationSlide ? 'h-[55vh] w-auto max-w-[90rem] lg:-translate-x-28 lg:-translate-y-6' : 'w-[80%] max-h-[80%]'}`}
           />
 
         </div>
