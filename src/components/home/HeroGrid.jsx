@@ -55,7 +55,7 @@ export function HeroGrid() {
         {/* LEFT SIDE */}
         <div className={`w-full ${isLocationSlide ? 'lg:w-2/5' : 'lg:w-1/2'} h-full flex items-start px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-6 lg:pt-10`}>
 
-          <div className="w-full max-w-2xl flex flex-col justify-between h-full pb-10">
+          <div className="w-full max-w-2xl flex flex-col justify-between h-full pb-6">
 
             <div>
 
@@ -68,11 +68,25 @@ export function HeroGrid() {
               </h1>
 
               {/* 🔥 UPDATED DESCRIPTION */}
-              <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-snug max-w-xl mb-6">
-                {slide.description}
-              </p>
+              {isLocationSlide ? (
+                <p
+                  className="text-sm sm:text-base md:text-lg text-gray-600 leading-snug max-w-xl mb-3"
+                  style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+                >
+                  {slide.description}
+                </p>
+              ) : (
+                <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-snug max-w-xl mb-6">
+                  {slide.description}
+                </p>
+              )}
 
-              <button className="group inline-flex items-center justify-center bg-[#07184B] text-white font-semibold py-3 sm:py-4 px-8 sm:px-10 text-sm tracking-wider rounded-full shadow-md transition-all duration-300 hover:bg-[#0a1f5c] hover:shadow-lg hover:-translate-y-1">
+            </div>
+
+            <div className="flex justify-center">
+              <button
+                className={`group inline-flex items-center justify-center bg-[#07184B] text-white font-semibold py-3 sm:py-4 px-8 sm:px-10 text-sm tracking-wider rounded-full shadow-md transition-all duration-300 hover:bg-[#0a1f5c] hover:shadow-lg hover:-translate-y-1 ${isLocationSlide ? '-mt-3' : ''}`}
+              >
 
                 {slide.buttonText}
 
@@ -81,7 +95,6 @@ export function HeroGrid() {
                 </span>
 
               </button>
-
             </div>
 
             <div className="flex gap-2">
