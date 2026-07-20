@@ -14,7 +14,7 @@
     "@tailwindcss/vite": "^4.2.4",
     "axios": "^1.15.2",
     "leaflet": "^1.9.4",
-    "lucide-react": "^1.14.0",
+    "lucide-react": "^1.25.0",
     "prop-types": "^15.8.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
