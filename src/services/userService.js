@@ -2,33 +2,64 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3000/api/users";
 
-export const getProfile = async () => {
+const getAuthHeaders = () => {
   const token = localStorage.getItem("token");
 
-  const res = await axios.get(
-    `${API_URL}/profile`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  return res.data;
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
 
+// ==========================
+// Get Logged User Profile
+// ==========================
+
+export const getProfile = async () => {
+  try {
+    const res = await axios.get(
+      `${API_URL}/profile`,
+      getAuthHeaders()
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("Get Profile Error:", error);
+    throw error;
+  }
+};
+
+// ==========================
+// Update Profile
+// ==========================
+
 export const updateProfile = async (profileData) => {
-  const token = localStorage.getItem("token");
+  try {
+    const payload = {
+      firstName: profileData.firstName,
+      lastName: profileData.lastName,
+      phone: profileData.phone,
 
-  const res = await axios.put(
-    `${API_URL}/profile`,
-    profileData,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+      city: profileData.city,
+      district: profileData.district,
 
-  return res.data;
+      description: profileData.description,
+      category: profileData.category,
+
+      image: profileData.image,
+      workImages: profileData.workImages,
+    };
+
+    const res = await axios.put(
+      `${API_URL}/profile`,
+      payload,
+      getAuthHeaders()
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("Update Profile Error:", error);
+    throw error;
+  }
 };
