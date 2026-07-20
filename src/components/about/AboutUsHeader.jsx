@@ -1,5 +1,5 @@
 import React from 'react'
-
+import aboutUsImg from '../../assets/images/AboutUsHeader.jpg';
 function AboutUsHeader() {
   // Features list data for the Why Choose Hub section
   const features = [
@@ -11,9 +11,7 @@ function AboutUsHeader() {
     '24/7 support',
   ];
 
-  // Using a high-quality online stock image of professional service providers 
-  // to avoid physical local file path errors during project compilation.
-  const aboutUsImg = "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=800";
+  
 
   return (
     <section className="w-full bg-white py-16 px-4">
@@ -44,16 +42,15 @@ function AboutUsHeader() {
             <img
               src={aboutUsImg}
               alt="Local Services Providers"
-              className="w-full max-w-md md:max-w-full h-auto object-cover rounded-lg"
+              className="w-full max-w-md md:max-w-lg h-auto object-cover rounded-lg"
             />
           </div>
         </div>
 
         {/* =========================================================
-            PART 2: Why Choose Hub Card (Positioned directly below)
+            PART 2: Why Choose Hub Card 
            ========================================================= */}
-        <div className="bg-white border border-gray-100 shadow-xl rounded-2xl p-8 md:p-12 max-w-4xl mx-auto mt-20">
-          
+        <div className="relative bg-gradient-to-br from-amber-50 via-orange-50/60 to-white text-gray-800 rounded-3xl p-8 md:p-12 max-w-4xl mx-auto mt-20 border border-amber-100 shadow-xl hover:shadow-2xl hover:shadow-orange-200/50 transform hover:-translate-y-2 hover:scale-[1.01] transition-all duration-300 ease-out group">
           {/* Card Title */}
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-extrabold text-[#0b1736]">
