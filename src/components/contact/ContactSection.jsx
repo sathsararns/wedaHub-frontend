@@ -34,7 +34,7 @@ export function ContactSection() {
     {
       icon: MapPinIcon,
       label: 'Visit now',
-      value: 'No. 23, Colombo - Kandy Road, Eldeniya, Kadawatha, Sri Lanka',
+      value: '123 Service Hub Road,Colombo 05,Sri Lanka',
     },
   ]
 
