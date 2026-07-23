@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-// Fix: Update these imports to point to the correct location
-// Assuming images are in src/assets/images/
 import hero_1 from '../../assets/images/hero_1.png';
-import hero_2 from '../../assets/images/hero_2.png';
+import hero_2 from '../../assets/images/location_2.png';
+import hero_3 from '../../assets/images/hero_3.png';
 
 export function HeroGrid() {
   const slides = [
     {
-      subtitle: 'YOUR TRUSTED HUB FOR LOCATION-AWARE PROFESSIONALS',
+      subtitle: 'TRUSTED LOCAL PROFESIONALS HUB',
       title: 'FIND TRUSTED LOCAL PROFESSIONALS',
       description:
         'Discover trusted and experienced local experts for any job. Check verified user reviews and book certified professionals with ease. We bring reliable and top-rated services right to your doorstep.',
@@ -19,16 +18,16 @@ export function HeroGrid() {
       title: 'PRECISION LOCATION SERVICES',
       description:
         'Connect your business to location intelligence. Distribute and integrate high-accuracy map data and services for precise, real-time insights across your network.',
-      buttonText: 'FIND SERVICES NOW',
+      buttonText: 'EXPLORE SOLUTIONS',
       image: hero_2,
     },
     {
       subtitle: 'AI-POWERED ASSISTANT',
-      title: 'CHATBOT FOR SMART SERVICE ',
+      title: 'CHATBOT FOR SMART SERVICE',
       description:
         'Get instant help finding the right local professional. Our intelligent chatbot understands your location, service needs, and availability to connect you with trusted experts in seconds — anywhere, anytime.',
-      buttonText: 'FIND SERVICES NOW',
-      image: hero_2,
+      buttonText: 'TRY AI ASSISTANT',
+      image: hero_3,
     },
   ];
 
@@ -37,71 +36,104 @@ export function HeroGrid() {
   useEffect(() => {
     const id = setInterval(() => {
       setIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 3000);
+
     return () => clearInterval(id);
-  }, [slides.length]);
+  }, []);
 
   const slide = slides[index];
+  const isLocationSlide = slide.image === hero_2;
 
   return (
-    <section className="relative w-full min-h-screen bg-white overflow-hidden">
+    <section className="w-full h-[calc(100vh-70px)] bg-white overflow-hidden">
+
       <div
         key={index}
-        className="flex flex-row lg:flex-row w-full min-h-[600px] lg:min-h-[700px] animate-[fadeIn_500ms_ease-out]"
+        className="flex flex-col lg:flex-row w-full h-full animate-[fadeIn_400ms_ease-out]"
       >
-        {/* Content Section - Left side on desktop */}
-        <div className="w-full lg:w-1/2 bg-white px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 py-12 sm:py-16 lg:py-24 flex items-center">
-          <div className="w-full max-w-2xl text-left">
-            {/* Subtitle */}
-            <div className="text-xs sm:text-sm font-semibold text-gray-500 tracking-[0.2em] uppercase mb-6 text-left">
-              {slide.subtitle}
+
+        {/* LEFT SIDE */}
+        <div className={`w-full ${isLocationSlide ? 'lg:w-2/5' : 'lg:w-1/2'} h-full flex items-start px-6 sm:px-10 md:px-16 lg:px-20 xl:px-28 pt-6 lg:pt-10`}>
+
+          <div className="w-full max-w-2xl flex flex-col justify-between h-full pb-6">
+
+            <div>
+
+              <div className="text-xs sm:text-sm font-semibold text-gray-500 tracking-[0.2em] uppercase mb-1">
+                {slide.subtitle}
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight mb-4">
+                {slide.title}
+              </h1>
+
+              {/* 🔥 UPDATED DESCRIPTION */}
+              {isLocationSlide ? (
+                <p
+                  className="text-sm sm:text-base md:text-lg text-gray-600 leading-snug max-w-xl mb-3"
+                  style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+                >
+                  {slide.description}
+                </p>
+              ) : (
+                <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-snug max-w-xl mb-6">
+                  {slide.description}
+                </p>
+              )}
+
             </div>
 
-            {/* Main Title */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold text-black leading-[1.05] tracking-tight mb-8 text-left">
-              {slide.title}
-            </h1>
+            <div className="flex justify-center">
+              <button
+                className={`group inline-flex items-center justify-center bg-[#07184B] text-white font-semibold py-3 sm:py-4 px-8 sm:px-10 text-sm tracking-wider rounded-full shadow-md transition-all duration-300 hover:bg-[#0a1f5c] hover:shadow-lg hover:-translate-y-1 ${isLocationSlide ? '-mt-3' : ''}`}
+              >
 
-            {/* Description */}
-            <p className="text-base sm:text-lg text-gray-600 leading-relaxed mb-10 max-w-xl text-left">
-              {slide.description}
-            </p>
+                {slide.buttonText}
 
-            {/* CTA button */}
-            <button className="bg-[#0ca59d] hover:bg-[#0a8a84] text-white font-semibold py-4 px-10 sm:px-12 text-sm tracking-wider transition-colors duration-200 mb-16">
-              {slide.buttonText}
-            </button>
+                <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
 
-            {/* Slide Indicators - Dots */}
-            <div className="flex gap-2 justify-start">
+              </button>
+            </div>
+
+            <div className="flex gap-2">
               {slides.map((_, slideIndex) => (
                 <button
                   key={slideIndex}
                   onClick={() => setIndex(slideIndex)}
-                  className={`h-2 rounded-full transition-all ${slideIndex === index ? 'bg-[#0ca59d] w-8' : 'bg-gray-300 w-2'}`}
-                  aria-label={`Go to slide ${slideIndex + 1}`}
+                  className={`h-2 rounded-full transition-all ${
+                    slideIndex === index
+                      ? 'bg-[#07184B] w-8'
+                      : 'bg-gray-300 w-2'
+                  }`}
                 />
               ))}
             </div>
+
           </div>
         </div>
 
-        {/* Image Section - Right side on desktop */}
-        <div className="relative w-full lg:w-1/2 bg-white flex items-center justify-center py-12 sm:py-16 lg:py-20 overflow-hidden">
+        {/* RIGHT SIDE */}
+        <div className={`w-full ${isLocationSlide ? 'lg:w-3/5' : 'lg:w-1/2'} h-full flex ${isLocationSlide ? 'items-center' : 'items-start'} justify-center pt-6 lg:pt-10`}>
+
           <img
             src={slide.image}
-            alt="Service showcase"
-            className="relative z-10 w-auto h-auto max-h-[380px] sm:max-h-[450px] lg:max-h-[520px] object-contain px-6"
+            alt="hero"
+            className={`object-contain transition-all duration-500 ${isLocationSlide ? 'h-[55vh] w-auto max-w-[90rem] lg:-translate-x-28 lg:-translate-y-6' : 'w-[80%] max-h-[80%]'}`}
           />
+
         </div>
+
       </div>
 
       <style>{`
         @keyframes fadeIn {
-          from { opacity: 0.4; }
-          to { opacity: 1; }
+          from { opacity: 0.4; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
+
     </section>
   );
 }
