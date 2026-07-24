@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   ZapIcon,
   WrenchIcon,
@@ -18,61 +19,77 @@ import pestControlImg from '../../assets/images/services/pest-control.jpg';
 import masonImg from '../../assets/images/services/mason.jpg';
 import painterImg from '../../assets/images/services/painter.jpg';
 
-
 const services = [
   {
     title: 'Electrician',
     description: 'Professional electrical repairs, wiring, and installation services.',
     Icon: ZapIcon,
     imageUrl: electricianImg,
+    category: 'Electrician',
   },
   {
     title: 'Plumber',
     description: 'Expert plumbing solutions for leaks, pipes, and installations.',
     Icon: WrenchIcon,
     imageUrl: plumberImg,
+    category: 'Plumber',
   },
   {
     title: 'Carpenter',
     description: 'Quality woodwork, furniture repair, and custom carpentry solutions.',
     Icon: HammerIcon,
     imageUrl: carpenterImg,
+    category: 'Carpenter',
   },
   {
     title: 'Cleaner',
     description: 'Reliable cleaning services for homes and commercial spaces.',
     Icon: SprayCanIcon,
     imageUrl: cleanerImg,
+    category: 'Cleaner',
   },
   {
     title: 'Appliance Repair',
     description: 'Fast and efficient repair services for all your home appliances.',
     Icon: CpuIcon,
     imageUrl: applianceImg,
+    category: 'Appliance Repair',
   },
   {
     title: 'Mason',
     description: 'Skilled masonry work for walls, foundations, and stone structures.',
     Icon: HammerIcon,
     imageUrl: masonImg,
+    category: 'Mason',
   },
   {
     title: 'Painter',
     description: 'Professional painting services for interiors, exteriors, and finishes.',
     Icon: BrushIcon,
     imageUrl: painterImg,
+    category: 'Painter',
   },
   {
     title: 'Pest Control',
     description: 'Effective pest management and control solutions for a safe environment.',
     Icon: BugIcon,
     imageUrl: pestControlImg,
+    category: 'Pest Control',
   },
 ];
 
-function ServiceCard({ title, description, Icon, imageUrl }) {
+function ServiceCard({ title, description, Icon, imageUrl, category }) {
+  const navigate = useNavigate();
+
+  const handleViewService = () => {
+    navigate(`/services/${encodeURIComponent(category)}`);
+  };
+
   return (
-    <div className="group flex h-full min-h-[22rem] flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+    <div 
+      onClick={handleViewService}
+      className="group flex h-full min-h-[22rem] flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
+    >
       <div className="relative h-44 overflow-hidden">
         <img
           src={imageUrl}
@@ -99,12 +116,10 @@ function ServiceCard({ title, description, Icon, imageUrl }) {
           </p>
         </div>
 
-        <a
-          href="#"
-          className="text-sky-300 font-semibold text-sm hover:text-sky-100"
-        >
+        <span className="text-sky-300 font-semibold text-sm hover:text-sky-100 transition-colors inline-flex items-center gap-1 group-hover:gap-2">
           View Service
-        </a>
+          <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+        </span>
       </div>
     </div>
   );
