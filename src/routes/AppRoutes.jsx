@@ -27,7 +27,7 @@ import ProviderBookingsPage from "../pages/ProviderBookingsPage";
 import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
 import ManageUsersPage from "../pages/admin/ManageUsersPage";
 import ManageBookingsPage from "../pages/admin/ManageBookingsPage";
-
+import ManageMessagesPage from "../pages/admin/ManageMessagesPage";
 
 export default function AppRoutes() {
   return (
@@ -67,20 +67,25 @@ export default function AppRoutes() {
       />
 
       {/* ADMIN */}
-          <Route
-      path="/admin-dashboard"
-      element={<AdminDashboardPage />}
-    />
+      <Route
+        path="/admin-dashboard"
+        element={<AdminDashboardPage />}
+      />
 
- <Route
-  path="/admin/users"
-  element={<ManageUsersPage />}
-/>
+      <Route
+        path="/admin/users"
+        element={<ManageUsersPage />}
+      />
 
-<Route
-  path="/admin/bookings"
-  element={<ManageBookingsPage />}
-/> 
+      <Route
+        path="/admin/bookings"
+        element={<ManageBookingsPage />}
+      />
+
+      <Route
+        path="/admin/messages"
+        element={<ManageMessagesPage />}
+      />
 
     </Routes>
   );

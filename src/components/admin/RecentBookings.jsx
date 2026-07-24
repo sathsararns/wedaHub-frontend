@@ -28,41 +28,41 @@ export default function RecentBookings() {
   return (
     <div className="bg-white rounded-xl shadow overflow-hidden">
 
-      <div className="p-6 border-b">
+      <div className="p-6 border-b border-gray-200">
         <h2 className="text-xl font-bold">
           Recent Bookings
         </h2>
       </div>
 
       {bookings.length === 0 ? (
-        <div className="p-6 text-gray-500">
+        <div className="p-8 text-center text-gray-500">
           No bookings found
         </div>
       ) : (
 
         <table className="w-full">
 
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-200">
 
             <tr>
 
-              <th className="p-3 text-left">
+              <th className="p-4 text-left">
                 Customer
               </th>
 
-              <th className="p-3 text-left">
+              <th className="p-4 text-left">
                 Provider
               </th>
 
-              <th className="p-3 text-left">
+              <th className="p-4 text-left">
                 Service
               </th>
 
-              <th className="p-3 text-left">
+              <th className="p-4 text-left">
                 Date
               </th>
 
-              <th className="p-3 text-left">
+              <th className="p-4 text-left">
                 Status
               </th>
 

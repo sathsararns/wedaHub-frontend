@@ -53,8 +53,9 @@ export default function ProvidersPage() {
       const fullName =
         `${provider.firstName} ${provider.lastName}`.toLowerCase();
 
-      const location =
-        (provider.location || "").toLowerCase();
+      const city = (provider.city || "").toLowerCase();
+      const district = (provider.district || "").toLowerCase();
+      const location = `${city} ${district}`;
 
       const matchesName =
         fullName.includes(searchName.toLowerCase());

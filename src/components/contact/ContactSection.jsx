@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import { PhoneIcon, MailIcon, MapPinIcon } from 'lucide-react'
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { sendMessage } from "../../services/contactService";
 
 const ACCENT = '#bf8d5b'
 
 export function ContactSection() {
+  const navigate = useNavigate();
+  
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -15,10 +20,36 @@ export function ContactSection() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // submit logic here
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("Please login first.");
+      navigate("/login");
+      return;
+    }
+
+    try {
+      await sendMessage(form);
+
+      toast.success("Message sent successfully!");
+
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+
+    } catch (err) {
+      toast.error(
+        err.response?.data?.message ||
+        "Failed to send message"
+      );
+    }
+  };
 
   const contactItems = [
     {

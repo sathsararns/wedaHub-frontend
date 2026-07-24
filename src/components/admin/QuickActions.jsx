@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
-import { Users, CalendarCheck } from "lucide-react";
+import {
+  Users,
+  CalendarCheck,
+  Mail,
+} from "lucide-react";
 
 export default function QuickActions() {
   return (
@@ -9,7 +13,7 @@ export default function QuickActions() {
         Quick Actions
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="grid md:grid-cols-3 gap-5">
 
         <Link
           to="/admin/users"
@@ -51,6 +55,26 @@ export default function QuickActions() {
             </p>
           </div>
 
+        </Link>
+
+        <Link
+          to="/admin/messages"
+          className="flex items-center gap-4 p-5 rounded-xl bg-orange-50 hover:bg-orange-100 transition"
+        >
+          <Mail
+            className="text-orange-600"
+            size={32}
+          />
+
+          <div>
+            <h3 className="font-bold">
+              Contact Messages
+            </h3>
+
+            <p className="text-sm text-gray-500">
+              View customer messages
+            </p>
+          </div>
         </Link>
 
       </div>

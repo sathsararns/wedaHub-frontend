@@ -3,6 +3,7 @@ import {
   LayoutDashboard,
   Users,
   CalendarCheck,
+  Mail,
   ArrowLeft,
   LogOut,
 } from "lucide-react";
@@ -28,6 +29,11 @@ export default function Sidebar() {
       name: "Manage Bookings",
       icon: <CalendarCheck size={20} />,
       path: "/admin/bookings",
+    },
+    {
+      name: "Contact Messages",
+      icon: <Mail size={20} />,
+      path: "/admin/messages",
     },
   ];
 
