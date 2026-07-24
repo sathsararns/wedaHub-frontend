@@ -48,13 +48,13 @@ function AboutUsHeader() {
         </div>
 
         {/* =========================================================
-            PART 2: Why Choose Hub Card 
+            PART 2: Why Work With Us Card 
            ========================================================= */}
         <div className="relative bg-gradient-to-br from-amber-50 via-orange-50/60 to-white text-gray-800 rounded-3xl p-8 md:p-12 max-w-4xl mx-auto mt-20 border border-amber-100 shadow-xl hover:shadow-2xl hover:shadow-orange-200/50 transform hover:-translate-y-2 hover:scale-[1.01] transition-all duration-300 ease-out group">
           {/* Card Title */}
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-extrabold text-[#0b1736]">
-              Why Work <span className="font-normal text-[#0b1736]">With Us?</span>
+              Why Work With Us?
             </h2>
           </div>
 
