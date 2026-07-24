@@ -1,10 +1,14 @@
+import { User, Star } from "lucide-react";
 import LocationAutocomplete from "../auth/LocationAutocomplete";
 
-export default function ProfileInfo({
-  profile,
-  setProfile,
-  editing,
-}) {
+const fieldClasses = (editing) =>
+  `w-full rounded-xl border p-3.5 text-sm text-gray-700 transition-colors ${
+    !editing
+      ? "cursor-not-allowed border-gray-100 bg-gray-50 text-gray-500"
+      : "border-gray-200 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+  }`;
+
+export default function ProfileInfo({ profile, setProfile, editing }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -15,16 +19,17 @@ export default function ProfileInfo({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-      <h2 className="text-2xl font-bold mb-6">
+    <div className="mb-8 rounded-3xl bg-white p-6 shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)] sm:p-8">
+      <h2 className="mb-6 flex items-center gap-2 text-xl font-bold text-gray-900 sm:text-2xl">
+        <User className="h-5 w-5 text-blue-600" />
         Personal Information
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid gap-6 md:grid-cols-2">
 
         {/* First Name */}
         <div>
-          <label className="block text-sm font-semibold text-gray-600 mb-1">
+          <label className="mb-1.5 block text-sm font-semibold text-gray-600">
             First Name
           </label>
 
@@ -34,17 +39,13 @@ export default function ProfileInfo({
             value={profile.firstName || ""}
             readOnly={!editing}
             onChange={handleChange}
-            className={`w-full border rounded-lg p-3 ${
-              !editing
-                ? "bg-gray-100 cursor-not-allowed"
-                : "focus:ring-2 focus:ring-blue-500"
-            }`}
+            className={fieldClasses(editing)}
           />
         </div>
 
         {/* Last Name */}
         <div>
-          <label className="block text-sm font-semibold text-gray-600 mb-1">
+          <label className="mb-1.5 block text-sm font-semibold text-gray-600">
             Last Name
           </label>
 
@@ -54,17 +55,13 @@ export default function ProfileInfo({
             value={profile.lastName || ""}
             readOnly={!editing}
             onChange={handleChange}
-            className={`w-full border rounded-lg p-3 ${
-              !editing
-                ? "bg-gray-100 cursor-not-allowed"
-                : "focus:ring-2 focus:ring-blue-500"
-            }`}
+            className={fieldClasses(editing)}
           />
         </div>
 
         {/* Phone */}
         <div>
-          <label className="block text-sm font-semibold text-gray-600 mb-1">
+          <label className="mb-1.5 block text-sm font-semibold text-gray-600">
             Phone Number
           </label>
 
@@ -74,17 +71,13 @@ export default function ProfileInfo({
             value={profile.phone || ""}
             readOnly={!editing}
             onChange={handleChange}
-            className={`w-full border rounded-lg p-3 ${
-              !editing
-                ? "bg-gray-100 cursor-not-allowed"
-                : "focus:ring-2 focus:ring-blue-500"
-            }`}
+            className={fieldClasses(editing)}
           />
         </div>
 
         {/* Email */}
         <div>
-          <label className="block text-sm font-semibold text-gray-600 mb-1">
+          <label className="mb-1.5 block text-sm font-semibold text-gray-600">
             Email
           </label>
 
@@ -92,13 +85,13 @@ export default function ProfileInfo({
             type="text"
             value={profile.email || ""}
             readOnly
-            className="w-full border rounded-lg p-3 bg-gray-100 cursor-not-allowed"
+            className={fieldClasses(false)}
           />
         </div>
 
         {/* City */}
         <div>
-          <label className="block text-sm font-semibold text-gray-600 mb-1">
+          <label className="mb-1.5 block text-sm font-semibold text-gray-600">
             City / Town
           </label>
 
@@ -112,14 +105,14 @@ export default function ProfileInfo({
               type="text"
               value={profile.city || ""}
               readOnly
-              className="w-full border rounded-lg p-3 bg-gray-100 cursor-not-allowed"
+              className={fieldClasses(false)}
             />
           )}
         </div>
 
         {/* District */}
         <div>
-          <label className="block text-sm font-semibold text-gray-600 mb-1">
+          <label className="mb-1.5 block text-sm font-semibold text-gray-600">
             District
           </label>
 
@@ -129,11 +122,7 @@ export default function ProfileInfo({
             value={profile.district || ""}
             readOnly={!editing}
             onChange={handleChange}
-            className={`w-full border rounded-lg p-3 ${
-              !editing
-                ? "bg-gray-100 cursor-not-allowed"
-                : "focus:ring-2 focus:ring-blue-500"
-            }`}
+            className={fieldClasses(editing)}
           />
         </div>
 
@@ -141,7 +130,7 @@ export default function ProfileInfo({
         {profile.role === "provider" && (
           <>
             <div className="md:col-span-2">
-              <label className="block text-sm font-semibold text-gray-600 mb-1">
+              <label className="mb-1.5 block text-sm font-semibold text-gray-600">
                 Description
               </label>
 
@@ -151,16 +140,12 @@ export default function ProfileInfo({
                 value={profile.description || ""}
                 readOnly={!editing}
                 onChange={handleChange}
-                className={`w-full border rounded-lg p-3 ${
-                  !editing
-                    ? "bg-gray-100 cursor-not-allowed"
-                    : "focus:ring-2 focus:ring-blue-500"
-                }`}
+                className={`resize-none ${fieldClasses(editing)}`}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-600 mb-1">
+              <label className="mb-1.5 block text-sm font-semibold text-gray-600">
                 Category
               </label>
 
@@ -169,7 +154,7 @@ export default function ProfileInfo({
                   name="category"
                   value={profile.category || ""}
                   onChange={handleChange}
-                  className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500"
+                  className={fieldClasses(true)}
                 >
                   <option value="">Select Category</option>
                   <option value="Electrician">Electrician</option>
@@ -188,22 +173,25 @@ export default function ProfileInfo({
                   type="text"
                   value={profile.category || ""}
                   readOnly
-                  className="w-full border rounded-lg p-3 bg-gray-100 cursor-not-allowed"
+                  className={fieldClasses(false)}
                 />
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-600 mb-1">
+              <label className="mb-1.5 block text-sm font-semibold text-gray-600">
                 Rating
               </label>
 
-              <input
-                type="text"
-                value={`${profile.rating || 0} ⭐ (${profile.reviews || 0} reviews)`}
-                readOnly
-                className="w-full border rounded-lg p-3 bg-gray-100 cursor-not-allowed"
-              />
+              <div className={`flex items-center gap-1.5 ${fieldClasses(false)}`}>
+                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                <span className="font-semibold text-gray-700">
+                  {profile.rating || 0}
+                </span>
+                <span className="text-gray-400">
+                  ({profile.reviews || 0} reviews)
+                </span>
+              </div>
             </div>
           </>
         )}

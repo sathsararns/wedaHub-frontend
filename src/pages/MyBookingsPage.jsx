@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CalendarX } from "lucide-react";
 import toast from "react-hot-toast";
 
 import { getCustomerBookings } from "../services/bookingService";
@@ -44,48 +44,63 @@ export default function MyBookingsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
-        <h2 className="text-xl font-semibold">
-          Loading...
-        </h2>
+      <div className="flex min-h-screen items-center justify-center bg-[#EAF0FE]">
+        <div className="text-center">
+          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
+          <h2 className="mt-4 text-xl font-semibold text-gray-700">
+            Loading...
+          </h2>
+        </div>
       </div>
     );
   }
 
   return (
-    <section className="min-h-screen bg-gray-100 py-10">
-      <div className="max-w-6xl mx-auto px-5">
+    <section className="min-h-screen bg-[#EAF0FE] py-8 sm:py-12">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6">
 
-        {/* Back Button */}
+        {/* ✨ NEW: Reimagined Back Button - Floating Circular with Hover-Expand */}
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6 transition"
+          aria-label="Go back"
+          className="group mb-6 flex h-11 w-11 items-center justify-center rounded-full bg-white text-blue-600 shadow-md ring-1 ring-black/5 transition-all hover:w-28 hover:justify-start hover:gap-2 hover:px-4 hover:shadow-lg"
         >
-          <ArrowLeft size={20} />
-          Back
+          <ArrowLeft size={20} className="shrink-0 transition-transform group-hover:-translate-x-0.5" />
+          <span className="max-w-0 overflow-hidden whitespace-nowrap text-sm font-semibold opacity-0 transition-all group-hover:max-w-[4rem] group-hover:opacity-100">
+            Back
+          </span>
         </button>
 
-        <h1 className="text-4xl font-bold mb-8">
-          My Bookings
-        </h1>
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">
+              My Bookings
+            </h1>
+            <p className="mt-1 text-sm text-gray-500">
+              Track and manage all your service bookings.
+            </p>
+          </div>
+          {bookings.length > 0 && (
+            <span className="hidden rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-blue-600 shadow-sm sm:inline-block">
+              {bookings.length} total
+            </span>
+          )}
+        </div>
 
         {bookings.length === 0 ? (
-          <div className="bg-white rounded-xl shadow p-10 text-center">
-            <h2 className="text-2xl font-semibold">
+          <div className="rounded-3xl bg-white p-10 text-center shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)] sm:p-14">
+            <CalendarX className="mx-auto h-12 w-12 text-gray-300" />
+            <h2 className="mt-4 text-xl font-semibold text-gray-800">
               No Bookings Yet
             </h2>
-
-            <p className="text-gray-500 mt-2">
-              Your bookings will appear here.
+            <p className="mt-2 text-sm text-gray-500">
+              Your bookings will appear here once you book a service.
             </p>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-5">
             {bookings.map((booking) => (
-              <BookingCard
-                key={booking._id}
-                booking={booking}
-              />
+              <BookingCard key={booking._id} booking={booking} />
             ))}
           </div>
         )}
