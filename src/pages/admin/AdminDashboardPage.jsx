@@ -28,8 +28,11 @@ export default function AdminDashboardPage() {
 
   if (!dashboard) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        Loading...
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
+          <h2 className="mt-4 text-xl font-semibold text-gray-700">Loading...</h2>
+        </div>
       </div>
     );
   }

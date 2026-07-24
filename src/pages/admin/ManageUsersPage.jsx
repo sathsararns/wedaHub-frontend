@@ -70,15 +70,19 @@ export default function ManageUsersPage() {
 
       <main className="flex-1 p-8">
 
+        {/* ✨ NEW: Reimagined Back Button - Floating Circular with Hover-Expand */}
         <button
           onClick={() => navigate("/admin-dashboard")}
-          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6"
+          aria-label="Go back to dashboard"
+          className="group mb-6 flex h-11 w-11 items-center justify-center rounded-full bg-white text-blue-600 shadow-md ring-1 ring-black/5 transition-all hover:w-36 hover:justify-start hover:gap-2 hover:px-4 hover:shadow-lg"
         >
-          <ArrowLeft size={20} />
-          Back
+          <ArrowLeft size={20} className="shrink-0 transition-transform group-hover:-translate-x-0.5" />
+          <span className="max-w-0 overflow-hidden whitespace-nowrap text-sm font-semibold opacity-0 transition-all group-hover:max-w-[8rem] group-hover:opacity-100">
+            Dashboard
+          </span>
         </button>
 
-        <h1 className="text-3xl font-bold mb-8">
+        <h1 className="text-3xl font-bold mb-8 text-gray-800">
           Manage Users
         </h1>
 
@@ -118,7 +122,7 @@ export default function ManageUsersPage() {
             onChange={(e) =>
               setRoleFilter(e.target.value)
             }
-            className="px-4 py-3 rounded-lg border border-gray-300 bg-white"
+            className="px-4 py-3 rounded-lg border border-gray-300 bg-white focus:ring-2 focus:ring-blue-500 outline-none"
           >
             <option value="all">
               All Roles
@@ -145,7 +149,7 @@ export default function ManageUsersPage() {
             onChange={(e) =>
               setStatusFilter(e.target.value)
             }
-            className="px-4 py-3 rounded-lg border border-gray-300 bg-white"
+            className="px-4 py-3 rounded-lg border border-gray-300 bg-white focus:ring-2 focus:ring-blue-500 outline-none"
           >
             <option value="all">
               All Status
