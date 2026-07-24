@@ -10,14 +10,14 @@ export default function DashboardHeader() {
 
       <div>
 
-        <button
+        {/* <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-blue-600 mb-3"
         >
           <ArrowLeft size={20} />
 
           Back
-        </button>
+        </button> */}
 
         <h1 className="text-4xl font-bold">
           Admin Dashboard
