@@ -1,59 +1,62 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function FAQSection() {
+  const navigate = useNavigate();
+  
   const [faqs, setFaqs] = useState([
-  {
-    question: 'How do I find service providers near my location?',
-    answer:
-      'Simply enter your location or allow location access, and our platform will display verified service providers available in your area.',
-    isOpen: false,
-  },
-  {
-    question: 'What types of services are available on the platform?',
-    answer:
-      'Our platform connects users with various service providers including electricians, plumbers, carpenters, cleaners, technicians, and other local professionals.',
-    isOpen: false,
-  },
-  {
-    question: 'How are service providers assigned to customers?',
-    answer:
-      'Service requests are distributed based on location, availability, service category, and provider ratings to ensure fast and reliable service.',
-    isOpen: false,
-  },
-  {
-    question: 'Are the service providers verified?',
-    answer:
-      'Yes. All providers go through a verification process before joining the platform to ensure quality, reliability, and customer safety.',
-    isOpen: false,
-  },
-])
+    {
+      question: 'How do I find service providers near my location?',
+      answer:
+        'Simply enter your location or allow location access, and our platform will display verified service providers available in your area.',
+      isOpen: false,
+    },
+    {
+      question: 'What types of services are available on the platform?',
+      answer:
+        'Our platform connects users with various service providers including electricians, plumbers, carpenters, cleaners, technicians, and other local professionals.',
+      isOpen: false,
+    },
+    {
+      question: 'How are service providers assigned to customers?',
+      answer:
+        'Service requests are distributed based on location, availability, service category, and provider ratings to ensure fast and reliable service.',
+      isOpen: false,
+    },
+    {
+      question: 'Are the service providers verified?',
+      answer:
+        'Yes. All providers go through a verification process before joining the platform to ensure quality, reliability, and customer safety.',
+      isOpen: false,
+    },
+  ]);
 
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
+          setIsVisible(true);
         }
       },
       {
         threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
+        rootMargin: '0px 0px -100px 0px',
       }
-    )
+    );
 
     if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+      observer.observe(sectionRef.current);
     }
 
     return () => {
       if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
+        observer.unobserve(sectionRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   const toggleFAQ = (index) => {
     setFaqs(
@@ -62,30 +65,40 @@ function FAQSection() {
           return {
             ...faq,
             isOpen: !faq.isOpen,
-          }
+          };
         }
-        return faq
-      }),
-    )
-  }
+        return faq;
+      })
+    );
+  };
+
+  const handleContactSupport = () => {
+    navigate('/contact');
+  };
 
   return (
     <div ref={sectionRef} className="w-full bg-white px-4 py-16 md:px-8 lg:px-16 xl:px-24">
       {/* Main FAQ Section */}
-      <div className={`max-w-4xl mx-auto transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+      <div
+        className={`max-w-4xl mx-auto transition-all duration-700 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}
+      >
         <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-2">
           FAQs
         </h1>
         <p className="text-center text-gray-600 mb-12">
-           Find answers to common questions about our location-based service platform
+          Find answers to common questions about our location-based service platform
         </p>
         <div className="space-y-4">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className={`border-b border-gray-200 transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              className={`border-b border-gray-200 transition-all duration-700 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
               style={{
-                transitionDelay: isVisible ? `${index * 100}ms` : '0ms'
+                transitionDelay: isVisible ? `${index * 100}ms` : '0ms',
               }}
             >
               <button
@@ -97,7 +110,9 @@ function FAQSection() {
                 </span>
                 <span className="ml-6 flex-shrink-0 text-gray-900">
                   <svg
-                    className={`w-6 h-6 transition-transform duration-300 ${faq.isOpen ? 'transform rotate-45' : ''}`}
+                    className={`w-6 h-6 transition-transform duration-300 ${
+                      faq.isOpen ? 'transform rotate-45' : ''
+                    }`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -112,7 +127,9 @@ function FAQSection() {
                 </span>
               </button>
               <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${faq.isOpen ? 'max-h-96 pb-5' : 'max-h-0'}`}
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  faq.isOpen ? 'max-h-96 pb-5' : 'max-h-0'
+                }`}
               >
                 <p className="text-gray-600 px-4">{faq.answer}</p>
               </div>
@@ -123,9 +140,11 @@ function FAQSection() {
 
       {/* Contact Section */}
       <div
-        className={`max-w-4xl mx-auto mt-20 text-center transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+        className={`max-w-4xl mx-auto mt-20 text-center transition-all duration-700 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}
         style={{
-          transitionDelay: isVisible ? '400ms' : '0ms'
+          transitionDelay: isVisible ? '400ms' : '0ms',
         }}
       >
         <h2 className="text-3xl font-bold text-gray-900 mb-2">
@@ -135,7 +154,8 @@ function FAQSection() {
           Contact us for more assistance and help
         </p>
         <button
-          type="submit"
+          onClick={handleContactSupport}
+          type="button"
           className="flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-[#2210F0] hover:bg-[#2210F0] before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
         >
           Contact Support
@@ -152,7 +172,7 @@ function FAQSection() {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default FAQSection
+export default FAQSection;

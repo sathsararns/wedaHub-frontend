@@ -1,5 +1,6 @@
 import { Toaster } from "react-hot-toast";
 import AppRoutes from "./routes/AppRoutes";
+import ScrollToTop from "./components/ScrollToTop";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         }}
       />
 
+      <ScrollToTop />
       <AppRoutes />
     </>
   );
