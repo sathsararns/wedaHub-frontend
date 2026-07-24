@@ -83,7 +83,7 @@ export function HeroGrid() {
 
             </div>
 
-            <div className="flex justify-center">
+            <div className={`flex justify-start -ml-2`}>
               <button
                 className={`group inline-flex items-center justify-center bg-[#07184B] text-white font-semibold py-3 sm:py-4 px-8 sm:px-10 text-sm tracking-wider rounded-full shadow-md transition-all duration-300 hover:bg-[#0a1f5c] hover:shadow-lg hover:-translate-y-1 ${isLocationSlide ? '-mt-3' : ''}`}
               >
