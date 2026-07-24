@@ -54,7 +54,7 @@ function AboutUsHeader() {
           {/* Card Title */}
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-extrabold text-[#0b1736]">
-              Why Choose <span className="font-normal text-[#0b1736]">Hub?</span>
+              Why Work <span className="font-normal text-[#0b1736]">With Us?</span>
             </h2>
           </div>
 
