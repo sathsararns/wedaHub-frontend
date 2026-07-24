@@ -3,11 +3,11 @@ import aboutUsImg from '../../assets/images/AboutUsHeader.jpg';
 function AboutUsHeader() {
   // Features list data for the Why Choose Hub section
   const features = [
-    'GPS-based real-time search',
+    'Real-time search',
     'Verified and trusted providers',
     'Easy booking & management',
     'Ratings & reviews',
-    'Secure communication',
+    'AI assistant help',
     '24/7 support',
   ];
 
