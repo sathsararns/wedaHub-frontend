@@ -9,7 +9,7 @@ export default function UserTable({
 
       <table className="w-full">
 
-        <thead className="bg-gray-100">
+        <thead className="bg-gray-200">
 
           <tr>
 
@@ -45,7 +45,7 @@ export default function UserTable({
 
               <td
                 colSpan={5}
-                className="text-center py-10 text-gray-500"
+                className="p-8 text-center text-gray-500"
               >
                 No users found.
               </td>

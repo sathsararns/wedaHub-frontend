@@ -2,25 +2,27 @@ export default function BookingRow({ booking }) {
   return (
     <tr className="border-b hover:bg-gray-50">
 
-      <td className="p-3">
-        {booking.customerId?.firstName}{" "}
-        {booking.customerId?.lastName}
+      <td className="p-4">
+        {booking.customerId
+          ? `${booking.customerId.firstName} ${booking.customerId.lastName}`
+          : "-"}
       </td>
 
-      <td className="p-3">
-        {booking.providerId?.businessName ||
-          `${booking.providerId?.firstName} ${booking.providerId?.lastName}`}
+      <td className="p-4">
+        {booking.providerId
+          ? `${booking.providerId.firstName} ${booking.providerId.lastName}`
+          : "-"}
       </td>
 
-      <td className="p-3">
-        {booking.serviceName}
+      <td className="p-4">
+        {booking.providerId?.category || booking.serviceName}
       </td>
 
-      <td className="p-3">
+      <td className="p-4">
         {new Date(booking.date).toLocaleDateString()}
       </td>
 
-      <td className="p-3 capitalize">
+      <td className="p-4 capitalize">
         {booking.status}
       </td>
 

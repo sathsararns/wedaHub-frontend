@@ -12,12 +12,8 @@ export default function BookingPage() {
   const navigate = useNavigate();
 
   const [provider, setProvider] = useState(null);
-
   const [bookingDate, setBookingDate] = useState("");
-
-  const [specialInstructions, setSpecialInstructions] =
-    useState("");
-
+  const [specialInstructions, setSpecialInstructions] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -30,9 +26,12 @@ export default function BookingPage() {
         `http://localhost:3000/api/users/provider/${id}`
       );
 
+      console.log("📦 Provider Data:", res.data);
+      console.log("🔍 Category:", res.data.category);
+      
       setProvider(res.data);
     } catch (err) {
-      console.log(err);
+      console.log("❌ Error:", err);
       toast.error("Provider not found");
     }
   }
@@ -46,20 +45,23 @@ export default function BookingPage() {
     try {
       setLoading(true);
 
-      await createBooking({
+      // ✅ මෙතනදි serviceName එක category එක විතරක් save කරන්න
+      const bookingData = {
         providerId: id,
-        serviceName:
-          provider.businessName || provider.category,
+        serviceName: provider.category, // "Electrician", "Plumber", "Cleaner" වගේ
         description: specialInstructions,
         date: bookingDate,
-      });
+      };
+
+      console.log("📝 Booking Data:", bookingData);
+
+      await createBooking(bookingData);
 
       toast.success("Booking submitted successfully");
-
       navigate("/my-bookings");
     } catch (err) {
-      console.log(err);
-      console.log(err.response?.data);
+      console.log("❌ Booking Error:", err);
+      console.log("❌ Response:", err.response?.data);
 
       toast.error(
         err.response?.data?.message ||
@@ -113,16 +115,15 @@ export default function BookingPage() {
 
             <div>
               <h2 className="text-2xl font-bold">
-                {provider.firstName}{" "}
-                {provider.lastName}
+                {provider.firstName} {provider.lastName}
               </h2>
-
-              <p className="text-gray-500">
-                {provider.businessName}
-              </p>
 
               <p>
                 ⭐ {(provider.rating || 0).toFixed(1)}
+              </p>
+              
+              <p className="text-sm text-gray-600 mt-1">
+                📂 {provider.category || "No category"}
               </p>
             </div>
           </div>
@@ -175,13 +176,12 @@ export default function BookingPage() {
 
             <p>
               <strong>Provider:</strong>{" "}
-              {provider.firstName}{" "}
-              {provider.lastName}
+              {provider.firstName} {provider.lastName}
             </p>
 
             <p>
-              <strong>Category:</strong>{" "}
-              {provider.category}
+              <strong>Service:</strong>{" "}
+              {provider.category || "-"}
             </p>
 
             <p>
@@ -191,7 +191,7 @@ export default function BookingPage() {
 
             <p>
               <strong>Location:</strong>{" "}
-              {provider.location}
+              {provider.location || "-"}
             </p>
           </div>
 
