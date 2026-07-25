@@ -18,6 +18,7 @@ import ProfilePage from "../pages/ProfilePage";
 import ProviderProfilePage from "../pages/ProviderProfilePage";
 import BookingPage from "../pages/BookingPage";
 import MyBookingsPage from "../pages/MyBookingsPage";
+import AIChatPage from "../pages/AIChatPage"; // ✅ Import AI Chat Page
 
 // Provider
 import ProviderDashboardPage from "../pages/ProviderDashboardPage";
@@ -54,6 +55,9 @@ export default function AppRoutes() {
       <Route path="/provider/:id" element={<ProviderProfilePage />} />
       <Route path="/booking/:id" element={<BookingPage />} />
       <Route path="/my-bookings" element={<MyBookingsPage />} />
+      
+      {/* AI CHAT SUPPORT - Customer Only */}
+      <Route path="/ai-support" element={<AIChatPage />} />
 
       {/* PROVIDER */}
       <Route
