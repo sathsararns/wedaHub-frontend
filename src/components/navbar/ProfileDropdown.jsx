@@ -41,13 +41,23 @@ export default function ProfileDropdown() {
 
           {/* CUSTOMER */}
           {user.role === "customer" && (
-            <Link
-              to="/my-bookings"
-              onClick={() => setOpen(false)}
-              className="block px-4 py-2 hover:bg-gray-100"
-            >
-              My Bookings
-            </Link>
+            <>
+              <Link
+                to="/my-bookings"
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2 hover:bg-gray-100"
+              >
+                My Bookings
+              </Link>
+
+              <Link
+                to="/ai-support"
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2 hover:bg-gray-100"
+              >
+                AI Assistant
+              </Link>
+            </>
           )}
 
           {/* PROVIDER */}
@@ -62,12 +72,12 @@ export default function ProfileDropdown() {
               </Link>
 
               <Link
-  to="/provider/requests"
-  className="block px-4 py-2 hover:bg-gray-100"
-  onClick={() => setOpen(false)}
->
-  Booking Requests
-</Link>
+                to="/provider/requests"
+                className="block px-4 py-2 hover:bg-gray-100"
+                onClick={() => setOpen(false)}
+              >
+                Booking Requests
+              </Link>
             </>
           )}
 
