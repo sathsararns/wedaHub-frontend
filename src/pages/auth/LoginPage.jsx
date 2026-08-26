@@ -30,6 +30,7 @@ export default function LoginPage() {
       });
 
       login({
+        _id: res.data._id,
         token: res.data.token,
         role: res.data.role,
         email: res.data.email,
@@ -37,7 +38,6 @@ export default function LoginPage() {
         lastName: res.data.lastName,
         image: res.data.image || null,
       });
-
       toast.success("Login successful");
       
       // Small delay before navigation

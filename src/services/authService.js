@@ -1,24 +1,57 @@
-import api from "../utils/api";
+import api from "../Utils/api";
 
-// Register User
+// =============================
+// Register
+// =============================
+
 export const register = async (userData) => {
-  const response = await api.post("/users/register", userData);
-  return response.data;
+  const { data } = await api.post("/users/register", userData);
+  return data;
 };
 
-// Login User
+// =============================
+// Login
+// =============================
+
 export const login = async (userData) => {
-  const response = await api.post("/users/login", userData);
-  return response.data;
+  const { data } = await api.post("/users/login", userData);
+
+  // save immediately
+  if (data.token) {
+    localStorage.setItem("token", data.token);
+  }
+
+  if (data._id) {
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        _id: data._id,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        role: data.role,
+        image: data.image,
+      })
+    );
+  }
+
+  return data;
 };
 
-// Get Logged-in User
+// =============================
+// Profile
+// =============================
+
 export const getProfile = async () => {
-  const response = await api.get("/users/profile");
-  return response.data;
+  const { data } = await api.get("/users/profile");
+  return data;
 };
 
-// Logout (Frontend)
+// =============================
+// Logout
+// =============================
+
 export const logout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("user");
 };
