@@ -37,11 +37,14 @@ export default function SignupPage() {
 
   const [formData, setFormData] = useState(initialFormData);
 
+  // ✅ Updated handleChange with functional state update
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   // Reset form function
