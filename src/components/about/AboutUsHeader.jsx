@@ -2,7 +2,7 @@ import React from 'react';
 import aboutUsImg from '../../assets/images/AboutUsHeader.jpg';
 
 function AboutUsHeader() {
-  // Updated feature list to match image 1
+  // Features list data
   const features = [
     'Real-time search',
     'Verified and trusted providers',
@@ -21,13 +21,25 @@ function AboutUsHeader() {
            ========================================================= */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Content */}
-          <div className="flex flex-col justify-center">
-            <p className="text-amber-500 font-bold text-sm uppercase tracking-wider mb-3">
-              About Us
-            </p>
+          <div className="flex flex-col items-start justify-center">
+            
+            {/* Pill Badge */}
+            <div className="inline-flex items-center gap-2 bg-[#fff8ed] border border-amber-200/60 px-4 py-1.5 rounded-full shadow-sm mb-6">
+              {/* Star Icon */}
+              <svg 
+                className="w-4 h-4 text-[#f5a800] fill-[#f5a800]" 
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              {/* Badge Text */}
+              <span className="text-[#f5a800] font-bold text-xs uppercase tracking-wider">
+                ABOUT US
+              </span>
+            </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-[56px] font-black text-[#0b1736] mb-6 leading-[1.15] tracking-tight">
-              Making Local Services <span className="text-amber-500">Simple</span>, Faster & Reliable
+              Making Local Services <span className="text-[#f5a800] font-black">Simple</span>, Faster & Reliable
             </h1>
             
             <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-lg font-normal">
@@ -47,13 +59,13 @@ function AboutUsHeader() {
         </div>
 
         {/* =========================================================
-            PART 2: Why Choose Hub Card (Exact match to Image 1)
+            PART 2: Why Work With Us Card
            ========================================================= */}
         <div className="bg-[#fffdf5] rounded-[32px] p-8 md:p-12 max-w-4xl mx-auto mt-20 border border-amber-100/60 shadow-sm">
           {/* Card Title */}
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-extrabold text-[#0b1736] tracking-tight">
-              Why Choose <span className="font-normal text-[#0b1736]">Hub?</span>
+              Why Work With <span className="font-normal text-[#0b1736]">Us?</span>
             </h2>
           </div>
 
@@ -61,10 +73,10 @@ function AboutUsHeader() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-7 max-w-3xl mx-auto">
             {features.map((feature, index) => (
               <div key={index} className="flex items-center gap-3.5">
-                {/* Thin Orange Checkmark Icon Matching Image 1 */}
+                {/* Checkmark Icon */}
                 <div className="flex-shrink-0">
                   <svg 
-                    className="w-7 h-7 text-amber-500" 
+                    className="w-7 h-7 text-[#f5a800]" 
                     viewBox="0 0 24 24" 
                     fill="none" 
                     stroke="currentColor" 
