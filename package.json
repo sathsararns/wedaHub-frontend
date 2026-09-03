@@ -13,7 +13,7 @@
     "@supabase/supabase-js": "^2.105.4",
     "@tailwindcss/vite": "^4.2.4",
     "axios": "^1.15.2",
-    "framer-motion": "^13.0.0",
+    "framer-motion": "^13.2.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^1.25.0",
     "prop-types": "^15.8.1",

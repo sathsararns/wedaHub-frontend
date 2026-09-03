@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { PhoneIcon, MailIcon, MapPinIcon } from 'lucide-react'
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import { sendMessage } from "../../services/contactService";
+import { useNavigate } from "react-router-dom"
+import toast from "react-hot-toast"
+import { sendMessage } from "../../services/contactService"
 
-const ACCENT = '#bf8d5b'
+const ACCENT = '#ff4d1a' 
+const BUTTON_YELLOW = '#ffb800' // Warm bright yellow from your image
 
 export function ContactSection() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   
   const [form, setForm] = useState({
     name: '',
@@ -21,35 +22,35 @@ export function ContactSection() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token")
 
     if (!token) {
-      toast.error("Please login first.");
-      navigate("/login");
-      return;
+      toast.error("Please login first.")
+      navigate("/login")
+      return
     }
 
     try {
-      await sendMessage(form);
+      await sendMessage(form)
 
-      toast.success("Message sent successfully!");
+      toast.success("Message sent successfully!")
 
       setForm({
         name: "",
         email: "",
         phone: "",
         message: "",
-      });
+      })
 
     } catch (err) {
       toast.error(
         err.response?.data?.message ||
         "Failed to send message"
-      );
+      )
     }
-  };
+  }
 
   const contactItems = [
     {
@@ -65,7 +66,7 @@ export function ContactSection() {
     {
       icon: MapPinIcon,
       label: 'Visit now',
-      value: '123 Service Hub Road,Colombo 05,Sri Lanka',
+      value: '123 Service Hub Road, Colombo 05, Sri Lanka',
     },
   ]
 
@@ -78,7 +79,7 @@ export function ContactSection() {
             className="mb-5 text-sm font-bold uppercase tracking-widest"
             style={{ color: ACCENT }}
           >
-            //Contact us
+            Contact us
           </p>
           <h2 className="max-w-md text-4xl font-extrabold leading-tight text-neutral-900 sm:text-5xl">
             Get in touch with our expert agents
@@ -92,13 +93,15 @@ export function ContactSection() {
             {contactItems.map(({ icon: Icon, label, value }) => (
               <li key={label} className="flex items-center gap-5">
                 <span
-                  className="flex h-12 w-12 shrink-0 items-center justify-center bg-neutral-100"
+                  className="flex h-12 w-12 shrink-0 items-center justify-center bg-neutral-100 rounded-md"
                   aria-hidden="true"
                 >
                   <Icon className="h-5 w-5" style={{ color: ACCENT }} />
                 </span>
                 <div>
-                  <p className="text-sm text-neutral-400">{label}</p>
+                  <p className="text-sm text-neutral-400">
+                    {label}
+                  </p>
                   <p className="text-lg font-bold text-neutral-900">{value}</p>
                 </div>
               </li>
@@ -106,8 +109,8 @@ export function ContactSection() {
           </ul>
         </div>
 
-        {/* Right column - form with balanced 4-sided shadow */}
-        <div className="bg-white p-6 shadow-[0_0_50px_rgba(0,0,0,0.12)] sm:p-10 rounded-xl">
+        {/* Right column - form */}
+        <div className="bg-[#fffdf5] border border-[#fef3c7] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.06)] sm:p-10 rounded-2xl">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label htmlFor="name" className="sr-only">
@@ -120,7 +123,7 @@ export function ContactSection() {
                 value={form.name}
                 onChange={handleChange}
                 placeholder="Your name"
-                className="w-full border-0 bg-neutral-100 px-5 py-4 text-neutral-900 placeholder-neutral-400 outline-none transition focus:ring-2 focus:ring-neutral-300"
+                className="w-full border-0 bg-white px-5 py-4 text-neutral-900 placeholder-neutral-400 outline-none transition focus:ring-2 focus:ring-yellow-200 rounded-lg shadow-sm"
               />
             </div>
             <div>
@@ -134,7 +137,7 @@ export function ContactSection() {
                 value={form.email}
                 onChange={handleChange}
                 placeholder="Email address"
-                className="w-full border-0 bg-neutral-100 px-5 py-4 text-neutral-900 placeholder-neutral-400 outline-none transition focus:ring-2 focus:ring-neutral-300"
+                className="w-full border-0 bg-white px-5 py-4 text-neutral-900 placeholder-neutral-400 outline-none transition focus:ring-2 focus:ring-yellow-200 rounded-lg shadow-sm"
               />
             </div>
             <div>
@@ -148,7 +151,7 @@ export function ContactSection() {
                 value={form.phone}
                 onChange={handleChange}
                 placeholder="Phone number"
-                className="w-full border-0 bg-neutral-100 px-5 py-4 text-neutral-900 placeholder-neutral-400 outline-none transition focus:ring-2 focus:ring-neutral-300"
+                className="w-full border-0 bg-white px-5 py-4 text-neutral-900 placeholder-neutral-400 outline-none transition focus:ring-2 focus:ring-yellow-200 rounded-lg shadow-sm"
               />
             </div>
             <div>
@@ -162,13 +165,13 @@ export function ContactSection() {
                 value={form.message}
                 onChange={handleChange}
                 placeholder="Write a message"
-                className="w-full resize-none border-0 bg-neutral-100 px-5 py-4 text-neutral-900 placeholder-neutral-400 outline-none transition focus:ring-2 focus:ring-neutral-300"
+                className="w-full resize-none border-0 bg-white px-5 py-4 text-neutral-900 placeholder-neutral-400 outline-none transition focus:ring-2 focus:ring-yellow-200 rounded-lg shadow-sm"
               />
             </div>
             <button
               type="submit"
-              className="px-8 py-4 text-sm font-bold uppercase tracking-wider text-white transition hover:brightness-95"
-              style={{ backgroundColor: ACCENT }}
+              className="px-8 py-4 text-sm font-bold uppercase tracking-wider text-black transition hover:brightness-95 rounded-md"
+              style={{ backgroundColor: BUTTON_YELLOW }}
             >
               Send a message
             </button>

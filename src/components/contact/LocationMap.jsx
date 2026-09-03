@@ -21,7 +21,7 @@ function MapResizeTrigger() {
   return null
 }
 
-// Red balloon map pin icon matching the red Google Maps pin styling
+// Red balloon map pin icon matching Google Maps pin styling
 const redBalloonIcon = L.divIcon({
   className: '',
   html: `
