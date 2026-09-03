@@ -79,7 +79,7 @@ export function ContactSection() {
             className="mb-5 text-sm font-bold uppercase tracking-widest"
             style={{ color: ACCENT }}
           >
-            Contact us
+            //Contact us
           </p>
           <h2 className="max-w-md text-4xl font-extrabold leading-tight text-neutral-900 sm:text-5xl">
             Get in touch with our expert agents
