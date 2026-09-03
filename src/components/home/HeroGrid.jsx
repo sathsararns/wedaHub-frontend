@@ -45,7 +45,7 @@ export function HeroGrid() {
   const isLocationSlide = slide.image === hero_2;
 
   return (
-    <section className="w-full h-[calc(100vh-70px)] bg-white overflow-hidden">
+    <section className="w-full h-[calc(100vh-70px)] bg-white overflow-hidden font-sans">
 
       <div
         key={index}
@@ -59,33 +59,34 @@ export function HeroGrid() {
 
             <div>
 
-              <div className="text-xs sm:text-sm font-semibold text-gray-500 tracking-[0.2em] uppercase mb-1">
+              <div className="text-xs sm:text-sm font-bold text-[#f5a800] tracking-[0.2em] uppercase mb-2">
                 {slide.subtitle}
               </div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight mb-4">
+              {/* Title styled with heavy font weight matching the image */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black text-[#0b1736] leading-[1.12] tracking-tight mb-5">
                 {slide.title}
               </h1>
 
-              {/* 🔥 UPDATED DESCRIPTION */}
+              {/* Description text matching the image body typography */}
               {isLocationSlide ? (
                 <p
-                  className="text-sm sm:text-base md:text-lg text-gray-600 leading-snug max-w-xl mb-3"
+                  className="text-sm sm:text-base md:text-lg text-gray-500 font-normal leading-relaxed max-w-xl mb-3"
                   style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
                 >
                   {slide.description}
                 </p>
               ) : (
-                <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-snug max-w-xl mb-6">
+                <p className="text-sm sm:text-base md:text-lg text-gray-500 font-normal leading-relaxed max-w-xl mb-6">
                   {slide.description}
                 </p>
               )}
 
             </div>
 
-            <div className="flex justify-center">
+            <div className={`flex justify-start -ml-2`}>
               <button
-                className={`group inline-flex items-center justify-center bg-[#07184B] text-white font-semibold py-3 sm:py-4 px-8 sm:px-10 text-sm tracking-wider rounded-full shadow-md transition-all duration-300 hover:bg-[#0a1f5c] hover:shadow-lg hover:-translate-y-1 ${isLocationSlide ? '-mt-3' : ''}`}
+                className={`group inline-flex items-center justify-center bg-[#0b1736] text-white font-bold py-3.5 sm:py-4 px-8 sm:px-10 text-sm tracking-wider rounded-full shadow-md transition-all duration-300 hover:bg-[#07184B] hover:shadow-lg hover:-translate-y-1 ${isLocationSlide ? '-mt-3' : ''}`}
               >
 
                 {slide.buttonText}
@@ -104,7 +105,7 @@ export function HeroGrid() {
                   onClick={() => setIndex(slideIndex)}
                   className={`h-2 rounded-full transition-all ${
                     slideIndex === index
-                      ? 'bg-[#07184B] w-8'
+                      ? 'bg-[#0b1736] w-8'
                       : 'bg-gray-300 w-2'
                   }`}
                 />
