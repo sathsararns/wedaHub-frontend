@@ -30,7 +30,7 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // ✅ Password toggle state
 
-  // Initial form state - reset function එකට use කරන්න
+  
   const initialFormData = {
     firstName: "",
     lastName: "",
@@ -73,8 +73,8 @@ export default function SignupPage() {
   // Reset form function
   const resetForm = () => {
     setFormData(initialFormData);
-    setRole("customer"); // Role එකත් reset කරන්න
-    setShowPassword(false); // Password toggle එකත් reset කරන්න
+    setRole("customer"); 
+    setShowPassword(false); 
   };
 
   // Password Validation
