@@ -22,7 +22,7 @@ export default function AIChatPage() {
     send,
     updateBooking,
     confirmBooking,
-    reset,
+    resetAll,
   } = useAIChat();
 
   const hasChat = messages.length > 0;
@@ -41,7 +41,7 @@ export default function AIChatPage() {
   };
 
   const handleNewChat = () => {
-    reset();
+    resetAll();
     setDraft("");
     setSection("home");
     setSidebarOpen(false);
@@ -61,7 +61,6 @@ export default function AIChatPage() {
       />
 
       <main className="flex min-w-0 flex-1 flex-col overflow-hidden bg-white md:my-3 md:mr-3 md:rounded-2xl md:border md:border-zinc-200">
-        {/* Header */}
         <header className="flex shrink-0 items-center justify-between px-5 py-4">
           <button
             type="button"
@@ -107,7 +106,8 @@ export default function AIChatPage() {
                 )}
               </div>
             </div>
-                        <div className="shrink-0 bg-white px-5 sm:px-8">
+
+            <div className="shrink-0 bg-white px-5 sm:px-8">
               <div className="mx-auto w-full max-w-[640px] pb-3">
                 {hasChat && (
                   <ChatComposer
@@ -120,8 +120,7 @@ export default function AIChatPage() {
                 )}
 
                 <p className="pt-3 text-center text-[11px] text-zinc-400">
-                  Prices are estimates. Final quote is confirmed by your
-                  provider on site.
+                  Prices are estimates. Final quote is confirmed by your provider on site.
                 </p>
               </div>
             </div>
@@ -130,9 +129,7 @@ export default function AIChatPage() {
           <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
             <div
               className={`mx-auto w-full ${
-                section === "services"
-                  ? "max-w-7xl"
-                  : "max-w-5xl"
+                section === "services" ? "max-w-7xl" : "max-w-5xl"
               }`}
             >
               {section === "services" ? (

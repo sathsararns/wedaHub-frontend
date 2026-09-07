@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../../utils/api";
 import toast, { Toaster } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { motion, AnimatePresence, useAnimation, useReducedMotion } from "framer-motion";
 
 import RoleSelector from "../../components/auth/RoleSelector";
 import CustomerFields from "../../components/auth/CustomerFields";
@@ -11,8 +12,19 @@ import ProviderFields from "../../components/auth/ProviderFields";
 // Import your logo (same as login page)
 import logo from "../../assets/images/logo.png";
 
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.15 } },
+};
+const riseItem = {
+  hidden: { opacity: 0, y: 14 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
+};
+
 export default function SignupPage() {
   const navigate = useNavigate();
+  const shouldReduceMotion = useReducedMotion();
+  const cardControls = useAnimation();
 
   const [role, setRole] = useState("customer");
   const [loading, setLoading] = useState(false);
@@ -36,6 +48,17 @@ export default function SignupPage() {
   };
 
   const [formData, setFormData] = useState(initialFormData);
+
+  // Entrance animation; the shake on failed submit below reuses the same
+  // controls, animating only `x`, so it layers on top of this rest state.
+  useEffect(() => {
+    cardControls.start({
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: shouldReduceMotion ? 0 : 0.5, ease: "easeOut" },
+    });
+  }, [cardControls, shouldReduceMotion]);
 
   // ✅ Updated handleChange with functional state update
   const handleChange = (e) => {
@@ -65,6 +88,14 @@ export default function SignupPage() {
     return minLength && hasUpper && hasLower && hasNumber && hasSymbol;
   };
 
+  const shakeCard = () => {
+    if (shouldReduceMotion) return;
+    cardControls.start({
+      x: [0, -10, 10, -8, 8, 0],
+      transition: { duration: 0.4, ease: "easeInOut" },
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -75,6 +106,7 @@ export default function SignupPage() {
           "Password must be 8+ chars with uppercase, lowercase, number & symbol"
         );
         setLoading(false);
+        shakeCard();
         return;
       }
 
@@ -98,10 +130,13 @@ export default function SignupPage() {
 
     } catch (err) {
       toast.error(err.response?.data?.message || "Signup failed");
+      shakeCard();
     } finally {
       setLoading(false);
     }
   };
+
+  const fieldFocus = shouldReduceMotion ? undefined : { scale: 1.01 };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F5F5FB] relative overflow-hidden font-sans py-12">
@@ -111,9 +146,18 @@ export default function SignupPage() {
       <div className="absolute left-0 right-0 top-[30%] h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent z-0 opacity-50"></div>
 
       {/* Main Card */}
-      <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-[480px] p-8 sm:p-10 relative z-10 mx-4">
+      <motion.div
+        initial={{ opacity: 0, y: 24, scale: 0.97 }}
+        animate={cardControls}
+        className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-[480px] p-8 sm:p-10 relative z-10 mx-4"
+      >
         {/* Logo */}
-        <div className="flex justify-center mb-6">
+        <motion.div
+          className="flex justify-center mb-6"
+          initial={{ scale: 0.6, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
+        >
           <div className="w-24 h-24 bg-[#07184B] rounded-full flex items-center justify-center overflow-hidden">
             <img
               src={logo}
@@ -121,7 +165,7 @@ export default function SignupPage() {
               className="w-20 h-20 object-contain"
             />
           </div>
-        </div>
+        </motion.div>
 
         {/* Heading */}
         <h1 className="text-3xl font-bold text-center text-gray-900 mb-2 tracking-tight">
@@ -132,69 +176,81 @@ export default function SignupPage() {
         </p>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <motion.form
+          onSubmit={handleSubmit}
+          className="space-y-5"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+        >
           {/* First Name */}
-          <div>
+          <motion.div variants={riseItem}>
             <label
               htmlFor="firstName"
               className="block text-sm font-semibold text-gray-900 mb-1.5"
             >
               First Name
             </label>
-            <input
+            <motion.input
               id="firstName"
               name="firstName"
               type="text"
               placeholder="e.g. John"
               value={formData.firstName}
+              whileFocus={fieldFocus}
+              transition={{ duration: 0.15 }}
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
             />
-          </div>
+          </motion.div>
 
           {/* Last Name */}
-          <div>
+          <motion.div variants={riseItem}>
             <label
               htmlFor="lastName"
               className="block text-sm font-semibold text-gray-900 mb-1.5"
             >
               Last Name
             </label>
-            <input
+            <motion.input
               id="lastName"
               name="lastName"
               type="text"
               placeholder="e.g. Doe"
               value={formData.lastName}
+              whileFocus={fieldFocus}
+              transition={{ duration: 0.15 }}
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
             />
-          </div>
+          </motion.div>
 
           {/* Email */}
-          <div>
+          <motion.div variants={riseItem}>
             <label
               htmlFor="email"
               className="block text-sm font-semibold text-gray-900 mb-1.5"
             >
               Email
             </label>
-            <input
+            <motion.input
               id="email"
               name="email"
               type="email"
               placeholder="e.g. john.doe@gmail.com"
               value={formData.email}
+              whileFocus={fieldFocus}
+              transition={{ duration: 0.15 }}
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
             />
-          </div>
+          </motion.div>
 
           {/* Password with Toggle */}
-          <div>
+          <motion.div variants={riseItem}>
             <label
               htmlFor="password"
               className="block text-sm font-semibold text-gray-900 mb-1.5"
@@ -202,7 +258,7 @@ export default function SignupPage() {
               Password
             </label>
             <div className="relative">
-              <input
+              <motion.input
                 id="password"
                 name="password"
                 type={showPassword ? "text" : "password"}
@@ -210,73 +266,118 @@ export default function SignupPage() {
                 value={formData.password}
                 onChange={handleChange}
                 required
+                whileFocus={fieldFocus}
+                transition={{ duration: 0.15 }}
                 className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               />
-              <button
+              <motion.button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
+                whileTap={{ scale: 0.85 }}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#4338CA] transition-colors"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
-              </button>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={showPassword ? "hide" : "show"}
+                    initial={{ opacity: 0, rotate: -20 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: 20 }}
+                    transition={{ duration: 0.15 }}
+                    className="block"
+                  >
+                    {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                  </motion.span>
+                </AnimatePresence>
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Phone */}
-          <div>
+          <motion.div variants={riseItem}>
             <label
               htmlFor="phone"
               className="block text-sm font-semibold text-gray-900 mb-1.5"
             >
               Phone
             </label>
-            <input
+            <motion.input
               id="phone"
               name="phone"
               type="tel"
               placeholder="e.g. +94 77 123 4567"
               value={formData.phone}
+              whileFocus={fieldFocus}
+              transition={{ duration: 0.15 }}
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
             />
-          </div>
+          </motion.div>
 
           {/* Role Selector */}
-          <div>
+          <motion.div variants={riseItem}>
             <label className="block text-sm font-semibold text-gray-900 mb-1.5">
               Account Type
             </label>
             <RoleSelector role={role} setRole={setRole} />
-          </div>
+          </motion.div>
 
-          {/* Conditional Fields */}
-          {role === "customer" && (
-            <CustomerFields
-              formData={formData}
-              handleChange={handleChange}
-            />
-          )}
+          {/* Conditional Fields — animate the swap since the role toggle
+              genuinely changes which fields are shown */}
+          <AnimatePresence mode="wait" initial={false}>
+            {role === "customer" && (
+              <motion.div
+                key="customer"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <CustomerFields formData={formData} handleChange={handleChange} />
+              </motion.div>
+            )}
 
-          {role === "provider" && (
-            <ProviderFields
-              formData={formData}
-              handleChange={handleChange}
-            />
-          )}
+            {role === "provider" && (
+              <motion.div
+                key="provider"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <ProviderFields formData={formData} handleChange={handleChange} />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Submit Button */}
-          <button
+          <motion.button
+            variants={riseItem}
             type="submit"
             disabled={loading}
+            whileHover={shouldReduceMotion || loading ? undefined : { scale: 1.01 }}
+            whileTap={loading ? undefined : { scale: 0.98 }}
             className="w-full bg-[#4338CA] hover:bg-[#07184B] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-colors mt-2 shadow-sm"
           >
-            {loading ? "Creating Account..." : "Create Account"}
-          </button>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={loading ? "loading" : "idle"}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="inline-block"
+              >
+                {loading ? "Creating Account..." : "Create Account"}
+              </motion.span>
+            </AnimatePresence>
+          </motion.button>
 
           {/* Login Link */}
-          <p className="text-center text-sm text-gray-500 mt-4">
+          <motion.p variants={riseItem} className="text-center text-sm text-gray-500 mt-4">
             Already have an account?{" "}
             <Link
               to="/login"
@@ -284,9 +385,9 @@ export default function SignupPage() {
             >
               Log in
             </Link>
-          </p>
-        </form>
-      </div>
+          </motion.p>
+        </motion.form>
+      </motion.div>
     </div>
   );
 }

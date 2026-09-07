@@ -7,27 +7,28 @@ function renderLine(line, key) {
   const parts = line.split(/(\*\*[^*]+\*\*)/g);
 
   return (
-    <p
-      key={key}
-      className="text-[14px] leading-relaxed text-zinc-700"
-    >
+    <p key={key} className="text-[14px] leading-relaxed text-zinc-700">
       {parts.map((part, i) =>
         part.startsWith("**") && part.endsWith("**") ? (
-          <strong
-            key={i}
-            className="font-semibold text-zinc-900"
-          >
+          <strong key={i} className="font-semibold text-zinc-900">
             {part.slice(2, -2)}
           </strong>
         ) : (
-          <React.Fragment key={i}>
-            {part}
-          </React.Fragment>
+          <React.Fragment key={i}>{part}</React.Fragment>
         )
       )}
     </p>
   );
 }
+
+const hasMeaningfulBooking = (booking) =>
+  booking &&
+  typeof booking === "object" &&
+  !Array.isArray(booking) &&
+  Object.keys(booking).some((key) => {
+    const value = booking[key];
+    return value !== null && value !== undefined && value !== "";
+  });
 
 export default function ChatMessages({
   messages,
@@ -37,28 +38,18 @@ export default function ChatMessages({
   const endRef = useRef(null);
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-    });
+    endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages]);
 
   return (
-    <div
-      className="space-y-6"
-      role="log"
-      aria-live="polite"
-    >
+    <div className="space-y-6" role="log" aria-live="polite">
       {messages.map((m) =>
         m.role === "user" ? (
           <motion.div
             key={m.id}
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.25,
-              ease: "easeOut",
-            }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
             className="flex justify-end"
           >
             <p className="max-w-[85%] rounded-2xl rounded-br-md bg-zinc-900 px-4 py-2.5 text-[14px] leading-relaxed text-white">
@@ -70,10 +61,7 @@ export default function ChatMessages({
             key={m.id}
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.25,
-              ease: "easeOut",
-            }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
             className="flex gap-3"
           >
             <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white">
@@ -81,18 +69,15 @@ export default function ChatMessages({
             </span>
 
             <div className="min-w-0 flex-1">
-              {m.typing ? (
-                <div className="flex items-center gap-1 pt-2">
-                  {[0, 1, 2].map((i) => (
-                    <motion.span
-                      key={i}
-                      className="h-2 w-2 rounded-full bg-zinc-400"
-                      animate={{
-                        y: [0, -5, 0],
-                        opacity: [0.4, 1, 0.4],
-                      }}
+              {m.pending ? (
+                <div className="space-y-2.5 pt-1.5" aria-label="Checking availability">
+                  {["w-10/12", "w-8/12", "w-6/12"].map((w, i) => (
+                    <motion.div
+                      key={w}
+                      className={`h-3 rounded-full bg-zinc-100 ${w}`}
+                      animate={{ opacity: [0.45, 1, 0.45] }}
                       transition={{
-                        duration: 0.7,
+                        duration: 1.2,
                         repeat: Infinity,
                         delay: i * 0.15,
                       }}
@@ -102,27 +87,18 @@ export default function ChatMessages({
               ) : (
                 <>
                   <div className="space-y-2">
-                    {m.content
+                    {String(m.content || "")
                       .split("\n")
                       .filter(Boolean)
                       .map(renderLine)}
                   </div>
 
-                  {m.booking && (
+                  {hasMeaningfulBooking(m.booking) && (
                     <ChatBookingCard
                       booking={m.booking}
                       bookingRef={m.bookingRef}
-                      onChange={(patch) =>
-                        onUpdateBooking({
-                          ...m.booking,
-                          ...patch,
-                        })
-                      }
-                      onConfirm={() =>
-                        onConfirmBooking({
-                          ...m.booking,
-                        })
-                      }
+                      onChange={(patch) => onUpdateBooking(m.id, patch)}
+                      onConfirm={() => onConfirmBooking(m.id)}
                     />
                   )}
                 </>
