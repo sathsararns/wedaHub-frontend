@@ -1,217 +1,17 @@
-// import { useEffect, useState } from "react";
-// import { useParams, useNavigate } from "react-router-dom";
-// import { ArrowLeft } from "lucide-react";
-// import axios from "axios";
-
-// import defaultAvatar from "../assets/images/avatar.png";
-
-// import ReviewForm from "../components/providers/ReviewForm";
-// import ReviewsList from "../components/providers/ReviewsList";
-// import ProviderGallery from "../components/providers/ProviderGallery";
-// import { getReviews } from "../services/reviewService";
-
-// export default function ProviderProfilePage() {
-//   const { id } = useParams();
-//   const navigate = useNavigate();
-
-//   const [provider, setProvider] = useState(null);
-//   const [reviews, setReviews] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     loadProvider();
-//     loadReviews();
-//   }, [id]);
-
-//   async function loadProvider() {
-//     try {
-//       const res = await axios.get(
-//         `http://localhost:3000/api/users/provider/${id}`
-//       );
-
-//       setProvider(res.data);
-//     } catch (err) {
-//       console.log(err);
-//     } finally {
-//       setLoading(false);
-//     }
-//   }
-
-//   async function loadReviews() {
-//     try {
-//       const data = await getReviews(id);
-//       setReviews(data);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-
-//   const handleBookNow = () => {
-//     const token = localStorage.getItem("token");
-
-//     if (!token) {
-//       navigate("/login");
-//       return;
-//     }
-
-//     navigate(`/booking/${provider._id}`);
-//   };
-
-//   if (loading || !provider) {
-//     return (
-//       <div className="min-h-screen flex justify-center items-center">
-//         <h2 className="text-xl font-semibold">
-//           Loading Provider...
-//         </h2>
-//       </div>
-//     );
-//   }
-
-//   const avatar =
-//     provider.image &&
-//     provider.image.trim() !== "" &&
-//     !provider.image.includes("default-profile.png")
-//       ? provider.image
-//       : defaultAvatar;
-
-//   return (
-//     <section className="bg-gray-100 min-h-screen py-10">
-//       <div className="max-w-5xl mx-auto px-5">
-
-//         {/* Back Button */}
-//         <button
-//           onClick={() => navigate(-1)}
-//           className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8"
-//         >
-//           <ArrowLeft size={20} />
-//           Back
-//         </button>
-
-//         {/* Provider Info */}
-//         <div className="bg-white rounded-2xl shadow-lg p-8">
-
-//           <div className="flex flex-col md:flex-row gap-8">
-
-//             <img
-//               src={avatar}
-//               alt={provider.firstName}
-//               className="w-44 h-44 rounded-full object-cover border"
-//               onError={(e) => {
-//                 e.currentTarget.src = defaultAvatar;
-//               }}
-//             />
-
-//             <div className="flex-1">
-
-//               <h1 className="text-4xl font-bold">
-//                 {provider.firstName} {provider.lastName}
-//               </h1>
-
-//               <p className="text-lg text-gray-500 mt-2">
-//                 {provider.category} {/* ✅ Changed from businessName */}
-//               </p>
-
-//               <div className="mt-5 space-y-2">
-
-//                 <p>
-//                   <strong>Category :</strong> {provider.category}
-//                 </p>
-
-//                 {/* ✅ Changed from location to city + district */}
-//                 <p>
-//                   <strong>City :</strong> {provider.city || "Not specified"}
-//                 </p>
-
-//                 <p>
-//                   <strong>District :</strong> {provider.district || "Not specified"}
-//                 </p>
-
-//                 <p>
-//                   <strong>Phone :</strong> {provider.phone || "Not available"}
-//                 </p>
-
-//                 <p>
-//                   <strong>Rating :</strong> ⭐ {(provider.rating || 0).toFixed(1)}
-//                 </p>
-
-//                 <p>
-//                   <strong>Reviews :</strong> {provider.reviews || 0}
-//                 </p>
-
-//               </div>
-
-//               {provider.description && (
-//                 <div className="mt-6">
-//                   <h3 className="font-bold text-xl mb-2">
-//                     About
-//                   </h3>
-
-//                   <p className="text-gray-600 leading-7">
-//                     {provider.description}
-//                   </p>
-//                 </div>
-//               )}
-
-//               {/* Book Now Button */}
-//               <div className="mt-8">
-//                 <button
-//                   onClick={handleBookNow}
-//                   className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition"
-//                 >
-//                   Book Now
-//                 </button>
-//               </div>
-
-//             </div>
-
-//           </div>
-
-//         </div>
-
-//         {/* Work Gallery */}
-//         <ProviderGallery
-//           images={provider.workImages || []}
-//         />
-
-//         {/* Review Form */}
-//         <ReviewForm
-//           providerId={id}
-//           onReviewAdded={() => {
-//             loadProvider();
-//             loadReviews();
-//           }}
-//         />
-
-//         {/* Reviews */}
-//         <div className="mt-10">
-
-//           <h2 className="text-2xl font-bold mb-5">
-//             Customer Reviews
-//           </h2>
-
-//           <ReviewsList reviews={reviews} />
-
-//         </div>
-
-//       </div>
-//     </section>
-//   );
-// }
-
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { 
-  ArrowLeft, 
-  Pencil, 
-  Star, 
-  Phone, 
-  MapPin, 
+import {
+  ArrowLeft,
+  Star,
+  Phone,
+  MapPin,
   Briefcase,
   Mail,
   Users,
   Award
 } from "lucide-react";
 import axios from "axios";
+import { motion, useReducedMotion } from "framer-motion";
 
 import defaultAvatar from "../assets/images/avatar.png";
 import ReviewForm from "../components/providers/ReviewForm";
@@ -255,9 +55,23 @@ function WhatsAppIcon({ className }) {
 
 // ====================================================
 
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+};
+const riseItem = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
+const popItem = {
+  hidden: { opacity: 0, scale: 0.7 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: "easeOut" } },
+};
+
 export default function ProviderProfilePage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const shouldReduceMotion = useReducedMotion();
 
   const [provider, setProvider] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -301,12 +115,16 @@ export default function ProviderProfilePage() {
 
   if (loading || !provider) {
     return (
-      <div className="min-h-screen flex justify-center items-center bg-[#EAF0FE]">
+      <div className="min-h-screen flex justify-center items-center bg-[#EAF0FE] px-4">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <h2 className="text-xl font-semibold mt-4 text-gray-700">
+          <motion.h2
+            className="text-lg sm:text-xl font-semibold mt-4 text-gray-700"
+            animate={shouldReduceMotion ? undefined : { opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+          >
             Loading Provider...
-          </h2>
+          </motion.h2>
         </div>
       </div>
     );
@@ -336,39 +154,63 @@ export default function ProviderProfilePage() {
     { label: 'Email', value: provider.email || 'Not available', icon: Mail },
   ];
 
+  const statCards = [
+    { label: 'Rating', value: (provider.rating || 0).toFixed(1), icon: Star, iconBg: 'bg-blue-50', iconColor: 'text-blue-600' },
+    { label: 'Reviews', value: provider.reviews || 0, icon: Users, iconBg: 'bg-green-50', iconColor: 'text-green-600' },
+    { label: 'Category', value: provider.category, icon: Award, iconBg: 'bg-purple-50', iconColor: 'text-purple-600', truncate: true },
+  ];
+
   return (
     <section className="min-h-screen bg-[#EAF0FE] py-8 sm:py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
-        {/* ✨ NEW: Reimagined Back Button - Floating Circular with Hover-Expand */}
-        <button
+        {/* Floating Circular Back Button, hover-expand kept as CSS since it's a
+            width/opacity transition Tailwind already handles cleanly */}
+        <motion.button
           onClick={() => navigate(-1)}
           aria-label="Go back"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          whileTap={{ scale: 0.94 }}
           className="group mb-6 flex h-11 w-11 items-center justify-center rounded-full bg-white text-blue-600 shadow-md ring-1 ring-black/5 transition-all hover:w-28 hover:justify-start hover:gap-2 hover:px-4 hover:shadow-lg"
         >
           <ArrowLeft size={20} className="shrink-0 transition-transform group-hover:-translate-x-0.5" />
           <span className="max-w-0 overflow-hidden whitespace-nowrap text-sm font-semibold opacity-0 transition-all group-hover:max-w-[4rem] group-hover:opacity-100">
             Back
           </span>
-        </button>
+        </motion.button>
 
         {/* Profile Card */}
-        <div className="w-full rounded-3xl bg-white p-6 shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)] sm:p-8">
+        <motion.div
+          className="w-full rounded-3xl bg-white p-6 shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)] sm:p-8"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+        >
           <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
-            
+
             {/* Avatar */}
-            <img
+            <motion.img
               src={avatar}
               alt={`${provider.firstName} ${provider.lastName}`}
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
               className="h-32 w-32 shrink-0 rounded-full object-cover ring-4 ring-blue-100"
               onError={(e) => {
                 e.currentTarget.src = defaultAvatar;
               }}
             />
 
-            <div className="w-full flex-1">
+            <motion.div
+              className="w-full flex-1"
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+            >
               {/* Name and Rating */}
-              <div className="flex flex-wrap items-start justify-between gap-4">
+              <motion.div variants={riseItem} className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <h1 className="text-xl font-extrabold text-gray-900 sm:text-2xl">
                     {provider.firstName} {provider.lastName}
@@ -387,19 +229,10 @@ export default function ProviderProfilePage() {
                     </div>
                   </div>
                 </div>
-                
-                {/* Edit Button */}
-                {/* <button
-                  type="button"
-                  aria-label="Edit profile"
-                  className="rounded-lg p-1.5 text-blue-600 transition-colors hover:bg-blue-50"
-                >
-                  <Pencil className="h-5 w-5" />
-                </button> */}
-              </div>
+              </motion.div>
 
               {/* Info Fields */}
-              <dl className="mt-4 space-y-2.5">
+              <motion.dl variants={riseItem} className="mt-4 space-y-2.5">
                 {infoFields.map((field) => (
                   <div key={field.label} className="flex flex-wrap items-center gap-x-2 text-sm">
                     <dt className="flex items-center gap-1 text-gray-400">
@@ -409,84 +242,85 @@ export default function ProviderProfilePage() {
                     <dd className="font-medium text-gray-700">{field.value}</dd>
                   </div>
                 ))}
-              </dl>
+              </motion.dl>
 
               {/* Description */}
               {provider.description && (
-                <div className="mt-4 p-4 bg-gray-50 rounded-xl">
+                <motion.div variants={riseItem} className="mt-4 p-4 bg-gray-50 rounded-xl">
                   <p className="text-sm text-gray-600 leading-relaxed">
                     {provider.description}
                   </p>
-                </div>
+                </motion.div>
               )}
 
               {/* Social Links & Book Button */}
-              <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-                <ul className="flex flex-wrap gap-2.5">
+              <motion.div
+                variants={riseItem}
+                className="mt-5 flex flex-wrap items-center justify-between gap-4"
+              >
+                <motion.ul
+                  className="flex flex-wrap gap-2.5"
+                  variants={staggerContainer}
+                  initial="hidden"
+                  animate="visible"
+                >
                   {socialLinks.map(({ label, icon: Icon, url }) => (
-                    <li key={label}>
-                      <a
+                    <motion.li key={label} variants={popItem}>
+                      <motion.a
                         href={url}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={label}
-                        className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-white transition-transform hover:scale-110 hover:bg-blue-700"
+                        whileHover={shouldReduceMotion ? undefined : { scale: 1.12 }}
+                        whileTap={{ scale: 0.94 }}
+                        className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700"
                       >
                         <Icon className="h-4 w-4" />
-                      </a>
-                    </li>
+                      </motion.a>
+                    </motion.li>
                   ))}
-                </ul>
+                </motion.ul>
 
-                <button
+                <motion.button
                   onClick={handleBookNow}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl"
                 >
                   Book Now
-                </button>
-              </div>
-            </div>
+                </motion.button>
+              </motion.div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-          <div className="bg-white rounded-2xl p-4 shadow-md">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-50 rounded-xl">
-                <Star className="h-5 w-5 text-blue-600" />
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+        >
+          {statCards.map(({ label, value, icon: Icon, iconBg, iconColor, truncate }) => (
+            <motion.div
+              key={label}
+              variants={riseItem}
+              whileHover={shouldReduceMotion ? undefined : { y: -4, boxShadow: "0 15px 25px -10px rgba(0,0,0,0.12)" }}
+              transition={{ duration: 0.25 }}
+              className="bg-white rounded-2xl p-4 shadow-md"
+            >
+              <div className="flex items-center gap-3">
+                <div className={`p-2 ${iconBg} rounded-xl`}>
+                  <Icon className={`h-5 w-5 ${iconColor}`} />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">{label}</p>
+                  <p className={`text-lg font-bold ${truncate ? "truncate" : ""}`}>{value}</p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-gray-500">Rating</p>
-                <p className="text-lg font-bold">{(provider.rating || 0).toFixed(1)}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl p-4 shadow-md">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-50 rounded-xl">
-                <Users className="h-5 w-5 text-green-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Reviews</p>
-                <p className="text-lg font-bold">{provider.reviews || 0}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl p-4 shadow-md">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-purple-50 rounded-xl">
-                <Award className="h-5 w-5 text-purple-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Category</p>
-                <p className="text-lg font-bold truncate">{provider.category}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          ))}
+        </motion.div>
 
         {/* Work Gallery */}
         <ProviderGallery images={provider.workImages || []} />

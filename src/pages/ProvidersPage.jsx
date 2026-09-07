@@ -2,13 +2,26 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ArrowLeft } from "lucide-react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 import ProviderCard from "../components/providers/ProviderCard";
 import ProviderFilters from "../components/providers/ProviderFilters";
 
+const gridVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.06 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
+  exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2, ease: "easeIn" } },
+};
+
 export default function ProvidersPage() {
   const { category } = useParams();
   const navigate = useNavigate();
+  const shouldReduceMotion = useReducedMotion();
 
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,27 +38,27 @@ export default function ProvidersPage() {
   }, [category]);
 
   async function fetchProviders() {
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const res = await axios.get(
-      `http://localhost:3000/api/users/providers/${category}`
-    );
+      const res = await axios.get(
+        `http://localhost:3000/api/users/providers/${category}`
+      );
 
-    setProviders(res.data);
+      setProviders(res.data);
 
-  } catch (err) {
+    } catch (err) {
 
-    console.log(err);
+      console.log(err);
 
-    setProviders([]);
+      setProviders([]);
 
-  } finally {
+    } finally {
 
-    setLoading(false);
+      setLoading(false);
 
+    }
   }
-}
 
   const filteredProviders = useMemo(() => {
     // Filter
@@ -118,62 +131,101 @@ export default function ProvidersPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
-        <h2 className="text-xl font-semibold">
+      <div className="min-h-screen flex justify-center items-center px-4">
+        <motion.h2
+          className="text-lg sm:text-xl font-semibold text-center"
+          animate={shouldReduceMotion ? undefined : { opacity: [0.4, 1, 0.4] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+        >
           Loading Providers...
-        </h2>
+        </motion.h2>
       </div>
     );
   }
 
   return (
-    <section className="min-h-screen bg-gray-100 py-12">
-      <div className="max-w-7xl mx-auto px-5">
-
-        <button
+    <section className="min-h-screen bg-gray-100 py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-5">
+        <motion.button
           onClick={() => navigate("/services")}
-          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium mb-6"
+          whileHover={shouldReduceMotion ? undefined : { x: -4 }}
+          whileTap={{ scale: 0.97 }}
+          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium mb-5 sm:mb-6"
         >
           <ArrowLeft size={20} />
           Back to Services
-        </button>
+        </motion.button>
 
-        <h1 className="text-4xl font-bold mb-8 capitalize">
+        <motion.h1
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 capitalize"
+        >
           {category} Providers
-        </h1>
+        </motion.h1>
 
-        <ProviderFilters
-          searchName={searchName}
-          setSearchName={setSearchName}
-          searchLocation={searchLocation}
-          setSearchLocation={setSearchLocation}
-          minimumRating={minimumRating}
-          setMinimumRating={setMinimumRating}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
+        >
+          <ProviderFilters
+            searchName={searchName}
+            setSearchName={setSearchName}
+            searchLocation={searchLocation}
+            setSearchLocation={setSearchLocation}
+            minimumRating={minimumRating}
+            setMinimumRating={setMinimumRating}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+          />
+        </motion.div>
 
-        {filteredProviders.length === 0 ? (
-          <div className="bg-white rounded-xl shadow p-10 text-center">
-            <h2 className="text-2xl font-semibold">
-              No Providers Found
-            </h2>
+        <AnimatePresence mode="wait">
+          {filteredProviders.length === 0 ? (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.25 }}
+              className="bg-white rounded-xl shadow p-8 sm:p-10 text-center mt-6"
+            >
+              <h2 className="text-xl sm:text-2xl font-semibold">
+                No Providers Found
+              </h2>
 
-            <p className="text-gray-500 mt-2">
-              Try changing the search filters.
-            </p>
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProviders.map((provider) => (
-              <ProviderCard
-                key={provider._id}
-                provider={provider}
-              />
-            ))}
-          </div>
-        )}
-
+              <p className="text-gray-500 mt-2 text-sm sm:text-base">
+                Try changing the search filters.
+              </p>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="grid"
+              layout
+              variants={gridVariants}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mt-6"
+            >
+              <AnimatePresence mode="popLayout">
+                {filteredProviders.map((provider) => (
+                  <motion.div
+                    key={provider._id}
+                    layout
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                  >
+                    <ProviderCard provider={provider} />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
