@@ -5,20 +5,21 @@ export default function ProviderFields({
   handleChange,
 }) {
   return (
-    <>
+    <div className="space-y-4">
       <textarea
         name="description"
         placeholder="Description"
         value={formData.description}
         onChange={handleChange}
-        className="w-full border rounded-lg p-3"
+        rows={3}
+        className="w-full border border-gray-200 rounded-lg px-4 py-2.5 resize-none text-gray-900 placeholder-gray-400"
       />
 
       <select
         name="category"
         value={formData.category}
         onChange={handleChange}
-        className="w-full border rounded-lg p-3"
+        className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-gray-900"
       >
         <option value="">Select Category</option>
         <option value="Electrician">Electrician</option>
@@ -39,8 +40,8 @@ export default function ProviderFields({
         value={formData.district}
         readOnly
         placeholder="District"
-        className="w-full border rounded-lg p-3 bg-gray-100 cursor-not-allowed"
+        className="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-gray-100 cursor-not-allowed text-gray-900 placeholder-gray-400"
       />
-    </>
+    </div>
   );
 }

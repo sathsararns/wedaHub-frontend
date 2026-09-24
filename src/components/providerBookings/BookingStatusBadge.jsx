@@ -1,32 +1,46 @@
-export default function BookingStatusBadge({ status }) {
-  const styles = {
-    pending:
-      "bg-yellow-100 text-yellow-700 border-yellow-300",
+import { CheckCircle2, Clock, Trophy, XCircle } from "lucide-react";
 
-    accepted:
-      "bg-green-100 text-green-700 border-green-300",
+const CONFIG = {
+  pending: {
+    label: "Pending",
+    icon: Clock,
+    classes: "bg-yellow-50 text-yellow-700 border-yellow-200",
+  },
+  accepted: {
+    label: "Accepted",
+    icon: CheckCircle2,
+    classes: "bg-green-50 text-green-700 border-green-200",
+  },
+  rejected: {
+    label: "Rejected",
+    icon: XCircle,
+    classes: "bg-red-50 text-red-700 border-red-200",
+  },
+  completed: {
+    label: "Completed",
+    icon: Trophy,
+    classes: "bg-blue-50 text-blue-700 border-blue-200",
+  },
+};
 
-    rejected:
-      "bg-red-100 text-red-700 border-red-300",
-
-    completed:
-      "bg-blue-100 text-blue-700 border-blue-300",
+export default function BookingStatusBadge({ status, size = "md" }) {
+  const config = CONFIG[status] || {
+    label: status,
+    icon: Clock,
+    classes: "bg-gray-50 text-gray-700 border-gray-200",
   };
 
-  const labels = {
-    pending: "Pending",
-    accepted: "Accepted",
-    rejected: "Rejected",
-    completed: "Completed",
-  };
+  const Icon = config.icon;
+  const isSmall = size === "sm";
 
   return (
     <span
-      className={`px-4 py-2 rounded-full border text-sm font-semibold ${
-        styles[status] || "bg-gray-100 text-gray-700"
-      }`}
+      className={`inline-flex items-center gap-1.5 rounded-full border font-semibold ${
+        config.classes
+      } ${isSmall ? "px-2.5 py-1 text-xs" : "px-3.5 py-1.5 text-sm"}`}
     >
-      {labels[status] || status}
+      <Icon size={isSmall ? 12 : 14} />
+      {config.label}
     </span>
   );
 }

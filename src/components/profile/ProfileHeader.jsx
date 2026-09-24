@@ -1,4 +1,4 @@
-import { Camera } from "lucide-react";
+import { Camera, MapPin, Star } from "lucide-react";
 
 import { uploadImage } from "../../services/uploadService";
 import defaultAvatar from "../../assets/images/avatar.png";
@@ -10,6 +10,8 @@ export default function ProfileHeader({ profile, setProfile, editing }) {
     !profile.image.includes("default-profile.png")
       ? profile.image
       : defaultAvatar;
+
+  const location = [profile?.city, profile?.district].filter(Boolean).join(", ");
 
   const handleImageUpload = async (e) => {
     try {
@@ -36,11 +38,11 @@ export default function ProfileHeader({ profile, setProfile, editing }) {
   };
 
   return (
-    <div className="mb-8 overflow-hidden rounded-3xl bg-white shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)]">
+    <div className="mb-6 sm:mb-8 overflow-hidden rounded-3xl bg-white shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)]">
       {/* Cover */}
-      <div className="h-36 bg-gradient-to-r from-blue-600 to-indigo-600 sm:h-44"></div>
+      <div className="h-28 bg-gradient-to-r from-[#07184B] to-blue-700 sm:h-36"></div>
 
-      <div className="flex flex-col items-center px-6 pb-8 -mt-16">
+      <div className="flex flex-col items-center px-6 pb-8 -mt-16 sm:-mt-20">
         <div className="relative">
           <img
             src={avatarSrc}
@@ -78,13 +80,47 @@ export default function ProfileHeader({ profile, setProfile, editing }) {
 
         <p className="text-gray-500">{profile.email}</p>
 
-        <span
-          className={`mt-3 rounded-full px-5 py-1.5 text-sm font-semibold ${
-            roleStyles[profile?.role] || "bg-gray-100 text-gray-700"
-          }`}
-        >
-          {profile?.role?.toUpperCase()}
-        </span>
+        {/* Summary row: role, category & rating, location */}
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
+          <span
+            className={`rounded-full px-4 py-1.5 text-sm font-semibold ${
+              roleStyles[profile?.role] || "bg-gray-100 text-gray-700"
+            }`}
+          >
+            {profile?.role?.toUpperCase()}
+          </span>
+
+          {profile.role === "provider" && (
+            <>
+              {profile.category && (
+                <>
+                  <span className="hidden text-gray-300 sm:inline">•</span>
+                  <span className="text-sm font-medium text-gray-600">
+                    {profile.category}
+                  </span>
+                </>
+              )}
+
+              <span className="hidden text-gray-300 sm:inline">•</span>
+              <span className="inline-flex items-center gap-1 text-sm">
+                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                <span className="font-semibold text-gray-700">
+                  {profile.rating?.toFixed(1) || "0.0"}
+                </span>
+                <span className="text-gray-400">
+                  ({profile.reviews || 0} reviews)
+                </span>
+              </span>
+            </>
+          )}
+        </div>
+
+        {location && (
+          <p className="mt-2 flex items-center gap-1 text-sm text-gray-400">
+            <MapPin size={14} />
+            {location}
+          </p>
+        )}
       </div>
     </div>
   );

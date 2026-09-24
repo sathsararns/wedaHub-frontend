@@ -149,36 +149,36 @@ export default function SignupPage() {
       <motion.div
         initial={{ opacity: 0, y: 24, scale: 0.97 }}
         animate={cardControls}
-        className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-[480px] p-8 sm:p-10 relative z-10 mx-4"
+        className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-[480px] p-6 sm:p-8 relative z-10 mx-4"
       >
         {/* Logo */}
         <motion.div
-          className="flex justify-center mb-6"
+          className="flex justify-center mb-4"
           initial={{ scale: 0.6, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
         >
-          <div className="w-24 h-24 bg-[#07184B] rounded-full flex items-center justify-center overflow-hidden">
+          <div className="w-20 h-20 bg-[#07184B] rounded-full flex items-center justify-center overflow-hidden">
             <img
               src={logo}
               alt="වැල Hub Logo"
-              className="w-20 h-20 object-contain"
+              className="w-16 h-16 object-contain"
             />
           </div>
         </motion.div>
 
         {/* Heading */}
-        <h1 className="text-3xl font-bold text-center text-gray-900 mb-2 tracking-tight">
+        <h1 className="text-3xl font-bold text-center text-gray-900 mb-1.5 tracking-tight">
           Sign Up
         </h1>
-        <p className="text-center text-gray-500 text-sm mb-8">
+        <p className="text-center text-gray-500 text-sm mb-5">
           Create your account to get started
         </p>
 
         {/* Form */}
         <motion.form
           onSubmit={handleSubmit}
-          className="space-y-5"
+          className="space-y-4"
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
@@ -187,7 +187,7 @@ export default function SignupPage() {
           <motion.div variants={riseItem}>
             <label
               htmlFor="firstName"
-              className="block text-sm font-semibold text-gray-900 mb-1.5"
+              className="block text-sm font-semibold text-gray-900 mb-1"
             >
               First Name
             </label>
@@ -199,7 +199,7 @@ export default function SignupPage() {
               value={formData.firstName}
               whileFocus={fieldFocus}
               transition={{ duration: 0.15 }}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
             />
@@ -209,7 +209,7 @@ export default function SignupPage() {
           <motion.div variants={riseItem}>
             <label
               htmlFor="lastName"
-              className="block text-sm font-semibold text-gray-900 mb-1.5"
+              className="block text-sm font-semibold text-gray-900 mb-1"
             >
               Last Name
             </label>
@@ -221,7 +221,7 @@ export default function SignupPage() {
               value={formData.lastName}
               whileFocus={fieldFocus}
               transition={{ duration: 0.15 }}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
             />
@@ -231,7 +231,7 @@ export default function SignupPage() {
           <motion.div variants={riseItem}>
             <label
               htmlFor="email"
-              className="block text-sm font-semibold text-gray-900 mb-1.5"
+              className="block text-sm font-semibold text-gray-900 mb-1"
             >
               Email
             </label>
@@ -243,7 +243,7 @@ export default function SignupPage() {
               value={formData.email}
               whileFocus={fieldFocus}
               transition={{ duration: 0.15 }}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
             />
@@ -253,7 +253,7 @@ export default function SignupPage() {
           <motion.div variants={riseItem}>
             <label
               htmlFor="password"
-              className="block text-sm font-semibold text-gray-900 mb-1.5"
+              className="block text-sm font-semibold text-gray-900 mb-1"
             >
               Password
             </label>
@@ -268,7 +268,7 @@ export default function SignupPage() {
                 required
                 whileFocus={fieldFocus}
                 transition={{ duration: 0.15 }}
-                className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+                className="w-full px-4 py-2.5 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               />
               <motion.button
                 type="button"
@@ -297,7 +297,7 @@ export default function SignupPage() {
           <motion.div variants={riseItem}>
             <label
               htmlFor="phone"
-              className="block text-sm font-semibold text-gray-900 mb-1.5"
+              className="block text-sm font-semibold text-gray-900 mb-1"
             >
               Phone
             </label>
@@ -309,7 +309,7 @@ export default function SignupPage() {
               value={formData.phone}
               whileFocus={fieldFocus}
               transition={{ duration: 0.15 }}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#4338CA] focus:border-transparent outline-none transition-all text-gray-900 placeholder-gray-400"
               onChange={handleChange}
               required
             />
@@ -317,9 +317,6 @@ export default function SignupPage() {
 
           {/* Role Selector */}
           <motion.div variants={riseItem}>
-            <label className="block text-sm font-semibold text-gray-900 mb-1.5">
-              Account Type
-            </label>
             <RoleSelector role={role} setRole={setRole} />
           </motion.div>
 
@@ -360,7 +357,7 @@ export default function SignupPage() {
             disabled={loading}
             whileHover={shouldReduceMotion || loading ? undefined : { scale: 1.01 }}
             whileTap={loading ? undefined : { scale: 0.98 }}
-            className="w-full bg-[#4338CA] hover:bg-[#07184B] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-colors mt-2 shadow-sm"
+            className="w-full bg-[#4338CA] hover:bg-[#07184B] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition-colors shadow-sm"
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.span
@@ -377,7 +374,7 @@ export default function SignupPage() {
           </motion.button>
 
           {/* Login Link */}
-          <motion.p variants={riseItem} className="text-center text-sm text-gray-500 mt-4">
+          <motion.p variants={riseItem} className="text-center text-sm text-gray-500">
             Already have an account?{" "}
             <Link
               to="/login"
