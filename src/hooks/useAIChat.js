@@ -1,19 +1,8 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import {
-  sendMessage,
-  createBooking,
-  resetChat,
-} from "../services/aiChatService";
+import { streamMessage, resetChat } from "../services/aiChatService";
 import { useAuth } from "../context/AuthContext";
 
 const uid = () => Math.random().toString(36).slice(2);
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const isEmptyObject = (value) =>
-  value &&
-  typeof value === "object" &&
-  !Array.isArray(value) &&
-  Object.keys(value).length === 0;
 
 const compactBookingResponse = (text) => {
   const raw = String(text || "").replace(/\r/g, "");
@@ -102,71 +91,65 @@ export function useAIChat() {
 
       setIsResponding(true);
 
+      let streamedText = "";
+      let receivedFirstChunk = false;
+
       try {
-        const result = await sendMessage(text, customerId, authToken);
+        await streamMessage(text, customerId, authToken, {
+          onChunk: (chunk) => {
+            if (myGeneration !== generationRef.current) return;
+
+            streamedText += chunk;
+            receivedFirstChunk = true;
+
+            setMessages((prev) =>
+              prev.map((m) =>
+                m.id === pendingId
+                  ? { ...m, pending: false, typing: false, content: streamedText }
+                  : m
+              )
+            );
+          },
+          onDone: (event) => {
+            if (myGeneration !== generationRef.current) return;
+
+            const booking = normalizeBooking(event.booking);
+            // Snap to the compacted text now that we know whether this
+            // turn produced a booking — while streaming we can't tell
+            // until this final event arrives, so the raw text is shown
+            // briefly and then replaced here (see aiChatService.js).
+            const finalText = booking
+              ? compactBookingResponse(streamedText)
+              : streamedText || "No response received.";
+
+            setMessages((prev) =>
+              prev.map((m) =>
+                m.id === pendingId
+                  ? {
+                      ...m,
+                      content: finalText,
+                      pending: false,
+                      typing: false,
+                      booking,
+                      recommendations: event.recommendations || [],
+                    }
+                  : m
+              )
+            );
+          },
+        });
 
         if (myGeneration !== generationRef.current) return;
 
-        const booking = normalizeBooking(result.booking);
-        const fullResponseRaw = result.response || "No response received.";
-        const fullResponse = booking
-          ? compactBookingResponse(fullResponseRaw)
-          : fullResponseRaw;
-
-        await sleep(500);
-        if (myGeneration !== generationRef.current) return;
-
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === pendingId
-              ? { ...m, pending: false, typing: false, content: "" }
-              : m
-          )
-        );
-
-        await sleep(100);
-        if (myGeneration !== generationRef.current) return;
-
-        let currentText = "";
-        const chunkSize = 2;
-
-        for (let i = 0; i < fullResponse.length; i += chunkSize) {
-          if (myGeneration !== generationRef.current) return;
-
-          currentText += fullResponse.slice(i, i + chunkSize);
-
+        if (!receivedFirstChunk) {
           setMessages((prev) =>
             prev.map((m) =>
-              m.id === pendingId ? { ...m, content: currentText } : m
+              m.id === pendingId
+                ? { ...m, pending: false, typing: false, content: "No response received." }
+                : m
             )
           );
-
-          const nextChar = fullResponse[i + chunkSize] || "";
-          let delay = 22;
-          if (nextChar === ".") delay = 180;
-          else if (nextChar === ",") delay = 80;
-          else if (nextChar === "\n") delay = 120;
-          else if (nextChar === " ") delay = 25;
-
-          await sleep(delay);
         }
-
-        if (myGeneration !== generationRef.current) return;
-
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === pendingId
-              ? {
-                  ...m,
-                  content: fullResponse,
-                  pending: false,
-                  typing: false,
-                  booking,
-                  recommendations: result.recommendations || [],
-                }
-              : m
-          )
-        );
       } catch (err) {
         if (myGeneration !== generationRef.current) return;
 
@@ -212,19 +195,11 @@ export function useAIChat() {
     );
   }, []);
 
-  const confirmBooking = useCallback(
-    async (booking) => {
-      return await createBooking(booking, authToken);
-    },
-    [authToken]
-  );
-
   return {
     messages,
     isResponding,
     send,
     updateBooking,
-    confirmBooking,
     resetAll,
   };
 }

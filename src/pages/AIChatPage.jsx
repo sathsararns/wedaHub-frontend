@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { PanelLeftIcon } from "lucide-react";
 
 import ChatSidebar from "../components/ai/ChatSidebar";
@@ -21,7 +21,6 @@ export default function AIChatPage() {
     isResponding,
     send,
     updateBooking,
-    confirmBooking,
     resetAll,
   } = useAIChat();
 
@@ -88,7 +87,6 @@ export default function AIChatPage() {
                   <ChatMessages
                     messages={messages}
                     onUpdateBooking={updateBooking}
-                    onConfirmBooking={confirmBooking}
                   />
                 ) : (
                   <>
