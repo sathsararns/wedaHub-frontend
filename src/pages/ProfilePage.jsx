@@ -11,7 +11,7 @@ import ProfileSection from "../components/profile/ProfileSection";
 
 import { getProfile, updateProfile } from "../services/userService";
 import { uploadImage } from "../services/uploadService";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../hooks/useAuth.js";
 
 const staggerContainer = {
   hidden: {},

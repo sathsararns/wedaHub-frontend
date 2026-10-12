@@ -1,10 +1,11 @@
-import api from "../utils/api";
+import api from "../Utils/api.js";
+import { normalizeToken } from "../Utils/authToken.js";
 
 const authConfig = (authToken) =>
-  authToken
+  normalizeToken(authToken)
     ? {
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${normalizeToken(authToken)}`,
         },
       }
     : undefined;

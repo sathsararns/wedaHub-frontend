@@ -1,4 +1,5 @@
 import api from "../utils/api";
+import { clearStoredAuth, storeToken } from "../Utils/authToken.js";
 
 // =============================
 // Register
@@ -18,7 +19,7 @@ export const login = async (userData) => {
 
   // save immediately
   if (data.token) {
-    localStorage.setItem("token", data.token);
+    storeToken(data.token);
   }
 
   if (data._id) {
@@ -52,6 +53,5 @@ export const getProfile = async () => {
 // =============================
 
 export const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
+  clearStoredAuth();
 };

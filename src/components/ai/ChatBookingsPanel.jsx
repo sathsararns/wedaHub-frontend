@@ -1,41 +1,44 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { CalendarX, RefreshCw } from "lucide-react";
 
 import { getCustomerBookings } from "../../services/bookingService";
 import BookingCard from "../bookings/BookingCard";
 import socket from "../../lib/socket";
-import { useAuth } from "../../context/AuthContext";
-
-const getToken = (authToken, user) =>
-  authToken ||
-  user?.token ||
-  localStorage.getItem("token") ||
-  localStorage.getItem("accessToken") ||
-  localStorage.getItem("authToken");
+import { useAuth } from "../../hooks/useAuth.js";
+import { resolveAuthToken } from "../../Utils/authToken.js";
 
 export default function ChatBookingsPanel() {
-  const { user, token } = useAuth();
-  const resolvedToken = getToken(token, user);
+  const { user, token, logout } = useAuth();
+  const location = useLocation();
+  const requestIdRef = useRef(0);
 
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
+  const [requiresLogin, setRequiresLogin] = useState(false);
 
   const loadBookings = useCallback(async () => {
-    if (!resolvedToken) {
+    const requestId = ++requestIdRef.current;
+    const resolvedToken = resolveAuthToken({ token, user });
+    if (!user || !resolvedToken) {
       setBookings([]);
       setError("Please log in first to see your bookings.");
+      setRequiresLogin(true);
       setLoading(false);
       setRefreshing(false);
+      if (user) logout();
       return;
     }
 
     try {
       setError("");
+      setRequiresLogin(false);
       setRefreshing(true);
 
       const data = await getCustomerBookings(resolvedToken);
+      if (requestId !== requestIdRef.current) return;
       const normalized = Array.isArray(data)
         ? data
         : Array.isArray(data?.bookings)
@@ -44,24 +47,32 @@ export default function ChatBookingsPanel() {
 
       setBookings(normalized);
     } catch (err) {
-      console.error("Failed to load bookings:", err);
+      if (requestId !== requestIdRef.current) return;
+      console.error("Failed to load bookings:", err?.response?.status || err?.message);
       setBookings([]);
 
       if (err?.response?.status === 401) {
+        setRequiresLogin(true);
         setError("Session expired. Please log in again.");
+        logout();
       } else {
-        setError(err?.message || "Failed to load bookings.");
+        setError(err?.response?.data?.message || err?.message || "Failed to load bookings.");
       }
     } finally {
-      setLoading(false);
-      setRefreshing(false);
+      if (requestId === requestIdRef.current) {
+        setLoading(false);
+        setRefreshing(false);
+      }
     }
-  }, [resolvedToken]);
+  }, [token, user, logout]);
 
   useEffect(() => {
-    loadBookings();
+    let active = true;
+    queueMicrotask(() => {
+      if (active) void loadBookings();
+    });
 
-    if (!socket.connected) socket.connect();
+    if (user && !socket.connected) socket.connect();
 
     const refresh = () => loadBookings();
 
@@ -69,10 +80,12 @@ export default function ChatBookingsPanel() {
     socket.on("booking-status-updated", refresh);
 
     return () => {
+      active = false;
+      requestIdRef.current += 1;
       socket.off("new-booking", refresh);
       socket.off("booking-status-updated", refresh);
     };
-  }, [loadBookings]);
+  }, [loadBookings, user]);
 
   if (loading) {
     return (
@@ -89,14 +102,22 @@ export default function ChatBookingsPanel() {
     return (
       <div className="rounded-3xl border border-rose-200 bg-rose-50 p-6 text-center">
         <p className="text-sm font-medium text-rose-700">{error}</p>
-        <button
+        {requiresLogin ? (
+          <Link
+            to="/login"
+            state={{ from: location.pathname + location.search }}
+            className="mt-4 inline-flex items-center gap-2 rounded-full bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700"
+          >
+            Log in
+          </Link>
+        ) : <button
           type="button"
           onClick={loadBookings}
           className="mt-4 inline-flex items-center gap-2 rounded-full bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700"
         >
           <RefreshCw className="h-4 w-4" />
           Try again
-        </button>
+        </button>}
       </div>
     );
   }
@@ -138,7 +159,7 @@ export default function ChatBookingsPanel() {
       ) : (
         <div className="space-y-5">
           {bookings.map((booking) => (
-            <BookingCard key={booking._id || booking.id} booking={booking} />
+            <BookingCard key={booking._id || booking.id} booking={booking} onCancelled={loadBookings} />
           ))}
         </div>
       )}

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import socket from "../lib/socket";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../hooks/useAuth.js";
 
 const SocketContext = createContext();
 

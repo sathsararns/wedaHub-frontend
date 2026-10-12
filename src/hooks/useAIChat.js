@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { streamMessage, resetChat } from "../services/aiChatService";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "./useAuth.js";
 
 const uid = () => Math.random().toString(36).slice(2);
 

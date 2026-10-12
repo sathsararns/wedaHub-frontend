@@ -1,19 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import defaultAvatar from "../assets/images/avatar.png";
 import socket from "../lib/socket";
-
-const AuthContext = createContext();
+import { clearStoredAuth, readStoredSession, resolveAuthToken, storeToken, TOKEN_KEYS } from "../Utils/authToken.js";
+import { AuthContext } from "./authState.js";
 
 const DEFAULT_IMAGE = defaultAvatar;
-const TOKEN_KEYS = ["token", "accessToken", "authToken", "jwt"];
-
-const readStoredToken = () => {
-  for (const key of TOKEN_KEYS) {
-    const value = localStorage.getItem(key);
-    if (value) return value;
-  }
-  return null;
-};
 
 const normalizeImage = (image) => {
   if (
@@ -27,28 +18,22 @@ const normalizeImage = (image) => {
 };
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [initialSession] = useState(() => readStoredSession());
+  const [user, setUser] = useState(() => initialSession.user && {
+    ...initialSession.user,
+    image: normalizeImage(initialSession.user.image),
+  });
+  const [token, setToken] = useState(initialSession.token);
 
   useEffect(() => {
-    const savedToken = readStoredToken();
-    const savedUser = localStorage.getItem("user");
-
-    if (savedToken && savedUser) {
-      try {
-        const parsedUser = JSON.parse(savedUser);
-
-        setToken(savedToken);
-        setUser({
-          ...parsedUser,
-          image: normalizeImage(parsedUser.image),
-        });
-      } catch (err) {
-        console.error("Failed to restore auth state:", err);
-        localStorage.removeItem("user");
-        TOKEN_KEYS.forEach((key) => localStorage.removeItem(key));
-      }
-    }
+    const restoreSession = (event) => {
+      if (event.key !== null && event.key !== "user" && !TOKEN_KEYS.includes(event.key)) return;
+      const saved = readStoredSession();
+      setToken(saved.token);
+      setUser(saved.user && { ...saved.user, image: normalizeImage(saved.user.image) });
+    };
+    window.addEventListener("storage", restoreSession);
+    return () => window.removeEventListener("storage", restoreSession);
   }, []);
 
   useEffect(() => {
@@ -64,10 +49,13 @@ export function AuthProvider({ children }) {
   }, [user]);
 
   const login = (data = {}) => {
-    const resolvedToken =
-      data.token || data.accessToken || data.authToken || data.jwt || null;
-
     const userId = data._id || data.id || data.user?._id || null;
+    const resolvedToken = resolveAuthToken({
+      token: data.token || data.accessToken || data.authToken || data.jwt,
+      user: { _id: userId },
+      storage: null,
+    });
+    if (!resolvedToken) throw new Error("Login did not return a valid session. Please try again.");
 
     const userData = {
       _id: userId,
@@ -83,7 +71,7 @@ export function AuthProvider({ children }) {
     setUser(userData);
 
     if (resolvedToken) {
-      TOKEN_KEYS.forEach((key) => localStorage.setItem(key, resolvedToken));
+      storeToken(resolvedToken);
     }
 
     localStorage.setItem("user", JSON.stringify(userData));
@@ -102,15 +90,14 @@ export function AuthProvider({ children }) {
     });
   };
 
-  const logout = () => {
+  const logout = useCallback(() => {
     socket.disconnect();
 
     setToken(null);
     setUser(null);
 
-    TOKEN_KEYS.forEach((key) => localStorage.removeItem(key));
-    localStorage.removeItem("user");
-  };
+    clearStoredAuth();
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -126,5 +113,3 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
-
-export const useAuth = () => useContext(AuthContext);
