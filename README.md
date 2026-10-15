@@ -5,7 +5,7 @@ browsing services, booking (form or AI chat), tracking bookings, and reviews.
 
 ## Prerequisites
 
-- Node.js 18+
+- Node.js 22.x
 - Backend running at `http://localhost:3000` (see [backend/README.md](../backend/README.md))
 
 ## Setup
@@ -36,7 +36,19 @@ npm run preview  # preview the production build
 npm run lint     # eslint
 ```
 
-Keep port `5173` — both backends allowlist exactly that origin in CORS.
+Local development defaults to port `5173`. For a different frontend origin, set
+the Express backend's `FRONTEND_URL` to that origin. Socket.IO derives its backend
+origin from `VITE_API_URL`.
+
+## Deploy to Vercel
+
+Import this repository as a Vite project. `vercel.json` configures installation,
+build, `dist` output, and the React Router fallback. Set `VITE_API_URL` to your
+Render backend's absolute URL including `/api`, plus the Cloudinary and Geoapify
+values in `.env.example`. Set the backend's `FRONTEND_URL` to your Vercel production
+URL. Frontend environment changes require a rebuild.
+
+See [the complete deployment guide](../DEPLOYMENT.md) in the WedaHub workspace.
 
 ## Test
 

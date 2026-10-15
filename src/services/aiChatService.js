@@ -1,4 +1,4 @@
-import api from "../utils/api";
+import api from "../Utils/api";
 
 import cleanerImg from "../assets/images/services/cleaner.jpg";
 import plumberImg from "../assets/images/services/plumber.jpg";

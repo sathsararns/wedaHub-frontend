@@ -1,16 +1,6 @@
-import axios from "axios";
+import api from "../Utils/api.js";
 
-const API_URL = "http://localhost:3000/api/users";
-
-const getAuthHeaders = () => {
-  const token = localStorage.getItem("token");
-
-  return {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-};
+const API_URL = "/users";
 
 // ==========================
 // Get Logged User Profile
@@ -18,10 +8,7 @@ const getAuthHeaders = () => {
 
 export const getProfile = async () => {
   try {
-    const res = await axios.get(
-      `${API_URL}/profile`,
-      getAuthHeaders()
-    );
+    const res = await api.get(`${API_URL}/profile`);
 
     return res.data;
   } catch (error) {
@@ -51,10 +38,9 @@ export const updateProfile = async (profileData) => {
       workImages: profileData.workImages,
     };
 
-    const res = await axios.put(
+    const res = await api.put(
       `${API_URL}/profile`,
-      payload,
-      getAuthHeaders()
+      payload
     );
 
     return res.data;

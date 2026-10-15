@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import api from "../../utils/api";
+import api from "../../Utils/api";
 import toast, { Toaster } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion, AnimatePresence, useAnimation, useReducedMotion } from "framer-motion";

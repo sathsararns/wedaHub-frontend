@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { motion, useReducedMotion } from "framer-motion";
 
-import api from "../utils/api";
+import api from "../Utils/api";
 import { getProviderBookings } from "../services/bookingService";
 
 import BackButton from "../components/common/BackButton";

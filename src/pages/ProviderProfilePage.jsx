@@ -10,7 +10,7 @@ import {
   Users,
   Award
 } from "lucide-react";
-import axios from "axios";
+import api from "../Utils/api.js";
 import { motion, useReducedMotion } from "framer-motion";
 
 import defaultAvatar from "../assets/images/avatar.png";
@@ -84,8 +84,8 @@ export default function ProviderProfilePage() {
 
   async function loadProvider() {
     try {
-      const res = await axios.get(
-        `http://localhost:3000/api/users/provider/${id}`
+      const res = await api.get(
+        `/users/provider/${id}`
       );
       setProvider(res.data);
     } catch (err) {

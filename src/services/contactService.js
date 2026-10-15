@@ -1,4 +1,4 @@
-import api from "../utils/api";
+import api from "../Utils/api";
 
 export const sendMessage = async (data) => {
   const res = await api.post("/contact", data);

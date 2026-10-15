@@ -1,4 +1,4 @@
-import api from "../utils/api";
+import api from "../Utils/api";
 import { clearStoredAuth, storeToken } from "../Utils/authToken.js";
 
 // =============================

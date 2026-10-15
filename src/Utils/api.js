@@ -1,8 +1,9 @@
 import axios from "axios";
 import { resolveAuthToken } from "./authToken.js";
+import { API_URL } from "./config.js";
 
 const api = axios.create({
-  baseURL: import.meta.env?.VITE_API_URL || "http://localhost:3000/api",
+  baseURL: API_URL,
   withCredentials: true,
 });
 

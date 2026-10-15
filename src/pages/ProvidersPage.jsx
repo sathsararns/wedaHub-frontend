@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../Utils/api.js";
 import { ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
@@ -41,8 +41,8 @@ export default function ProvidersPage() {
     try {
       setLoading(true);
 
-      const res = await axios.get(
-        `http://localhost:3000/api/users/providers/${category}`
+      const res = await api.get(
+        `/users/providers/${category}`
       );
 
       setProviders(res.data);

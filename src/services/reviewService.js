@@ -1,20 +1,14 @@
-import axios from "axios";
+import api from "../Utils/api.js";
 
-const API_URL = "http://localhost:3000/api/reviews";
+const API_URL = "/reviews";
 
 export async function addReview(review) {
-  const token = localStorage.getItem("token");
-
-  const res = await axios.post(API_URL, review, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await api.post(API_URL, review);
 
   return res.data;
 }
 
 export async function getReviews(providerId) {
-  const res = await axios.get(`${API_URL}/${providerId}`);
+  const res = await api.get(`${API_URL}/${providerId}`);
   return res.data;
 }

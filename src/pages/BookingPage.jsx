@@ -9,7 +9,7 @@ import {
   MapPin,
   ClipboardList,
 } from "lucide-react";
-import axios from "axios";
+import api from "../Utils/api.js";
 import toast from "react-hot-toast";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
@@ -41,8 +41,8 @@ export default function BookingPage() {
 
   async function loadProvider() {
     try {
-      const res = await axios.get(
-        `http://localhost:3000/api/users/provider/${id}`
+      const res = await api.get(
+        `/users/provider/${id}`
       );
 
       console.log("📦 Provider Data:", res.data);

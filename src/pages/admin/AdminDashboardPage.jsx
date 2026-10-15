@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import api from "../../utils/api";
+import api from "../../Utils/api";
 
 import Sidebar from "../../components/admin/Sidebar";
 import DashboardHeader from "../../components/admin/DashboardHeader";

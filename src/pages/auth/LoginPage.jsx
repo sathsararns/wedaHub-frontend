@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion, AnimatePresence, useAnimation, useReducedMotion } from "framer-motion";
 
-import api from "../../utils/api";
+import api from "../../Utils/api";
 import { useAuth } from "../../hooks/useAuth.js";
 import { loginReturnPath } from "../../Utils/authRedirect.js";
 
