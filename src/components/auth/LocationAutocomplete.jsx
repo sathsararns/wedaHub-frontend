@@ -63,7 +63,7 @@ export default function LocationAutocomplete({
         onChange={handleChange}
         placeholder="City / Town"
         autoComplete="off"
-        className="w-full border rounded-lg p-3"
+        className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-400"
       />
 
       {suggestions.length > 0 && (

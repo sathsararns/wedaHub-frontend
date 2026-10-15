@@ -4,7 +4,7 @@ import logo from "../../assets/images/logo.png";
 import NavLinks from "./NavLinks";
 import AuthButtons from "./AuthButtons";
 import ProfileDropdown from "./ProfileDropdown";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth.js";
 import { NavLink } from "react-router-dom";
 
 const topBarVariants = {

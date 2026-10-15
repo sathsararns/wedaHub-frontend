@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion, AnimatePresence, useAnimation, useReducedMotion } from "framer-motion";
 
 import api from "../../utils/api";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth.js";
+import { loginReturnPath } from "../../Utils/authRedirect.js";
 
 // Import your logo image (adjust the path based on your project structure)
 import logo from "../../assets/images/logo.png";
@@ -19,6 +20,7 @@ export default function LoginPage() {
 
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const shouldReduceMotion = useReducedMotion();
   const cardControls = useAnimation();
 
@@ -57,12 +59,12 @@ export default function LoginPage() {
 
       // Small delay before navigation
       setTimeout(() => {
-        navigate("/");
+        navigate(loginReturnPath(location.state?.from), { replace: true });
       }, 500);
 
     } catch (err) {
       toast.error(
-        err.response?.data?.message || "Login failed"
+        err.response?.data?.message || err.message || "Login failed"
       );
 
       // A quick shake gives immediate visual feedback on a failed attempt,

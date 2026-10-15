@@ -7,7 +7,7 @@ export default function ProfileActions({
   loading,
 }) {
   return (
-    <div className="flex justify-end gap-3 rounded-2xl bg-white p-5 shadow-md">
+    <div className="flex justify-end gap-3 rounded-2xl bg-white p-5 shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)]">
 
       {!editing ? (
         <button

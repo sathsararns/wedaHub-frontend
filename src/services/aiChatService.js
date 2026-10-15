@@ -50,49 +50,79 @@ export async function resetChat(customerId = null, authToken = null) {
 }
 
 // ==============================
-// Booking
+// AI Chat (streaming)
 // ==============================
+// Uses fetch + ReadableStream directly (not axios) since a genuine
+// incremental stream needs the raw response body reader — axios's
+// browser adapter buffers the whole response before resolving.
+// Frames are newline-delimited "data: {...}\n\n" (Server-Sent Events
+// style), each either {type:"chunk", text} or the final
+// {type:"done", recommendations, booking}.
 
-export async function createBooking(bookingData, authToken = null) {
-  const { data } = await api.post(
-    "/ai/booking",
-    bookingData,
-    authConfig(authToken)
-  );
-  return data;
-}
-
-// ==============================
-// Booking Status
-// ==============================
-
-export async function getBookingStatus(bookingId, authToken = null) {
-  const { data } = await api.get(
-    `/ai/booking/${bookingId}`,
-    authConfig(authToken)
-  );
-  return data;
-}
-
-// ==============================
-// Provider Recommendations
-// ==============================
-
-export async function getRecommendations(
-  service,
-  location,
-  authToken = null
+export async function streamMessage(
+  message,
+  customerId = null,
+  authToken = null,
+  { onChunk, onDone } = {}
 ) {
-  const { data } = await api.post(
-    "/ai/recommend",
-    {
-      service,
-      location,
-    },
-    authConfig(authToken)
-  );
+  const headers = { "Content-Type": "application/json" };
 
-  return data;
+  if (authToken) {
+    headers.Authorization = `Bearer ${authToken}`;
+  }
+
+  const baseURL = api.defaults.baseURL || "";
+
+  const response = await fetch(`${baseURL}/ai/chat/stream`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      message,
+      customerId,
+      customer_id: customerId,
+    }),
+  });
+
+  if (!response.ok || !response.body) {
+    throw new Error(`AI stream request failed (${response.status})`);
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+
+    let boundary = buffer.indexOf("\n\n");
+
+    while (boundary !== -1) {
+      const rawEvent = buffer.slice(0, boundary);
+      buffer = buffer.slice(boundary + 2);
+
+      const line = rawEvent.startsWith("data: ") ? rawEvent.slice(6) : rawEvent;
+
+      if (line.trim()) {
+        try {
+          const event = JSON.parse(line);
+
+          if (event.type === "chunk") {
+            onChunk?.(event.text);
+          } else if (event.type === "done") {
+            onDone?.(event);
+          }
+        } catch {
+          // Ignore a malformed/partial frame — shouldn't happen since
+          // frames are only parsed once a full "\n\n" boundary arrives.
+        }
+      }
+
+      boundary = buffer.indexOf("\n\n");
+    }
+  }
 }
 
 // ==============================
