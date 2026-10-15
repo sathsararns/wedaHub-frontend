@@ -1,14 +1,5 @@
 import api from "../Utils/api";
 
-import cleanerImg from "../assets/images/services/cleaner.jpg";
-import plumberImg from "../assets/images/services/plumber.jpg";
-import electricianImg from "../assets/images/services/electrician.jpg";
-import applianceImg from "../assets/images/services/appliance.jpg";
-import pestImg from "../assets/images/services/pest-control.jpg";
-import carpenterImg from "../assets/images/services/carpenter.jpg";
-import painterImg from "../assets/images/services/painter.jpg";
-import mechanicImg from "../assets/images/services/mechanic.jpg";
-
 const authConfig = (authToken) =>
   authToken
     ? {
@@ -130,78 +121,14 @@ export async function streamMessage(
 // ==============================
 
 export const SERVICES = [
-  {
-    id: "cleaning",
-    name: "Home Cleaning",
-    image: cleanerImg,
-    blurb: "Standard or deep clean by vetted, insured cleaners.",
-    priceFrom: 3500,
-    unit: "per visit",
-    duration: "2–3 hrs",
-  },
-  {
-    id: "plumbing",
-    name: "Plumbing Repair",
-    image: plumberImg,
-    blurb: "Leaks, blocked drains, taps, water heaters and fittings.",
-    priceFrom: 2500,
-    unit: "call-out",
-    duration: "1–2 hrs",
-  },
-  {
-    id: "electrical",
-    name: "Electrical Work",
-    image: electricianImg,
-    blurb: "Licensed electricians for wiring, sockets and fixtures.",
-    priceFrom: 3000,
-    unit: "call-out",
-    duration: "1–2 hrs",
-  },
-  {
-    id: "ac",
-    name: "AC Service & Repair",
-    image: mechanicImg,
-    blurb: "Servicing, gas top-up and installation.",
-    priceFrom: 4500,
-    unit: "per unit",
-    duration: "1–2 hrs",
-  },
-  {
-    id: "pest",
-    name: "Pest Control",
-    image: pestImg,
-    blurb: "Full-home pest treatment with warranty.",
-    priceFrom: 5000,
-    unit: "per treatment",
-    duration: "1 hr",
-  },
-  {
-    id: "carpentry",
-    name: "Carpentry",
-    image: carpenterImg,
-    blurb: "Furniture repair and custom woodwork.",
-    priceFrom: 3200,
-    unit: "call-out",
-    duration: "2–4 hrs",
-  },
-  {
-    id: "painting",
-    name: "Painting",
-    image: painterImg,
-    blurb: "Interior and exterior painting.",
-    priceFrom: 6000,
-    unit: "per room",
-    duration: "4–6 hrs",
-  },
-  {
-    id: "appliance",
-    name: "Appliance Repair",
-    image: applianceImg,
-    blurb: "Repair washing machines, fridges and ovens.",
-    priceFrom: 2800,
-    unit: "call-out",
-    duration: "1–2 hrs",
-  },
+  { id: "cleaning", name: "Home Cleaning" },
+  { id: "plumbing", name: "Plumbing Repair" },
+  { id: "electrical", name: "Electrical Work" },
+  { id: "ac", name: "AC Service & Repair" },
+  { id: "pest", name: "Pest Control" },
+  { id: "carpentry", name: "Carpentry" },
+  { id: "painting", name: "Painting" },
+  { id: "appliance", name: "Appliance Repair" },
 ];
 
 // ==============================

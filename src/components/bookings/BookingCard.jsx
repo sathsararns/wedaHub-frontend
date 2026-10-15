@@ -108,7 +108,7 @@ const resolvePhone = (booking) => {
 const resolveDescription = (booking) =>
   pick(booking?.description, booking?.instructions, booking?.note, "");
 
-export default function BookingCard({ booking, onCancelled }) {
+export default function BookingCard({ booking, onCancelled, allowCancel = true }) {
   const [cancelling, setCancelling] = useState(false);
   const [avatarError, setAvatarError] = useState(false);
 
@@ -134,7 +134,7 @@ export default function BookingCard({ booking, onCancelled }) {
 
   const description = resolveDescription(booking);
   const statusLabel = normalizeStatus(booking?.status);
-  const canCancel = statusLabel === "Pending";
+  const canCancel = allowCancel && statusLabel === "Pending";
 
   async function handleCancel() {
     if (!window.confirm("Cancel this booking request?")) return;

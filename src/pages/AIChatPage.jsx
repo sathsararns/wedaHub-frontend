@@ -136,7 +136,7 @@ export default function AIChatPage() {
           <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
             <div
               className={`mx-auto w-full ${
-                section === "services" ? "max-w-7xl" : "max-w-5xl"
+                section === "services" ? "max-w-3xl" : "max-w-5xl"
               }`}
             >
               {section === "services" ? (
