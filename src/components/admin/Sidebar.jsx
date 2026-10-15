@@ -8,7 +8,7 @@ import {
   LogOut,
 } from "lucide-react";
 
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth.js";
 
 export default function Sidebar() {
   const { logout } = useAuth();

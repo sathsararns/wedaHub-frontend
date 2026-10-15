@@ -31,9 +31,9 @@ export default function StatusBadge({ status }) {
 
   return (
     <span
-      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${classes}`}
+      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold uppercase tracking-wide ring-1 ring-inset ${classes}`}
     >
-      <Icon size={12} />
+      <Icon size={13} />
       {status}
     </span>
   );

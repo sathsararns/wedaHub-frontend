@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
 import toast from "react-hot-toast";
 import { motion, useReducedMotion } from "framer-motion";
 
 import api from "../utils/api";
 import { getProviderBookings } from "../services/bookingService";
 
+import BackButton from "../components/common/BackButton";
 import DashboardHeader from "../components/providerDashboard/DashboardHeader";
 import StatsCards from "../components/providerDashboard/StatsCards";
 import QuickActions from "../components/providerDashboard/QuickActions";
 import RecentBookings from "../components/providerDashboard/RecentBookings";
 import LatestReviews from "../components/providerDashboard/LatestReviews";
+import WorkGalleryPreview from "../components/providerDashboard/WorkGalleryPreview";
 
 const staggerContainer = {
   hidden: {},
@@ -23,7 +23,6 @@ const riseItem = {
 };
 
 export default function ProviderDashboardPage() {
-  const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
 
   const [provider, setProvider] = useState(null);
@@ -68,23 +67,13 @@ export default function ProviderDashboardPage() {
     );
   }
 
+  const pendingCount = bookings.filter((b) => b.status === "pending").length;
+
   return (
-    <section className="min-h-screen bg-gray-100 py-8 sm:py-10">
+    <section className="min-h-screen bg-gray-50 py-8 sm:py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-5">
 
-        {/* Back Button */}
-        <motion.button
-          onClick={() => navigate(-1)}
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-          whileHover={shouldReduceMotion ? undefined : { x: -4 }}
-          whileTap={{ scale: 0.96 }}
-          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-5 sm:mb-6 font-medium"
-        >
-          <ArrowLeft size={20} />
-          Back
-        </motion.button>
+        <BackButton className="mb-5 sm:mb-6" />
 
         <motion.div variants={staggerContainer} initial="hidden" animate="visible">
           <motion.div variants={riseItem}>
@@ -92,20 +81,35 @@ export default function ProviderDashboardPage() {
           </motion.div>
 
           <motion.div variants={riseItem}>
-            <StatsCards bookings={bookings} />
+            <StatsCards bookings={bookings} provider={provider} />
           </motion.div>
 
-          <motion.div variants={riseItem}>
-            <QuickActions />
-          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+            {/* Main column */}
+            <div className="lg:col-span-2 flex flex-col gap-6 sm:gap-8">
+              <motion.div variants={riseItem}>
+                <RecentBookings bookings={bookings} />
+              </motion.div>
 
-          <motion.div variants={riseItem}>
-            <RecentBookings bookings={bookings} />
-          </motion.div>
+              <motion.div variants={riseItem}>
+                <LatestReviews providerId={provider?._id} />
+              </motion.div>
+            </div>
 
-          <motion.div variants={riseItem}>
-            <LatestReviews />
-          </motion.div>
+            {/* Sidebar */}
+            <div className="flex flex-col gap-6 sm:gap-8">
+              <motion.div variants={riseItem}>
+                <QuickActions
+                  pendingCount={pendingCount}
+                  providerId={provider?._id}
+                />
+              </motion.div>
+
+              <motion.div variants={riseItem}>
+                <WorkGalleryPreview images={provider?.workImages} />
+              </motion.div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

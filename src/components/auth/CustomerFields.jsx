@@ -5,7 +5,7 @@ export default function CustomerFields({
   handleChange,
 }) {
   return (
-    <>
+    <div className="space-y-4">
       <LocationAutocomplete
         value={formData.city}
         handleChange={handleChange}
@@ -17,8 +17,8 @@ export default function CustomerFields({
         value={formData.district}
         readOnly
         placeholder="District"
-        className="w-full border rounded-lg p-3 bg-gray-100 cursor-not-allowed"
+        className="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-gray-100 cursor-not-allowed text-gray-900 placeholder-gray-400"
       />
-    </>
+    </div>
   );
 }

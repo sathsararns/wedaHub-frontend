@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { PanelLeftIcon } from "lucide-react";
 
 import ChatSidebar from "../components/ai/ChatSidebar";
@@ -12,7 +13,15 @@ import ChatBookingsPanel from "../components/ai/ChatBookingsPanel";
 import { useAIChat } from "../hooks/useAIChat";
 
 export default function AIChatPage() {
-  const [section, setSection] = useState("home");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedSection = searchParams.get("section");
+  const section = ["home", "services", "bookings"].includes(requestedSection) ? requestedSection : "home";
+  const setSection = (value) => setSearchParams((current) => {
+    const next = new URLSearchParams(current);
+    if (value === "home") next.delete("section");
+    else next.set("section", value);
+    return next;
+  }, { replace: true });
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [draft, setDraft] = useState("");
 
@@ -21,7 +30,6 @@ export default function AIChatPage() {
     isResponding,
     send,
     updateBooking,
-    confirmBooking,
     resetAll,
   } = useAIChat();
 
@@ -88,7 +96,6 @@ export default function AIChatPage() {
                   <ChatMessages
                     messages={messages}
                     onUpdateBooking={updateBooking}
-                    onConfirmBooking={confirmBooking}
                   />
                 ) : (
                   <>

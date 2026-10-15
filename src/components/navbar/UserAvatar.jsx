@@ -1,6 +1,6 @@
 
 
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth.js";
 import defaultAvatar from "../../assets/images/avatar.png";
 
 export default function UserAvatar({ onClick }) {

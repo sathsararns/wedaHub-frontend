@@ -33,7 +33,6 @@ const hasMeaningfulBooking = (booking) =>
 export default function ChatMessages({
   messages,
   onUpdateBooking,
-  onConfirmBooking,
 }) {
   const endRef = useRef(null);
 
@@ -98,7 +97,6 @@ export default function ChatMessages({
                       booking={m.booking}
                       bookingRef={m.bookingRef}
                       onChange={(patch) => onUpdateBooking(m.id, patch)}
-                      onConfirm={() => onConfirmBooking(m.id)}
                     />
                   )}
                 </>

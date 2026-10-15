@@ -1,7 +1,11 @@
-import { Calendar, MapPin, Phone, MessageSquare } from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Ban, Calendar, ExternalLink, FileText, MapPin, Phone } from "lucide-react";
+import toast from "react-hot-toast";
 
 import defaultAvatar from "../../assets/images/avatar.png";
 import StatusBadge from "./StatusBadge";
+import { cancelBooking } from "../../services/bookingService";
 
 const pick = (...values) =>
   values.find(
@@ -102,13 +106,17 @@ const resolvePhone = (booking) => {
 };
 
 const resolveDescription = (booking) =>
-  pick(booking?.description, booking?.instructions, booking?.note, "-");
+  pick(booking?.description, booking?.instructions, booking?.note, "");
 
-export default function BookingCard({ booking }) {
+export default function BookingCard({ booking, onCancelled }) {
+  const [cancelling, setCancelling] = useState(false);
+  const [avatarError, setAvatarError] = useState(false);
+
   const provider = resolveProvider(booking);
+  const providerId = provider?._id;
 
   const avatar =
-    provider?.image && !provider.image.includes("default-profile")
+    !avatarError && provider?.image && !provider.image.includes("default-profile")
       ? provider.image
       : defaultAvatar;
 
@@ -122,10 +130,27 @@ export default function BookingCard({ booking }) {
     },
     { icon: MapPin, label: "City", value: resolveCity(booking) },
     { icon: Phone, label: "Phone", value: resolvePhone(booking) },
-    { icon: MessageSquare, label: "Instructions", value: resolveDescription(booking) },
   ];
 
+  const description = resolveDescription(booking);
   const statusLabel = normalizeStatus(booking?.status);
+  const canCancel = statusLabel === "Pending";
+
+  async function handleCancel() {
+    if (!window.confirm("Cancel this booking request?")) return;
+
+    try {
+      setCancelling(true);
+      await cancelBooking(booking._id);
+      toast.success("Booking cancelled");
+      onCancelled?.();
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response?.data?.message || "Failed to cancel booking");
+    } finally {
+      setCancelling(false);
+    }
+  }
 
   return (
     <div className="rounded-3xl bg-white p-5 shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)] transition-shadow hover:shadow-lg sm:p-6">
@@ -134,6 +159,7 @@ export default function BookingCard({ booking }) {
           src={avatar}
           alt={resolveProviderName(booking)}
           className="h-20 w-20 shrink-0 self-center rounded-full object-cover ring-4 ring-blue-100 sm:self-start"
+          onError={() => setAvatarError(true)}
         />
 
         <div className="min-w-0 flex-1">
@@ -150,7 +176,7 @@ export default function BookingCard({ booking }) {
             <StatusBadge status={statusLabel} />
           </div>
 
-          <dl className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2.5 sm:grid-cols-2">
+          <dl className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2.5 sm:grid-cols-3">
             {details.map(({ icon: Icon, label, value }) => (
               <div key={label} className="flex items-start gap-2 text-sm">
                 <Icon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-blue-500" />
@@ -163,6 +189,43 @@ export default function BookingCard({ booking }) {
               </div>
             ))}
           </dl>
+
+          {description && (
+            <div className="mt-4 rounded-xl bg-gray-50 p-4">
+              <div className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-gray-500">
+                <FileText size={13} />
+                Your Instructions
+              </div>
+              <p className="text-sm leading-relaxed text-gray-700">
+                {description}
+              </p>
+            </div>
+          )}
+
+          {(providerId || canCancel) && (
+            <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-gray-100 pt-4">
+              {providerId && (
+                <Link
+                  to={`/provider/${providerId}`}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+                >
+                  <ExternalLink size={14} />
+                  View Provider
+                </Link>
+              )}
+
+              {canCancel && (
+                <button
+                  onClick={handleCancel}
+                  disabled={cancelling}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  <Ban size={14} />
+                  {cancelling ? "Cancelling..." : "Cancel Booking"}
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
