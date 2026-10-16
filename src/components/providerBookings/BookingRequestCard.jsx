@@ -3,6 +3,7 @@ import { Briefcase, Calendar, FileText, MapPin, Phone } from "lucide-react";
 import CustomerAvatar from "../common/CustomerAvatar";
 import BookingStatusBadge from "./BookingStatusBadge";
 import BookingActions from "./BookingActions";
+import { getBookingLocation } from "../../Utils/bookingLocation.js";
 
 function formatDate(date) {
   if (!date) return "-";
@@ -38,7 +39,7 @@ export default function BookingRequestCard({ booking, onStatusChanged }) {
       label: "Date",
       value: `${formatDate(booking.date)}${booking.time ? ` · ${booking.time}` : ""}`,
     },
-    { icon: MapPin, label: "Location", value: booking.city?.trim() || booking.location?.trim() || "Not specified" },
+    { icon: MapPin, label: "Location", value: getBookingLocation(booking) },
     { icon: Phone, label: "Phone", value: customer?.phone || "-" },
   ];
 

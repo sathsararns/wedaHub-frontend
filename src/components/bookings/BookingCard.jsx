@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import defaultAvatar from "../../assets/images/avatar.png";
 import StatusBadge from "./StatusBadge";
 import { cancelBooking } from "../../services/bookingService";
+import { getBookingLocation } from "../../Utils/bookingLocation.js";
 
 const pick = (...values) =>
   values.find(
@@ -87,19 +88,6 @@ const resolveProviderCategory = (booking) => {
   return pick(provider?.category, booking?.category, "-");
 };
 
-const resolveCity = (booking) => {
-  const provider = resolveProvider(booking);
-
-  return pick(
-    provider?.city,
-    provider?.location,
-    provider?.district,
-    booking?.city,
-    booking?.location,
-    "-"
-  );
-};
-
 const resolvePhone = (booking) => {
   const provider = resolveProvider(booking);
   return pick(provider?.phone, booking?.phone, "-");
@@ -128,7 +116,7 @@ export default function BookingCard({ booking, onCancelled, allowCancel = true }
         pick(booking?.date, booking?.bookingDate, booking?.scheduledDate)
       ),
     },
-    { icon: MapPin, label: "City", value: resolveCity(booking) },
+    { icon: MapPin, label: "City", value: getBookingLocation(booking) },
     { icon: Phone, label: "Phone", value: resolvePhone(booking) },
   ];
 
