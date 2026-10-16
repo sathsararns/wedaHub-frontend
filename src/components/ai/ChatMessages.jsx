@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import ChatLogo from "./ChatLogo";
 import ChatBookingCard from "./ChatBookingCard";
@@ -7,7 +7,7 @@ function renderLine(line, key) {
   const parts = line.split(/(\*\*[^*]+\*\*)/g);
 
   return (
-    <p key={key} className="text-[14px] leading-relaxed text-zinc-700 [overflow-wrap:anywhere]">
+    <p key={key} className="text-[15px] leading-relaxed text-zinc-700 [overflow-wrap:anywhere] sm:text-sm">
       {parts.map((part, i) =>
         part.startsWith("**") && part.endsWith("**") ? (
           <strong key={i} className="font-semibold text-zinc-900">
@@ -34,12 +34,6 @@ export default function ChatMessages({
   messages,
   onUpdateBooking,
 }) {
-  const endRef = useRef(null);
-
-  useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [messages]);
-
   return (
     <div className="space-y-6" role="log" aria-live="polite">
       {messages.map((m) =>
@@ -51,7 +45,7 @@ export default function ChatMessages({
             transition={{ duration: 0.25, ease: "easeOut" }}
             className="flex justify-end"
           >
-            <p className="max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-zinc-900 px-4 py-2.5 text-[14px] leading-relaxed text-white [overflow-wrap:anywhere]">
+            <p className="max-w-[92%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-zinc-900 px-3 py-2.5 text-[15px] leading-relaxed text-white [overflow-wrap:anywhere] sm:max-w-[85%] sm:px-4 sm:text-sm">
               {m.content}
             </p>
           </motion.div>
@@ -61,7 +55,7 @@ export default function ChatMessages({
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="flex gap-3"
+            className="grid min-w-0 grid-cols-[28px_minmax(0,1fr)] gap-x-2 sm:gap-x-3"
           >
             <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white">
               <ChatLogo showWordmark={false} />
@@ -84,29 +78,27 @@ export default function ChatMessages({
                   ))}
                 </div>
               ) : (
-                <>
-                  <div className="space-y-2">
-                    {String(m.content || "")
-                      .split("\n")
-                      .filter(Boolean)
-                      .map(renderLine)}
-                  </div>
-
-                  {hasMeaningfulBooking(m.booking) && (
-                    <ChatBookingCard
-                      booking={m.booking}
-                      bookingRef={m.bookingRef}
-                      onChange={(patch) => onUpdateBooking(m.id, patch)}
-                    />
-                  )}
-                </>
+                <div className="space-y-2">
+                  {String(m.content || "")
+                    .split("\n")
+                    .filter(Boolean)
+                    .map(renderLine)}
+                </div>
               )}
             </div>
+            {!m.pending && hasMeaningfulBooking(m.booking) && (
+              <div className="col-span-2 min-w-0 sm:col-span-1 sm:col-start-2">
+                <ChatBookingCard
+                  booking={m.booking}
+                  bookingRef={m.bookingRef}
+                  onChange={(patch) => onUpdateBooking(m.id, patch)}
+                />
+              </div>
+            )}
           </motion.div>
         )
       )}
 
-      <div ref={endRef} />
     </div>
   );
 }

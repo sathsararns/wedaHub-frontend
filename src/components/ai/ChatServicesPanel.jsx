@@ -4,9 +4,9 @@ import { SERVICES } from "../../services/aiChatService";
 
 export default function ChatServicesPanel({ onBook }) {
   return (
-    <div className="space-y-6">
+    <div className="min-w-0 space-y-5 sm:space-y-6">
       <div>
-        <h1 className="text-[28px] font-semibold tracking-tight text-zinc-900">
+        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-[28px]">
           Services
         </h1>
         <p className="mt-1 text-sm text-zinc-500">

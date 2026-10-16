@@ -108,8 +108,8 @@ export default function ChatBookingCard({ booking }) {
   ];
 
   return (
-    <div className="mt-4 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
-      <div className="border-b border-zinc-100 bg-zinc-50 px-4 py-3">
+    <div className="mt-4 min-w-0 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+      <div className="border-b border-zinc-100 bg-zinc-50 px-3 py-3 sm:px-4">
         <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
           <div>
             <p className="text-sm font-semibold text-zinc-900">
@@ -127,7 +127,7 @@ export default function ChatBookingCard({ booking }) {
         </div>
       </div>
 
-      <div className="p-4">
+      <div className="p-3 sm:p-4">
         <div className="grid gap-3 sm:grid-cols-2">
           {rows.map(({ icon: Icon, label, value }) => (
             <div
