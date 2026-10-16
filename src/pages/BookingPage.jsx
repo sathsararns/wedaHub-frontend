@@ -32,6 +32,7 @@ export default function BookingPage() {
 
   const [provider, setProvider] = useState(null);
   const [bookingDate, setBookingDate] = useState("");
+  const [serviceCity, setServiceCity] = useState("");
   const [specialInstructions, setSpecialInstructions] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -61,6 +62,12 @@ export default function BookingPage() {
       return;
     }
 
+    const city = serviceCity.trim();
+    if (!city) {
+      toast.error("Please enter the city where you need the service");
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -69,7 +76,7 @@ export default function BookingPage() {
         serviceName: provider.category,
         description: specialInstructions,
         date: bookingDate,
-        city: provider.city,
+        city,
       };
 
       console.log("📝 Booking Data:", bookingData);
@@ -195,6 +202,27 @@ export default function BookingPage() {
             />
           </motion.div>
 
+          {/* Service location */}
+          <motion.div variants={riseItem} className="mt-5">
+            <label htmlFor="booking-city" className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-gray-700">
+              <MapPin className="h-4 w-4 text-blue-600" />
+              Service Location / City
+            </label>
+            <motion.input
+              id="booking-city"
+              name="city"
+              type="text"
+              autoComplete="address-level2"
+              required
+              value={serviceCity}
+              onChange={(e) => setServiceCity(e.target.value)}
+              placeholder="Enter the city where you need the service, e.g. Mirissa"
+              whileFocus={fieldFocus}
+              transition={{ duration: 0.15 }}
+              className="w-full rounded-xl border border-gray-200 p-3.5 text-sm text-gray-700 placeholder:text-gray-400 transition-colors focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+            />
+          </motion.div>
+
           {/* Instructions */}
           <motion.div variants={riseItem} className="mt-5">
             <label className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-gray-700">
@@ -261,7 +289,7 @@ export default function BookingPage() {
                   City
                 </dt>
                 <dd className="text-right font-semibold text-gray-800">
-                  {provider.city || "City not specified"} {/* Changed from provider.location to provider.city */}
+                  {serviceCity.trim() || "Enter your service location"}
                 </dd>
               </div>
             </dl>
