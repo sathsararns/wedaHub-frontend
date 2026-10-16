@@ -58,7 +58,7 @@ export default function RecentBookings({ bookings }) {
 
   return (
     <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/5 p-5 sm:p-6">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
         <h2 className="text-lg font-bold text-gray-900">Recent Bookings</h2>
 
         {bookings.length > 0 && (

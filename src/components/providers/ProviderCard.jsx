@@ -42,7 +42,7 @@ export default function ProviderCard({ provider }) {
   };
 
   return (
-    <article className="w-[320px] rounded-[28px] bg-white p-3 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.18)] ring-1 ring-black/5 transition-all hover:shadow-[0_20px_60px_-12px_rgba(0,0,0,0.25)]">
+    <article className="min-w-0 w-full rounded-[28px] bg-white p-3 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.18)] ring-1 ring-black/5 transition-all hover:shadow-[0_20px_60px_-12px_rgba(0,0,0,0.25)]">
       {/* Image */}
       <div className="relative overflow-hidden rounded-[22px]">
         <img
@@ -60,7 +60,7 @@ export default function ProviderCard({ provider }) {
           onClick={() => setSaved((s) => !s)}
           aria-pressed={saved}
           aria-label={saved ? 'Remove bookmark' : 'Save provider'}
-          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
         >
           <Bookmark
             className="h-[18px] w-[18px]"
@@ -114,7 +114,7 @@ export default function ProviderCard({ provider }) {
 
           <div className="w-px bg-gray-200 flex-shrink-0" />
 
-          <div className="flex-1 min-w-0 px-4">
+          <div className="flex-1 min-w-0 px-2 sm:px-3">
             <dd className="truncate text-[15px] font-bold text-gray-900">
               {provider.city || "-"}
             </dd>
@@ -123,7 +123,7 @@ export default function ProviderCard({ provider }) {
 
           <div className="w-px bg-gray-200 flex-shrink-0" />
 
-          <div className="flex-1 min-w-0 pl-4">
+          <div className="flex-1 min-w-0 pl-2 sm:pl-3">
             <dd
               className="truncate text-[15px] font-bold text-gray-900"
               title={provider.district}
@@ -135,7 +135,7 @@ export default function ProviderCard({ provider }) {
         </dl>
 
         {/* Location & Phone - Fixed overflow issue */}
-        <div className="mt-3 flex items-center justify-between gap-2 text-xs text-gray-500">
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500">
           <div className="flex min-w-0 items-center gap-1">
             <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
             <span 
@@ -172,6 +172,7 @@ export default function ProviderCard({ provider }) {
           <button
             type="button"
             onClick={handleGetInTouch}
+            aria-label={`Contact ${provider.firstName} ${provider.lastName}`}
             className="flex items-center justify-center gap-2 rounded-full bg-gray-900 px-4 py-3 text-[14px] font-semibold text-white transition hover:bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
           >
             <Mail className="h-4 w-4" />
@@ -181,7 +182,7 @@ export default function ProviderCard({ provider }) {
         {/* View Profile Link */}
         <Link
           to={`/provider/${provider._id}`}
-          className="mt-3 block w-full text-center text-sm text-blue-600 hover:text-blue-800 transition"
+          className="mt-3 flex min-h-11 w-full items-center justify-center text-center text-sm text-blue-600 hover:text-blue-800 transition"
         >
           View Full Profile →
         </Link>

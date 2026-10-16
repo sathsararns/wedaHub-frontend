@@ -204,7 +204,7 @@ export default function ProviderProfilePage() {
             />
 
             <motion.div
-              className="w-full flex-1"
+              className="min-w-0 w-full flex-1"
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
@@ -239,7 +239,7 @@ export default function ProviderProfilePage() {
                       <field.icon className="h-3.5 w-3.5" />
                       <span>{field.label}:</span>
                     </dt>
-                    <dd className="font-medium text-gray-700">{field.value}</dd>
+                    <dd className="min-w-0 max-w-full font-medium text-gray-700 [overflow-wrap:anywhere]">{field.value}</dd>
                   </div>
                 ))}
               </motion.dl>

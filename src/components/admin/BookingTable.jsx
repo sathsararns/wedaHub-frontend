@@ -2,9 +2,9 @@ import BookingRow from "./BookingRow";
 
 export default function BookingTable({ bookings }) {
   return (
-    <div className="bg-white rounded-xl shadow overflow-hidden">
+    <div className="min-w-0 overflow-x-auto rounded-xl bg-white shadow" tabIndex={0} role="region" aria-label="Bookings table, scroll horizontally to see all columns">
 
-      <table className="w-full">
+      <table className="w-full min-w-[640px]">
 
         <thead className="bg-gray-200">
 

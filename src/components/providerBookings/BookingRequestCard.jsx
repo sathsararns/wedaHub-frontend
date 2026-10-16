@@ -46,7 +46,7 @@ export default function BookingRequestCard({ booking, onStatusChanged }) {
   return (
     <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/5 p-5 sm:p-6 hover:shadow-md transition">
       {/* Header: customer + status */}
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:gap-4">
         <div className="flex items-center gap-3 min-w-0">
           <CustomerAvatar
             customer={customer}
@@ -55,14 +55,14 @@ export default function BookingRequestCard({ booking, onStatusChanged }) {
           />
 
           <div className="min-w-0">
-            <h2 className="text-lg font-bold text-gray-900 truncate">
+            <h2 className="text-lg font-bold text-gray-900 [overflow-wrap:anywhere]">
               {customer?.firstName} {customer?.lastName}
             </h2>
-            <p className="text-sm text-gray-500 truncate">{customer?.email}</p>
+            <p className="text-sm text-gray-500 [overflow-wrap:anywhere]">{customer?.email}</p>
           </div>
         </div>
 
-        <div className="flex flex-col items-end gap-1.5 shrink-0">
+        <div className="flex shrink-0 flex-row items-center gap-2 sm:flex-col sm:items-end sm:gap-1.5">
           <BookingStatusBadge status={booking.status} />
           {booking.createdAt && (
             <span className="text-xs text-gray-400">{timeAgo(booking.createdAt)}</span>
@@ -79,7 +79,7 @@ export default function BookingRequestCard({ booking, onStatusChanged }) {
             </div>
             <div className="min-w-0">
               <p className="text-xs text-gray-400">{label}</p>
-              <p className="font-medium text-gray-800 truncate">{value}</p>
+              <p className="font-medium text-gray-800 [overflow-wrap:anywhere]">{value}</p>
             </div>
           </div>
         ))}
@@ -92,7 +92,7 @@ export default function BookingRequestCard({ booking, onStatusChanged }) {
             <FileText size={13} />
             Customer's Note
           </div>
-          <p className="text-sm text-gray-700 leading-relaxed">{booking.description}</p>
+          <p className="text-sm text-gray-700 leading-relaxed [overflow-wrap:anywhere]">{booking.description}</p>
         </div>
       )}
 

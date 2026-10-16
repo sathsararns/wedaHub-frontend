@@ -1,4 +1,3 @@
-import React from 'react'
 import { SendHorizonalIcon } from 'lucide-react'
 
 export default function ChatComposer({
@@ -35,7 +34,7 @@ export default function ChatComposer({
         onKeyDown={handleKeyDown}
         rows={compact ? 1 : 2}
         placeholder="Describe what you need — e.g. “my kitchen tap is leaking”"
-        className="min-h-[24px] w-full resize-none bg-transparent px-1 pt-1 text-[14px] text-zinc-900 placeholder:text-zinc-400 focus:outline-none"
+        className="min-h-11 max-h-40 w-full resize-none bg-transparent px-1 pt-1 text-base text-zinc-900 placeholder:text-zinc-400 focus:outline-none sm:text-[14px]"
       />
 
       <div
@@ -45,7 +44,7 @@ export default function ChatComposer({
           type="submit"
           disabled={!canSend}
           aria-label="Send message"
-          className={`flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 ${
+          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 ${
             canSend
               ? 'bg-zinc-900 hover:bg-zinc-800'
               : 'cursor-not-allowed bg-zinc-300'

@@ -124,7 +124,7 @@ export default function ChatBookingsPanel() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
         <div>
           <h1 className="text-[28px] font-semibold tracking-tight text-zinc-900">
             My bookings

@@ -87,7 +87,7 @@ export default function LoginPage() {
   const fieldFocus = shouldReduceMotion ? undefined : { scale: 1.01 };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F5F5FB] relative overflow-hidden font-sans">
+    <div className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-[#F5F5FB] px-4 py-8 font-sans sm:py-12">
       {/* Decorative background line */}
       <div className="absolute left-0 right-0 top-[30%] h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent z-0 opacity-50"></div>
 
@@ -95,7 +95,7 @@ export default function LoginPage() {
       <motion.div
         initial={{ opacity: 0, y: 24, scale: 0.97 }}
         animate={cardControls}
-        className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-[440px] p-8 sm:p-10 relative z-10 mx-4"
+        className="relative z-10 min-w-0 w-full max-w-[440px] rounded-2xl bg-white p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:p-10"
       >
         <>
           {/* Logo */}
@@ -168,7 +168,7 @@ export default function LoginPage() {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   whileTap={{ scale: 0.85 }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#4338CA] transition-colors"
+                  className="absolute right-1 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-gray-500 hover:text-[#4338CA] transition-colors"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   <AnimatePresence mode="wait" initial={false}>

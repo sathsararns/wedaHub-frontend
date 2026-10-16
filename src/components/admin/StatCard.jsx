@@ -23,7 +23,7 @@ export default function StatCard({
   const Icon = icons[icon];
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 flex justify-between items-center">
+    <div className="flex min-w-0 flex-col-reverse items-start gap-3 rounded-xl bg-white p-4 shadow-md sm:flex-row sm:items-center sm:justify-between sm:p-5">
 
       <div>
 
@@ -31,14 +31,14 @@ export default function StatCard({
           {title}
         </p>
 
-        <h2 className="text-3xl font-bold mt-2">
+        <h2 className="mt-2 text-2xl font-bold sm:text-3xl">
           {value}
         </h2>
 
       </div>
 
       <div
-        className={`w-14 h-14 rounded-xl flex justify-center items-center ${color}`}
+        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl sm:h-12 sm:w-12 ${color}`}
       >
         <Icon className="text-white" size={28} />
       </div>

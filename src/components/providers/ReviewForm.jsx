@@ -91,7 +91,7 @@ export default function ReviewForm({ providerId, onReviewAdded }) {
   return (
     <form
       onSubmit={submitReview}
-      className="mt-8 rounded-3xl bg-white p-6 shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)] sm:p-8"
+      className="mt-8 rounded-3xl bg-white p-4 shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)] sm:p-8"
     >
       <h2 className="text-xl font-bold text-gray-900">Write a Review</h2>
       <p className="mt-1 text-sm text-gray-500">
@@ -103,7 +103,7 @@ export default function ReviewForm({ providerId, onReviewAdded }) {
         <label className="mb-2 block text-sm font-medium text-gray-700">
           Your Rating
         </label>
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1">
           {[1, 2, 3, 4, 5].map((value) => (
             <button
               key={value}
@@ -112,7 +112,7 @@ export default function ReviewForm({ providerId, onReviewAdded }) {
               onMouseEnter={() => setHoverRating(value)}
               onMouseLeave={() => setHoverRating(0)}
               aria-label={`Rate ${value} star${value > 1 ? "s" : ""}`}
-              className="p-0.5 transition-transform hover:scale-110"
+              className="flex h-11 w-11 items-center justify-center transition-transform hover:scale-110"
             >
               <Star
                 size={28}
@@ -152,7 +152,7 @@ export default function ReviewForm({ providerId, onReviewAdded }) {
       <button
         type="submit"
         disabled={submitting || !comment.trim()}
-        className="mt-5 flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:scale-105 hover:bg-blue-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+        className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl sm:w-auto bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:scale-105 hover:bg-blue-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
       >
         <Send size={16} />
         {submitting ? "Submitting..." : "Submit Review"}

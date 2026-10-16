@@ -1,4 +1,3 @@
-import React from "react";
 import {
   CalendarDays,
   User,
@@ -111,7 +110,7 @@ export default function ChatBookingCard({ booking }) {
   return (
     <div className="mt-4 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
       <div className="border-b border-zinc-100 bg-zinc-50 px-4 py-3">
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
           <div>
             <p className="text-sm font-semibold text-zinc-900">
               Booking Created
@@ -141,7 +140,7 @@ export default function ChatBookingCard({ booking }) {
                   {label}
                 </span>
               </div>
-              <p className="text-sm font-medium text-zinc-900">{value}</p>
+              <p className="text-sm font-medium text-zinc-900 [overflow-wrap:anywhere]">{value}</p>
             </div>
           ))}
         </div>

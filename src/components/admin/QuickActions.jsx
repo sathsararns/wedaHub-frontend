@@ -7,13 +7,13 @@ import {
 
 export default function QuickActions() {
   return (
-    <div className="mt-8 bg-white rounded-xl shadow-md p-6">
+    <div className="mt-6 rounded-xl bg-white p-4 shadow-md sm:mt-8 sm:p-6">
 
       <h2 className="text-2xl font-bold mb-5">
         Quick Actions
       </h2>
 
-      <div className="grid md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 gap-3 xl:grid-cols-3 sm:gap-5">
 
         <Link
           to="/admin/users"

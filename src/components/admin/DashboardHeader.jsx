@@ -1,9 +1,4 @@
-import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-
 export default function DashboardHeader() {
-
-  const navigate = useNavigate();
 
   return (
     <div className="flex justify-between items-center mb-8">
@@ -19,7 +14,7 @@ export default function DashboardHeader() {
           Back
         </button> */}
 
-        <h1 className="text-4xl font-bold">
+        <h1 className="text-2xl font-bold sm:text-3xl xl:text-4xl">
           Admin Dashboard
         </h1>
 

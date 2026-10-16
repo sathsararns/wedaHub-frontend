@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-export default function NavLinks() {
+export default function NavLinks({ onNavigate }) {
   const navItems = [
     { name: "HOME", path: "/" },
     { name: "ABOUT", path: "/about" },
@@ -9,14 +9,15 @@ export default function NavLinks() {
   ];
 
   return (
-    <div className="flex items-center gap-10">
+    <div className="flex flex-col items-stretch gap-2 lg:flex-row lg:items-center lg:gap-8">
       {navItems.map((item) => (
         <NavLink
           key={item.path}
           to={item.path}
           end={item.path === "/"}
+          onClick={onNavigate}
           className={({ isActive }) =>
-            `relative text-sm font-medium transition duration-300 ${
+            `relative flex min-h-11 items-center py-2 text-sm font-medium transition duration-300 ${
               isActive
                 ? "text-[#D4AF37]"
                 : "text-white hover:text-[#D4AF37]"
@@ -28,7 +29,7 @@ export default function NavLinks() {
               {item.name}
 
               {isActive && (
-                <span className="absolute left-0 -bottom-2 w-full h-[2px] bg-[#D4AF37]" />
+                <span className="absolute bottom-0 left-0 h-[2px] w-8 bg-[#D4AF37] lg:w-full" />
               )}
             </>
           )}

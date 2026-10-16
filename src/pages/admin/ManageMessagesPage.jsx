@@ -26,11 +26,11 @@ export default function ManageMessagesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="flex min-h-dvh min-w-0 flex-col bg-gray-100 lg:flex-row">
 
       <Sidebar />
 
-      <main className="flex-1 p-8">
+      <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
 
         {/* ✨ NEW: Reimagined Back Button - Floating Circular with Hover-Expand */}
         <button
@@ -44,13 +44,21 @@ export default function ManageMessagesPage() {
           </span>
         </button>
 
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">
+        <h1 className="mb-6 text-2xl font-bold text-gray-800 sm:text-3xl">
           Messages
         </h1>
 
-        <div className="bg-white rounded-xl shadow overflow-hidden">
+        <div className="min-w-0 overflow-x-auto rounded-xl bg-white shadow" tabIndex={0} role="region" aria-label="Contact messages table, scroll horizontally to see all columns">
 
-          <table className="w-full">
+          <table className="w-full min-w-[760px] table-fixed">
+
+            <colgroup>
+              <col className="w-[18%]" />
+              <col className="w-[23%]" />
+              <col className="w-[16%]" />
+              <col className="w-[25%]" />
+              <col className="w-[18%]" />
+            </colgroup>
 
             <thead className="bg-gray-200">
 
@@ -78,7 +86,7 @@ export default function ManageMessagesPage() {
 
                   <td className="p-4 text-sm">{msg.name}</td>
 
-                  <td className="p-4 text-sm">{msg.email}</td>
+                  <td className="p-4 text-sm [overflow-wrap:anywhere]">{msg.email}</td>
 
                   <td className="p-4 text-sm">{msg.phone}</td>
 

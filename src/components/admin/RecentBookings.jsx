@@ -26,7 +26,7 @@ export default function RecentBookings() {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow overflow-hidden">
+    <div className="min-w-0 bg-white rounded-xl shadow overflow-hidden">
 
       <div className="p-6 border-b border-gray-200">
         <h2 className="text-xl font-bold">
@@ -40,7 +40,8 @@ export default function RecentBookings() {
         </div>
       ) : (
 
-        <table className="w-full">
+        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Recent bookings table, scroll horizontally to see all columns">
+        <table className="w-full min-w-[600px]">
 
           <thead className="bg-gray-200">
 
@@ -82,6 +83,7 @@ export default function RecentBookings() {
           </tbody>
 
         </table>
+        </div>
 
       )}
 

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { motion } from 'framer-motion';
 import { EyeIcon, TargetIcon } from 'lucide-react';
 
@@ -34,7 +34,7 @@ const mobileDividerVariants = {
 
 function VisionMission() {
   return (
-    <section className="w-full bg-[#0b1736] py-14 sm:py-16 md:py-20 px-6">
+    <section className="w-full overflow-hidden bg-[#0b1736] px-4 py-14 sm:px-6 sm:py-16 md:py-20">
       <motion.div
         className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-10 md:gap-12 items-center"
         initial="hidden"
@@ -46,12 +46,12 @@ function VisionMission() {
             <motion.div
               custom={i === 0}
               variants={itemVariants}
-              className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-4 sm:gap-6"
+              className="flex min-w-0 flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-4 sm:gap-6"
             >
               <div className="shrink-0">
                 <Icon className="w-10 h-10 sm:w-12 sm:h-12 text-white" strokeWidth={1.5} />
               </div>
-              <div>
+              <div className="min-w-0 w-full">
                 <h3 className="text-white text-lg sm:text-xl font-semibold mb-2 sm:mb-3">
                   {title}
                 </h3>

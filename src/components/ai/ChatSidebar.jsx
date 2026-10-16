@@ -1,4 +1,4 @@
-import React from "react";
+import { useCallback } from "react";
 import {
   CalendarCheckIcon,
   HouseIcon,
@@ -9,6 +9,7 @@ import {
 
 import ChatLogo from "./ChatLogo";
 import BackToSiteButton from "./BackToSiteButton";
+import useMobileDrawer from "../../hooks/useMobileDrawer.js";
 
 const NAV = [
   {
@@ -35,18 +36,32 @@ export default function ChatSidebar({
   isOpen,
   onToggle,
 }) {
+  const close = useCallback(() => {
+    if (isOpen) onToggle();
+  }, [isOpen, onToggle]);
+  const drawerRef = useMobileDrawer(isOpen, close, 768);
+
   return (
     <>
       {isOpen && (
-        <div
+        <button
+          type="button"
+          tabIndex={-1}
+          aria-label="Close AI menu"
           className="fixed inset-0 z-30 bg-black/30 md:hidden"
           onClick={onToggle}
         />
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-[248px] shrink-0 flex-col bg-[#EBF3FF] px-4 py-5 transition-transform duration-300 md:static md:translate-x-0 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+        id="ai-sidebar"
+        ref={drawerRef}
+        data-mobile-drawer
+        tabIndex={-1}
+        role={isOpen ? "dialog" : undefined}
+        aria-modal={isOpen || undefined}
+        className={`fixed inset-y-0 left-0 z-40 flex h-dvh w-[248px] max-w-[85vw] shrink-0 flex-col overflow-y-auto bg-[#EBF3FF] px-4 py-5 transition-transform duration-300 md:static md:h-full md:visible md:translate-x-0 ${
+          isOpen ? "visible translate-x-0" : "invisible -translate-x-full"
         }`}
         aria-label="AI assistant sidebar"
       >
@@ -56,7 +71,7 @@ export default function ChatSidebar({
           <button
             type="button"
             onClick={onToggle}
-            className="rounded-lg p-2 hover:bg-zinc-200 md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-lg hover:bg-zinc-200 md:hidden"
             aria-label="Close sidebar"
           >
             <PanelLeftIcon className="h-5 w-5" />
@@ -90,7 +105,7 @@ export default function ChatSidebar({
           ))}
         </nav>
 
-        <div className="mt-auto">
+        <div className="mt-auto pt-6 pb-[env(safe-area-inset-bottom)]">
           <BackToSiteButton />
         </div>
       </aside>

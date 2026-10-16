@@ -7,7 +7,7 @@ export default function ChatWelcome() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
     >
-      <h1 className="text-3xl font-semibold">
+      <h1 className="text-2xl font-semibold sm:text-3xl">
         Welcome to WedaHub
       </h1>
 

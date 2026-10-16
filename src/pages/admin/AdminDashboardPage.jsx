@@ -38,11 +38,11 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="flex min-h-dvh min-w-0 flex-col bg-gray-100 lg:flex-row">
 
       <Sidebar />
 
-      <main className="min-w-0 flex-1 p-8">
+      <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
 
         <DashboardHeader />
 
@@ -50,7 +50,7 @@ export default function AdminDashboardPage() {
 
         <QuickActions />
 
-        <div className="grid lg:grid-cols-2 gap-6 mt-8">
+        <div className="mt-6 grid min-w-0 grid-cols-1 gap-6 xl:mt-8 xl:grid-cols-2">
 
           <RecentUsers users={dashboard.recentUsers} />
 

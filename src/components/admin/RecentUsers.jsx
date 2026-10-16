@@ -15,7 +15,7 @@ export default function RecentUsers({ users = [] }) {
         </div>
       ) : (
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Recent users table, scroll horizontally to see all columns">
         <table className="w-full min-w-[480px] table-fixed">
 
           <colgroup>

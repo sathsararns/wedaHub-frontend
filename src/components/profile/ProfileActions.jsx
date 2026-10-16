@@ -7,12 +7,12 @@ export default function ProfileActions({
   loading,
 }) {
   return (
-    <div className="flex justify-end gap-3 rounded-2xl bg-white p-5 shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)]">
+    <div className="flex flex-col justify-end gap-3 rounded-2xl bg-white p-4 sm:flex-row sm:p-5 shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)]">
 
       {!editing ? (
         <button
           onClick={() => setEditing(true)}
-          className="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:scale-105 hover:bg-blue-700 hover:shadow-xl"
+          className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 hover:shadow-xl"
         >
           <Pencil size={16} />
           Edit Profile
@@ -22,7 +22,7 @@ export default function ProfileActions({
           <button
             onClick={() => setEditing(false)}
             disabled={loading}
-            className="flex items-center gap-2 rounded-xl bg-gray-100 px-6 py-3 font-semibold text-gray-600 transition hover:bg-gray-200 disabled:opacity-50"
+            className="flex items-center justify-center gap-2 rounded-xl bg-gray-100 px-6 py-3 font-semibold text-gray-600 transition hover:bg-gray-200 disabled:opacity-50"
           >
             <X size={16} />
             Cancel
@@ -31,7 +31,7 @@ export default function ProfileActions({
           <button
             onClick={handleSave}
             disabled={loading}
-            className="flex items-center gap-2 rounded-xl bg-green-600 px-6 py-3 font-semibold text-white shadow-lg shadow-green-600/20 transition hover:scale-105 hover:bg-green-700 hover:shadow-xl disabled:cursor-not-allowed disabled:bg-green-300 disabled:hover:scale-100"
+            className="flex items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-3 font-semibold text-white shadow-lg shadow-green-600/20 transition hover:bg-green-700 hover:shadow-xl disabled:cursor-not-allowed disabled:bg-green-300 disabled:hover:scale-100"
           >
             <Save size={16} />
             {loading ? "Saving..." : "Save Changes"}

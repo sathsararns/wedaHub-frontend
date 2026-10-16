@@ -9,7 +9,7 @@ export default function WorkGalleryPreview({ images = [] }) {
 
   return (
     <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/5 p-5 sm:p-6">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
         <h2 className="text-lg font-bold text-gray-900">Work Gallery</h2>
 
         {images.length > 0 && (

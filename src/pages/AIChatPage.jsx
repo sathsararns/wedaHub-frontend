@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { PanelLeftIcon } from "lucide-react";
 
@@ -24,6 +24,25 @@ export default function AIChatPage() {
   }, { replace: true });
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [draft, setDraft] = useState("");
+  const containerRef = useRef(null);
+  const toggleSidebar = useCallback(() => setSidebarOpen((open) => !open), []);
+
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    const resize = () => {
+      if (!containerRef.current) return;
+      containerRef.current.style.height = viewport && window.innerWidth < 768
+        ? `${viewport.height}px`
+        : "";
+    };
+    resize();
+    viewport?.addEventListener("resize", resize);
+    window.addEventListener("resize", resize);
+    return () => {
+      viewport?.removeEventListener("resize", resize);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
 
   const {
     messages,
@@ -56,7 +75,7 @@ export default function AIChatPage() {
   };
 
   return (
-    <div className="flex h-screen w-full bg-zinc-100 text-zinc-900">
+    <div ref={containerRef} className="flex h-dvh min-h-0 w-full overflow-hidden bg-zinc-100 text-zinc-900">
       <ChatSidebar
         active={section}
         onNavigate={(key) => {
@@ -65,31 +84,35 @@ export default function AIChatPage() {
         }}
         onNewChat={handleNewChat}
         isOpen={sidebarOpen}
-        onToggle={() => setSidebarOpen((o) => !o)}
+        onToggle={toggleSidebar}
       />
 
       <main className="flex min-w-0 flex-1 flex-col overflow-hidden bg-white md:my-3 md:mr-3 md:rounded-2xl md:border md:border-zinc-200">
-        <header className="flex shrink-0 items-center justify-between px-5 py-4">
+        <header className="flex shrink-0 items-center justify-between gap-3 px-3 py-2 sm:px-5 sm:py-4">
           <button
             type="button"
             onClick={() => setSidebarOpen(true)}
             aria-label="Open sidebar"
-            className="rounded-md p-1 text-zinc-500 transition hover:text-zinc-900 md:invisible"
+            aria-expanded={sidebarOpen}
+            aria-controls="ai-sidebar"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-zinc-500 transition hover:text-zinc-900 md:invisible"
           >
             <PanelLeftIcon className="h-4 w-4" />
           </button>
+
+          <span className="min-w-0 flex-1 font-semibold md:hidden">WedaHub AI</span>
 
           <ChatUserAvatar />
         </header>
 
         {section === "home" ? (
           <>
-            <div className="min-h-0 flex-1 overflow-y-auto px-5 sm:px-8">
+            <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain px-4 sm:px-8">
               <div
                 className={`mx-auto w-full max-w-[640px] ${
                   hasChat
                     ? "py-6"
-                    : "flex min-h-full flex-col justify-center py-10"
+                    : "flex min-h-full flex-col justify-center py-6 sm:py-10"
                 }`}
               >
                 {hasChat ? (
@@ -114,8 +137,8 @@ export default function AIChatPage() {
               </div>
             </div>
 
-            <div className="shrink-0 bg-white px-5 sm:px-8">
-              <div className="mx-auto w-full max-w-[640px] pb-3">
+            <div className="shrink-0 bg-white px-4 sm:px-8">
+              <div className="mx-auto w-full max-w-[640px] pb-[max(0.75rem,env(safe-area-inset-bottom))]">
                 {hasChat && (
                   <ChatComposer
                     value={draft}
@@ -133,7 +156,7 @@ export default function AIChatPage() {
             </div>
           </>
         ) : (
-          <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
+          <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-6">
             <div
               className={`mx-auto w-full ${
                 section === "services" ? "max-w-3xl" : "max-w-5xl"

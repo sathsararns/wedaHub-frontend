@@ -150,7 +150,7 @@ export default function BookingCard({ booking }) {
                 <Icon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-blue-500" />
                 <div className="min-w-0">
                   <dt className="text-xs text-gray-400">{label}</dt>
-                  <dd className="truncate font-medium text-gray-700">
+                  <dd className="font-medium text-gray-700 [overflow-wrap:anywhere]">
                     {value}
                   </dd>
                 </div>
@@ -164,7 +164,7 @@ export default function BookingCard({ booking }) {
                 <FileText size={13} />
                 Your Instructions
               </div>
-              <p className="text-sm leading-relaxed text-gray-700">
+              <p className="text-sm leading-relaxed text-gray-700 [overflow-wrap:anywhere]">
                 {description}
               </p>
             </div>

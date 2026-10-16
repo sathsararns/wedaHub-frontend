@@ -140,7 +140,7 @@ export default function BookingPage() {
         </motion.button>
 
         <motion.div
-          className="rounded-3xl bg-white p-6 shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)] sm:p-8"
+          className="min-w-0 rounded-3xl bg-white p-4 shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)] sm:p-8"
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
@@ -157,12 +157,12 @@ export default function BookingPage() {
           {/* Provider */}
           <motion.div
             variants={riseItem}
-            className="mt-6 flex items-center gap-5 rounded-2xl bg-gray-50 p-4"
+            className="mt-6 flex items-center gap-3 rounded-2xl bg-gray-50 p-3 sm:gap-5 sm:p-4"
           >
             <img
               src={avatar}
               alt={`${provider.firstName} ${provider.lastName}`}
-              className="h-20 w-20 shrink-0 rounded-full object-cover ring-4 ring-blue-100"
+              className="h-16 w-16 shrink-0 rounded-full sm:h-20 sm:w-20 object-cover ring-4 ring-blue-100"
             />
 
             <div className="min-w-0">
@@ -242,7 +242,7 @@ export default function BookingPage() {
           </motion.div>
 
           {/* Summary */}
-          <motion.div variants={riseItem} className="mt-6 rounded-2xl bg-blue-50 p-6">
+          <motion.div variants={riseItem} className="mt-6 rounded-2xl bg-blue-50 p-4 sm:p-6">
             <h2 className="flex items-center gap-2 text-lg font-bold text-gray-900">
               <ClipboardList className="h-5 w-5 text-blue-600" />
               Booking Summary
@@ -251,14 +251,14 @@ export default function BookingPage() {
             <dl className="mt-4 space-y-2.5 text-sm">
               <div className="flex justify-between gap-4">
                 <dt className="text-gray-500">Provider</dt>
-                <dd className="font-semibold text-gray-800">
+                <dd className="min-w-0 text-right font-semibold text-gray-800 [overflow-wrap:anywhere]">
                   {provider.firstName} {provider.lastName}
                 </dd>
               </div>
 
               <div className="flex justify-between gap-4">
                 <dt className="text-gray-500">Service</dt>
-                <dd className="font-semibold text-gray-800">
+                <dd className="min-w-0 text-right font-semibold text-gray-800 [overflow-wrap:anywhere]">
                   {provider.category || "-"}
                 </dd>
               </div>
@@ -288,7 +288,7 @@ export default function BookingPage() {
                   <MapPin className="h-3.5 w-3.5" />
                   City
                 </dt>
-                <dd className="text-right font-semibold text-gray-800">
+                <dd className="min-w-0 text-right font-semibold text-gray-800 [overflow-wrap:anywhere]">
                   {serviceCity.trim() || "Enter your service location"}
                 </dd>
               </div>

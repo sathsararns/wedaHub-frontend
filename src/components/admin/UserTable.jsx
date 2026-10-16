@@ -5,7 +5,7 @@ export default function UserTable({
   refresh,
 }) {
   return (
-    <div className="min-w-0 bg-white rounded-xl shadow overflow-x-auto">
+    <div className="min-w-0 bg-white rounded-xl shadow overflow-x-auto" tabIndex={0} role="region" aria-label="Users table, scroll horizontally to see all columns">
 
       <table className="w-full min-w-[800px] table-fixed">
 

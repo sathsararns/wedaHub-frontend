@@ -7,7 +7,7 @@ function renderLine(line, key) {
   const parts = line.split(/(\*\*[^*]+\*\*)/g);
 
   return (
-    <p key={key} className="text-[14px] leading-relaxed text-zinc-700">
+    <p key={key} className="text-[14px] leading-relaxed text-zinc-700 [overflow-wrap:anywhere]">
       {parts.map((part, i) =>
         part.startsWith("**") && part.endsWith("**") ? (
           <strong key={i} className="font-semibold text-zinc-900">
@@ -51,7 +51,7 @@ export default function ChatMessages({
             transition={{ duration: 0.25, ease: "easeOut" }}
             className="flex justify-end"
           >
-            <p className="max-w-[85%] rounded-2xl rounded-br-md bg-zinc-900 px-4 py-2.5 text-[14px] leading-relaxed text-white">
+            <p className="max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-zinc-900 px-4 py-2.5 text-[14px] leading-relaxed text-white [overflow-wrap:anywhere]">
               {m.content}
             </p>
           </motion.div>

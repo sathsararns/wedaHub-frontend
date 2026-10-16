@@ -78,7 +78,7 @@ export default function ProfileHeader({ profile, setProfile, editing }) {
           {profile.firstName} {profile.lastName}
         </h1>
 
-        <p className="text-gray-500">{profile.email}</p>
+        <p className="max-w-full text-center text-gray-500 [overflow-wrap:anywhere]">{profile.email}</p>
 
         {/* Summary row: role, category & rating, location */}
         <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
