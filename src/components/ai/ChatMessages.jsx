@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import ChatLogo from "./ChatLogo";
 import ChatBookingCard from "./ChatBookingCard";
+import ChatPendingReply from "./ChatPendingReply";
 
 function renderLine(line, key) {
   const parts = line.split(/(\*\*[^*]+\*\*)/g);
@@ -40,7 +41,7 @@ export default function ChatMessages({
         m.role === "user" ? (
           <motion.div
             key={m.id}
-            initial={{ opacity: 0, y: 6 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
             className="flex justify-end"
@@ -52,7 +53,7 @@ export default function ChatMessages({
         ) : (
           <motion.div
             key={m.id}
-            initial={{ opacity: 0, y: 6 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
             className="grid min-w-0 grid-cols-[28px_minmax(0,1fr)] gap-x-2 sm:gap-x-3"
@@ -63,20 +64,7 @@ export default function ChatMessages({
 
             <div className="min-w-0 flex-1">
               {m.pending ? (
-                <div className="space-y-2.5 pt-1.5" aria-label="Checking availability">
-                  {["w-10/12", "w-8/12", "w-6/12"].map((w, i) => (
-                    <motion.div
-                      key={w}
-                      className={`h-3 rounded-full bg-zinc-100 ${w}`}
-                      animate={{ opacity: [0.45, 1, 0.45] }}
-                      transition={{
-                        duration: 1.2,
-                        repeat: Infinity,
-                        delay: i * 0.15,
-                      }}
-                    />
-                  ))}
-                </div>
+                <ChatPendingReply />
               ) : (
                 <div className="space-y-2">
                   {String(m.content || "")

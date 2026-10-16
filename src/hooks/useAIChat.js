@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { streamMessage, resetChat } from "../services/aiChatService";
 import { useAuth } from "./useAuth.js";
 
@@ -69,10 +69,19 @@ export function useAIChat() {
   const [isResponding, setIsResponding] = useState(false);
 
   const generationRef = useRef(0);
+  const requestRef = useRef(null);
+
+  useEffect(() => () => {
+    generationRef.current += 1;
+    requestRef.current?.abort();
+  }, []);
 
   const send = useCallback(
     async (text) => {
-      if (!text.trim() || isResponding) return;
+      if (!text.trim() || requestRef.current) return;
+
+      const request = new AbortController();
+      requestRef.current = request;
 
       const myGeneration = generationRef.current;
       const pendingId = uid();
@@ -96,6 +105,7 @@ export function useAIChat() {
 
       try {
         await streamMessage(text, customerId, authToken, {
+          signal: request.signal,
           onChunk: (chunk) => {
             if (myGeneration !== generationRef.current) return;
 
@@ -168,15 +178,18 @@ export function useAIChat() {
         );
       } finally {
         if (myGeneration === generationRef.current) {
+          requestRef.current = null;
           setIsResponding(false);
         }
       }
     },
-    [authToken, customerId, isResponding]
+    [authToken, customerId]
   );
 
   const resetAll = useCallback(() => {
     generationRef.current += 1;
+    requestRef.current?.abort();
+    requestRef.current = null;
     setMessages([]);
     setIsResponding(false);
 

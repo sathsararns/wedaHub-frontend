@@ -1,5 +1,16 @@
 import api from "../Utils/api.js";
 
+const AI_REQUEST_TIMEOUT_MS = 180_000;
+
+function shouldBufferReplies() {
+  const browser = globalThis.navigator;
+  // Choose the transport before submitting: never replay a booking message
+  // just because a streaming response stalled on a mobile browser.
+  return /iPhone|iPad|iPod/i.test(browser?.userAgent || "") ||
+    (browser?.platform === "MacIntel" && browser?.maxTouchPoints > 1) ||
+    typeof TextDecoder === "undefined" || typeof ReadableStream === "undefined";
+}
+
 const authConfig = (authToken) =>
   authToken
     ? {
@@ -13,7 +24,7 @@ const authConfig = (authToken) =>
 // AI Chat
 // ==============================
 
-export async function sendMessage(message, customerId = null, authToken = null) {
+export async function sendMessage(message, customerId = null, authToken = null, options = {}) {
   const { data } = await api.post(
     "/ai/chat",
     {
@@ -21,7 +32,11 @@ export async function sendMessage(message, customerId = null, authToken = null) 
       customerId,
       customer_id: customerId,
     },
-    authConfig(authToken)
+    {
+      ...authConfig(authToken),
+      signal: options.signal,
+      timeout: options.timeoutMs ?? AI_REQUEST_TIMEOUT_MS,
+    }
   );
 
   return data;
@@ -54,7 +69,58 @@ export async function streamMessage(
   message,
   customerId = null,
   authToken = null,
-  { onChunk, onDone } = {}
+  { onChunk, onDone, signal, timeoutMs = AI_REQUEST_TIMEOUT_MS } = {}
+) {
+  const controller = new AbortController();
+  let timedOut = false;
+  const abort = () => controller.abort();
+  if (signal?.aborted) controller.abort();
+  else signal?.addEventListener("abort", abort, { once: true });
+  const timer = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, timeoutMs);
+
+  try {
+    if (shouldBufferReplies()) {
+      const result = await sendMessage(message, customerId, authToken, {
+        signal: controller.signal,
+        timeoutMs,
+      });
+      if (typeof result?.response !== "string" || !result.response.trim()) {
+        throw new Error("The AI assistant returned an empty reply. Please try again.");
+      }
+      onChunk?.(result.response);
+      onDone?.({
+        type: "done",
+        recommendations: result.recommendations || [],
+        booking: result.booking || null,
+      });
+      return;
+    }
+
+    await readStreamingMessage(message, customerId, authToken, {
+      onChunk, onDone, signal: controller.signal,
+    });
+  } catch (error) {
+    if (timedOut || error.code === "ECONNABORTED") {
+      throw new Error("The AI assistant took too long to reply. Please try again shortly.", { cause: error });
+    }
+    if (error.response) {
+      throw new Error(error.response.data?.message || "The AI assistant is temporarily unavailable. Please try again shortly.", { cause: error });
+    }
+    throw error;
+  } finally {
+    clearTimeout(timer);
+    signal?.removeEventListener("abort", abort);
+  }
+}
+
+async function readStreamingMessage(
+  message,
+  customerId = null,
+  authToken = null,
+  { onChunk, onDone, signal } = {}
 ) {
   const headers = { "Content-Type": "application/json" };
 
@@ -67,6 +133,7 @@ export async function streamMessage(
   const response = await fetch(`${baseURL}/ai/chat/stream`, {
     method: "POST",
     headers,
+    signal,
     body: JSON.stringify({
       message,
       customerId,

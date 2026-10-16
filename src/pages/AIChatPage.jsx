@@ -187,7 +187,7 @@ export default function AIChatPage() {
                 tabIndex={0}
                 aria-label="Chat messages"
                 data-chat-scroll
-                className="h-full overflow-x-hidden overflow-y-auto overscroll-contain px-3 outline-offset-[-2px] sm:px-6 lg:px-8"
+                className="absolute inset-0 overflow-x-hidden overflow-y-auto overscroll-contain px-3 outline-offset-[-2px] sm:px-6 lg:px-8"
               >
                 <div
                   ref={contentRef}
