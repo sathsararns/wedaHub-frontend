@@ -1,4 +1,4 @@
-import api from "../Utils/api";
+import api from "../Utils/api.js";
 
 const authConfig = (authToken) =>
   authToken
@@ -75,44 +75,68 @@ export async function streamMessage(
   });
 
   if (!response.ok || !response.body) {
-    throw new Error(`AI stream request failed (${response.status})`);
+    const error = await response.json().catch(() => null);
+    throw new Error(
+      error?.message || error?.detail ||
+      "The AI assistant is temporarily unavailable. Please try again shortly."
+    );
   }
 
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let buffer = "";
+  let completed = false;
 
-  while (true) {
-    const { value, done } = await reader.read();
-    if (done) break;
+  function handleEvent(frame) {
+    const data = frame.split("\n")
+      .filter((line) => line.startsWith("data:"))
+      .map((line) => line.slice(5).replace(/^ /, ""))
+      .join("\n");
+    if (!data) return;
 
-    buffer += decoder.decode(value, { stream: true });
+    let event;
+    try {
+      event = JSON.parse(data);
+    } catch {
+      return;
+    }
 
-    let boundary = buffer.indexOf("\n\n");
+    if (event.type === "error") {
+      throw new Error(event.message || "The AI connection was interrupted. Please try again shortly.");
+    }
+    if (event.type === "chunk") {
+      onChunk?.(event.text);
+    } else if (event.type === "done") {
+      completed = true;
+      onDone?.(event);
+    }
+  }
 
-    while (boundary !== -1) {
-      const rawEvent = buffer.slice(0, boundary);
-      buffer = buffer.slice(boundary + 2);
+  try {
+    while (!completed) {
+      const { value, done } = await reader.read();
+      buffer += done ? decoder.decode() : decoder.decode(value, { stream: true });
+      buffer = buffer.replace(/\r\n/g, "\n");
 
-      const line = rawEvent.startsWith("data: ") ? rawEvent.slice(6) : rawEvent;
-
-      if (line.trim()) {
-        try {
-          const event = JSON.parse(line);
-
-          if (event.type === "chunk") {
-            onChunk?.(event.text);
-          } else if (event.type === "done") {
-            onDone?.(event);
-          }
-        } catch {
-          // Ignore a malformed/partial frame — shouldn't happen since
-          // frames are only parsed once a full "\n\n" boundary arrives.
-        }
+      let boundary = buffer.indexOf("\n\n");
+      while (boundary !== -1 && !completed) {
+        handleEvent(buffer.slice(0, boundary));
+        buffer = buffer.slice(boundary + 2);
+        boundary = buffer.indexOf("\n\n");
       }
 
-      boundary = buffer.indexOf("\n\n");
+      if (done) {
+        if (!completed && buffer.trim()) handleEvent(buffer);
+        break;
+      }
     }
+
+    if (!completed) {
+      throw new Error("The AI connection ended before the reply finished. Please try again shortly.");
+    }
+  } finally {
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
   }
 }
 
