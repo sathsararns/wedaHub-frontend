@@ -1,8 +1,6 @@
-import React from 'react'
 import { motion } from 'framer-motion'
-import ChatSuggestions from './ChatSuggestions'
 
-export default function ChatWelcome({ onSelectSuggestion }) {
+export default function ChatWelcome() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -16,10 +14,6 @@ export default function ChatWelcome({ onSelectSuggestion }) {
       <p className="mt-2 text-zinc-500">
         Book trusted home service providers in a single conversation.
       </p>
-
-      <div className="mt-10">
-        <ChatSuggestions onSelect={onSelectSuggestion} />
-      </div>
     </motion.div>
   )
 }

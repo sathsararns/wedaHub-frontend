@@ -99,7 +99,7 @@ export default function AIChatPage() {
                   />
                 ) : (
                   <>
-                    <ChatWelcome onSelectSuggestion={handlePrompt} />
+                    <ChatWelcome />
 
                     <div className="mt-7">
                       <ChatComposer
