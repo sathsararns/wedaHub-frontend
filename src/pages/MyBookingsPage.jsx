@@ -269,7 +269,7 @@ export default function MyBookingsPage() {
                     exit="exit"
                     className="rounded-3xl"
                   >
-                    <BookingCard booking={booking} onCancelled={loadBookings} />
+                    <BookingCard booking={booking} />
                   </motion.div>
                 ))}
               </AnimatePresence>

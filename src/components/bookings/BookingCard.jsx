@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Ban, Calendar, ExternalLink, FileText, MapPin, Phone } from "lucide-react";
-import toast from "react-hot-toast";
+import { Calendar, ExternalLink, FileText, MapPin, Phone } from "lucide-react";
 
 import defaultAvatar from "../../assets/images/avatar.png";
 import StatusBadge from "./StatusBadge";
-import { cancelBooking } from "../../services/bookingService";
 import { getBookingLocation } from "../../Utils/bookingLocation.js";
 
 const pick = (...values) =>
@@ -96,8 +94,7 @@ const resolvePhone = (booking) => {
 const resolveDescription = (booking) =>
   pick(booking?.description, booking?.instructions, booking?.note, "");
 
-export default function BookingCard({ booking, onCancelled, allowCancel = true }) {
-  const [cancelling, setCancelling] = useState(false);
+export default function BookingCard({ booking }) {
   const [avatarError, setAvatarError] = useState(false);
 
   const provider = resolveProvider(booking);
@@ -122,23 +119,6 @@ export default function BookingCard({ booking, onCancelled, allowCancel = true }
 
   const description = resolveDescription(booking);
   const statusLabel = normalizeStatus(booking?.status);
-  const canCancel = allowCancel && statusLabel === "Pending";
-
-  async function handleCancel() {
-    if (!window.confirm("Cancel this booking request?")) return;
-
-    try {
-      setCancelling(true);
-      await cancelBooking(booking._id);
-      toast.success("Booking cancelled");
-      onCancelled?.();
-    } catch (err) {
-      console.log(err);
-      toast.error(err.response?.data?.message || "Failed to cancel booking");
-    } finally {
-      setCancelling(false);
-    }
-  }
 
   return (
     <div className="rounded-3xl bg-white p-5 shadow-[0_20px_45px_-25px_rgba(91,52,196,0.35)] transition-shadow hover:shadow-lg sm:p-6">
@@ -190,28 +170,15 @@ export default function BookingCard({ booking, onCancelled, allowCancel = true }
             </div>
           )}
 
-          {(providerId || canCancel) && (
+          {providerId && (
             <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-gray-100 pt-4">
-              {providerId && (
-                <Link
-                  to={`/provider/${providerId}`}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
-                >
-                  <ExternalLink size={14} />
-                  View Provider
-                </Link>
-              )}
-
-              {canCancel && (
-                <button
-                  onClick={handleCancel}
-                  disabled={cancelling}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  <Ban size={14} />
-                  {cancelling ? "Cancelling..." : "Cancel Booking"}
-                </button>
-              )}
+              <Link
+                to={`/provider/${providerId}`}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+              >
+                <ExternalLink size={14} />
+                View Provider
+              </Link>
             </div>
           )}
         </div>

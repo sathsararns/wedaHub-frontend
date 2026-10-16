@@ -159,7 +159,7 @@ export default function ChatBookingsPanel() {
       ) : (
         <div className="space-y-5">
           {bookings.map((booking) => (
-            <BookingCard key={booking._id || booking.id} booking={booking} allowCancel={false} />
+            <BookingCard key={booking._id || booking.id} booking={booking} />
           ))}
         </div>
       )}
