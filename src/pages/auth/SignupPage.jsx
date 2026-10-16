@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../../Utils/api";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion, AnimatePresence, useAnimation, useReducedMotion } from "framer-motion";
 
@@ -118,15 +118,19 @@ export default function SignupPage() {
       await api.post("/users/register", payload);
 
       // Success message
-      toast.success("Account created successfully! Redirecting to login...");
+      toast.success("Account created successfully! Redirecting to login...", {
+        id: "auth-success",
+        duration: 1000,
+        removeDelay: 200,
+      });
 
       // Form reset කරන්න
       resetForm();
 
-      // 1.5s පස්සේ login page එකට navigate කරන්න
+      // Continue to login promptly after successful signup.
       setTimeout(() => {
         navigate("/login");
-      }, 1500);
+      }, 500);
 
     } catch (err) {
       toast.error(err.response?.data?.message || "Signup failed");
@@ -140,8 +144,6 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F5F5FB] relative overflow-hidden font-sans py-12">
-      <Toaster position="top-center" />
-
       {/* Decorative background line */}
       <div className="absolute left-0 right-0 top-[30%] h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent z-0 opacity-50"></div>
 

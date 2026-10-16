@@ -55,7 +55,11 @@ export default function LoginPage() {
         lastName: res.data.lastName,
         image: res.data.image || null,
       });
-      toast.success("Login successful");
+      toast.success("Login successful", {
+        id: "auth-success",
+        duration: 1000,
+        removeDelay: 200,
+      });
 
       // Small delay before navigation
       setTimeout(() => {
