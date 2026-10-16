@@ -38,7 +38,7 @@ export default function BookingRequestCard({ booking, onStatusChanged }) {
       label: "Date",
       value: `${formatDate(booking.date)}${booking.time ? ` · ${booking.time}` : ""}`,
     },
-    { icon: MapPin, label: "Location", value: booking.city || "Not specified" },
+    { icon: MapPin, label: "Location", value: booking.city?.trim() || booking.location?.trim() || "Not specified" },
     { icon: Phone, label: "Phone", value: customer?.phone || "-" },
   ];
 

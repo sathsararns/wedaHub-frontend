@@ -69,7 +69,7 @@ export default function BookingPage() {
         serviceName: provider.category,
         description: specialInstructions,
         date: bookingDate,
-        location: provider.city, // Changed from provider.location to provider.city
+        city: provider.city,
       };
 
       console.log("📝 Booking Data:", bookingData);
