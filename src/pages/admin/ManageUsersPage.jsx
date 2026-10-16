@@ -68,7 +68,7 @@ export default function ManageUsersPage() {
 
       <Sidebar />
 
-      <main className="flex-1 p-8">
+      <main className="min-w-0 flex-1 p-8">
 
         {/* ✨ NEW: Reimagined Back Button - Floating Circular with Hover-Expand */}
         <button

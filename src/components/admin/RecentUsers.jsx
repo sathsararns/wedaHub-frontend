@@ -1,7 +1,7 @@
 export default function RecentUsers({ users = [] }) {
 
   return (
-    <div className="bg-white rounded-xl shadow overflow-hidden">
+    <div className="min-w-0 bg-white rounded-xl shadow overflow-hidden">
 
       <div className="p-6 border-b border-gray-200">
         <h2 className="text-xl font-bold">
@@ -15,7 +15,14 @@ export default function RecentUsers({ users = [] }) {
         </div>
       ) : (
 
-        <table className="w-full">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[480px] table-fixed">
+
+          <colgroup>
+            <col className="w-[30%]" />
+            <col className="w-[47%]" />
+            <col className="w-[23%]" />
+          </colgroup>
 
           <thead className="bg-gray-200">
 
@@ -46,16 +53,18 @@ export default function RecentUsers({ users = [] }) {
                 className="border-b hover:bg-gray-50 transition"
               >
 
-                <td className="p-4 font-medium">
+                <td className="p-4 font-medium [overflow-wrap:anywhere]">
                   {user.firstName} {user.lastName}
                 </td>
 
-                <td className="p-4">
-                  {user.email}
+                <td className="p-4 text-sm text-gray-600">
+                  <span className="block [overflow-wrap:anywhere]" title={user.email}>
+                    {user.email || "—"}
+                  </span>
                 </td>
 
                 <td className="p-4">
-                  <span className={`capitalize px-3 py-1 rounded-full text-sm ${
+                  <span className={`inline-flex whitespace-nowrap capitalize px-3 py-1 rounded-full text-sm ${
                     user.role === 'admin' 
                       ? 'bg-purple-100 text-purple-700'
                       : user.role === 'provider'
@@ -73,6 +82,7 @@ export default function RecentUsers({ users = [] }) {
           </tbody>
 
         </table>
+        </div>
 
       )}
 

@@ -23,19 +23,21 @@ export default function UserRow({ user, refresh }) {
   return (
     <tr className="border-b hover:bg-gray-50">
 
-      <td className="p-4">
+      <td className="p-4 [overflow-wrap:anywhere]">
         {user.firstName} {user.lastName}
       </td>
 
-      <td className="p-4">
-        {user.email}
+      <td className="p-4 text-sm text-gray-600">
+        <span className="block [overflow-wrap:anywhere]" title={user.email}>
+          {user.email || "—"}
+        </span>
       </td>
 
-      <td className="p-4 capitalize">
+      <td className="p-4 text-sm capitalize whitespace-nowrap">
         {user.role}
       </td>
 
-      <td className="p-4">
+      <td className="p-4 text-sm whitespace-nowrap">
         {user.isBlocked ? (
           <span className="text-red-600 font-semibold">
             Blocked
@@ -47,7 +49,7 @@ export default function UserRow({ user, refresh }) {
         )}
       </td>
 
-      <td className="p-4">
+      <td className="p-4 text-center">
 
         {user.isBlocked ? (
 
