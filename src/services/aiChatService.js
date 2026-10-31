@@ -1,6 +1,19 @@
 import api from "../Utils/api.js";
 
 const AI_REQUEST_TIMEOUT_MS = 180_000;
+let warmupPromise = null;
+
+export function warmAIService() {
+  // Start once on page entry, rather than waiting for Send. Never submit a
+  // synthetic chat message, reset memory, or run a periodic keep-alive loop.
+  if (!warmupPromise) {
+    warmupPromise = api.get("/ai/health", { timeout: 100_000 })
+      .then(({ data }) => data?.status === "ok")
+      .catch(() => false)
+      .finally(() => { warmupPromise = null; });
+  }
+  return warmupPromise;
+}
 
 function shouldBufferReplies() {
   const browser = globalThis.navigator;

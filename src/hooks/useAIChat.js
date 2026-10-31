@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { streamMessage, resetChat } from "../services/aiChatService";
+import { streamMessage, resetChat, warmAIService } from "../services/aiChatService";
 import { useAuth } from "./useAuth.js";
 
 const uid = () => Math.random().toString(36).slice(2);
@@ -54,6 +54,8 @@ const normalizeBooking = (booking) => {
 
 export function useAIChat() {
   const { user, token } = useAuth();
+
+  useEffect(() => { void warmAIService(); }, []);
 
   const customerId = useMemo(
     () => user?._id || user?.id || user?.user?._id || null,

@@ -1,7 +1,35 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { streamMessage } from "../src/services/aiChatService.js";
+import { streamMessage, warmAIService } from "../src/services/aiChatService.js";
 import api from "../src/Utils/api.js";
+
+test("opening chat wakes the service once without sending a chat message", async (t) => {
+  let finish;
+  const get = t.mock.method(api, "get", (url, options) => {
+    assert.equal(url, "/ai/health");
+    assert.equal(options.timeout, 100_000);
+    return new Promise((resolve) => { finish = resolve; });
+  });
+  t.mock.method(api, "post", () => assert.fail("Warm-up must not send chat or reset memory"));
+  const first = warmAIService();
+  assert.equal(warmAIService(), first);
+  assert.equal(get.mock.callCount(), 1);
+  finish({ data: { status: "ok" } });
+  assert.equal(await first, true);
+
+  // Returning to the page after idle checks readiness again.
+  const next = warmAIService();
+  assert.equal(get.mock.callCount(), 2);
+  finish({ data: { status: "ok" } });
+  assert.equal(await next, true);
+});
+
+test("a failed warm-up does not block chat and can be checked on a later visit", async (t) => {
+  const get = t.mock.method(api, "get", async () => { throw new Error("Starting"); });
+  assert.equal(await warmAIService(), false);
+  get.mock.mockImplementation(async () => ({ data: { status: "ok" } }));
+  assert.equal(await warmAIService(), true);
+});
 
 function browser(t, value) {
   const previous = Object.getOwnPropertyDescriptor(globalThis, "navigator");
