@@ -5,6 +5,7 @@ import {
   FileText,
   CheckCircle2,
 } from "lucide-react";
+import { formatBookingDate } from "../../Utils/bookingDate.js";
 
 const pick = (...values) =>
   values.find(
@@ -13,30 +14,6 @@ const pick = (...values) =>
       value !== null &&
       String(value).trim() !== ""
   ) ?? "";
-
-const formatDate = (value) => {
-  const raw = pick(value);
-  if (!raw) return "Not provided";
-
-  if (raw instanceof Date && !Number.isNaN(raw.getTime())) {
-    return raw.toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  }
-
-  const parsed = new Date(raw);
-  if (!Number.isNaN(parsed.getTime())) {
-    return parsed.toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  }
-
-  return String(raw);
-};
 
 const normalizeStatus = (status) => {
   const value = String(pick(status, "pending")).toLowerCase();
@@ -100,7 +77,7 @@ export default function ChatBookingCard({ booking }) {
     {
       icon: CalendarDays,
       label: "Booking date",
-      value: formatDate(
+      value: formatBookingDate(
         pick(booking?.date, booking?.bookingDate, booking?.booking_date)
       ),
     },
