@@ -1,6 +1,10 @@
-// Vite embeds these public URLs at build time; no server secrets belong here.
-export const API_URL = (
-  import.meta.env?.VITE_API_URL || "http://localhost:3000/api"
-).replace(/\/+$/, "");
+// Docker uses the same-origin /api proxy; Vercel and direct Vite development
+// can still configure an absolute backend URL.
+export function resolveApiUrls(apiUrl, origin = "http://localhost:5173") {
+  const api = (apiUrl || "http://localhost:3000/api").replace(/\/+$/, "");
+  return { api, socket: new URL(api, origin).origin };
+}
 
-export const SOCKET_URL = new URL(API_URL).origin;
+const urls = resolveApiUrls(import.meta.env?.VITE_API_URL, globalThis.location?.origin);
+export const API_URL = urls.api;
+export const SOCKET_URL = urls.socket;
